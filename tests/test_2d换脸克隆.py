@@ -40,7 +40,19 @@ def resolve_template(text, context):
 
 def resolve_dict(d, context):
     if isinstance(d, dict):
-        return {k: resolve_dict(v, context) for k, v in d.items()}
+        result = {}
+        for k, v in d.items():
+            if isinstance(v, str):
+                import re
+                match = re.search(r'\{\{(\w+)\}\}', v)
+                if match:
+                    var_name = match.group(1)
+                    result[k] = context.get(var_name, v)
+                else:
+                    result[k] = resolve_template(v, context)
+            else:
+                result[k] = resolve_dict(v, context)
+        return result
     elif isinstance(d, list):
         return [resolve_dict(v, context) for v in d]
     elif isinstance(d, str):
@@ -75,8 +87,7 @@ class Test2d换脸克隆:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -102,12 +113,7 @@ class Test2d换脸克隆:
         self._apply_common_headers()
         url = f"{BASE_URL}/metaman/api/asset/human/faceSwap"
         url = resolve_template(url, self.context)
-        headers = {
-    "token": "",
-    "Authorization": "",
-    "auto-gen-qa-tasks_id": ""
-}
-        headers = resolve_dict(headers, self.context)
+        headers = {}
         body = {
     "name": "自动化接口测试",
     "path": "https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/photo/178/00abf0c3-c0ff-497f-ad4a-7da13799c927.jpg",
@@ -118,7 +124,6 @@ class Test2d换脸克隆:
             method="POST",
             url=url,
             json=body,
-            headers=headers,
         )
         try:
             self.context["faceswap_task_id"] = extract_json_path(response.json(), "$.data.id")
@@ -130,12 +135,7 @@ class Test2d换脸克隆:
         self._apply_common_headers()
         url = f"{BASE_URL}/metaman/api/asset/human/get"
         url = resolve_template(url, self.context)
-        headers = {
-    "token": "",
-    "Authorization": "",
-    "auto-gen-qa-tasks_id": ""
-}
-        headers = resolve_dict(headers, self.context)
+        headers = {}
         body = {
     "human_id": "{{faceswap_task_id}}"
 }
@@ -144,7 +144,6 @@ class Test2d换脸克隆:
             method="POST",
             url=url,
             json=body,
-            headers=headers,
         )
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
@@ -153,10 +152,7 @@ class Test2d换脸克隆:
         url = f"{BASE_URL}/metaman/api/asset/human/delete"
         url = resolve_template(url, self.context)
         headers = {
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": "",
-    "auto-gen-qa-tasks_id": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {

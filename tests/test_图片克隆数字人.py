@@ -40,7 +40,19 @@ def resolve_template(text, context):
 
 def resolve_dict(d, context):
     if isinstance(d, dict):
-        return {k: resolve_dict(v, context) for k, v in d.items()}
+        result = {}
+        for k, v in d.items():
+            if isinstance(v, str):
+                import re
+                match = re.search(r'\{\{(\w+)\}\}', v)
+                if match:
+                    var_name = match.group(1)
+                    result[k] = context.get(var_name, v)
+                else:
+                    result[k] = resolve_template(v, context)
+            else:
+                result[k] = resolve_dict(v, context)
+        return result
     elif isinstance(d, list):
         return [resolve_dict(v, context) for v in d]
     elif isinstance(d, str):
@@ -75,8 +87,7 @@ class Test图片克隆数字人:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -103,12 +114,8 @@ class Test图片克隆数字人:
         url = f"{BASE_URL}/metaman/api/tool/risk/check"
         url = resolve_template(url, self.context)
         headers = {
-    "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExMjQwMDYsImlhdCI6MTc2MTAzNzYwNiwiand0VXNlcklkIjoyMzN9.jarPwDQg_Jv6k_UBami_ubSbnBtTwi7ytu-NBf_j8Po",
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": "",
-    "auto-gen-qa-tasks_id": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -130,10 +137,7 @@ class Test图片克隆数字人:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": "",
-    "auto-gen-qa-tasks_id": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -154,10 +158,7 @@ class Test图片克隆数字人:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": "",
-    "auto-gen-qa-tasks_id": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -167,48 +168,12 @@ class Test图片克隆数字人:
     "bUsed": True
 }
         body = resolve_dict(body, self.context)
-        
-        max_retries = 30
-        wait_interval = 5
-        poll_expression = "$.data.status"
-        poll_expected = 'completed'
-        error_statuses = ["failed", "error", "rejected", "timeout"]
-        
-        for attempt in range(max_retries):
-            response = self.session.request(
-                method="POST",
-                url=url,
-                json=body,
-                headers=headers,
-            )
-            
-            if response.status_code != 200:
-                print(f"Poll attempt {attempt+1}/{max_retries}: HTTP {response.status_code}")
-                time.sleep(wait_interval)
-                continue
-            
-            try:
-                data = response.json()
-                actual_value = extract_json_path(data, poll_expression)
-                
-                if actual_value == poll_expected:
-                    print(f"Poll attempt {attempt+1}/{max_retries}: Task completed successfully")
-                    break
-                    
-                if actual_value in error_statuses:
-                    raise RuntimeError(f"Task failed with status: {actual_value}")
-                    
-                print(f"Poll attempt {attempt+1}/{max_retries}: Current status = {actual_value!r}, waiting...")
-                
-            except json.JSONDecodeError:
-                print(f"Poll attempt {attempt+1}/{max_retries}: Failed to parse JSON response")
-            except Exception as e:
-                print(f"Poll attempt {attempt+1}/{max_retries}: Error - {str(e)}")
-            
-            time.sleep(wait_interval)
-        else:
-            raise TimeoutError(f"Polling timeout after {max_retries * wait_interval} seconds")
-        
+        response = self.session.request(
+            method="POST",
+            url=url,
+            json=body,
+            headers=headers,
+        )
         try:
             self.context["photo_clone_id"] = extract_json_path(response.json(), "$.data.id")
         except Exception:
@@ -221,9 +186,7 @@ class Test图片克隆数字人:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {

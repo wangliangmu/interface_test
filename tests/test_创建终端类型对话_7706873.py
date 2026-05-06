@@ -40,7 +40,19 @@ def resolve_template(text, context):
 
 def resolve_dict(d, context):
     if isinstance(d, dict):
-        return {k: resolve_dict(v, context) for k, v in d.items()}
+        result = {}
+        for k, v in d.items():
+            if isinstance(v, str):
+                import re
+                match = re.search(r'\{\{(\w+)\}\}', v)
+                if match:
+                    var_name = match.group(1)
+                    result[k] = context.get(var_name, v)
+                else:
+                    result[k] = resolve_template(v, context)
+            else:
+                result[k] = resolve_dict(v, context)
+        return result
     elif isinstance(d, list):
         return [resolve_dict(v, context) for v in d]
     elif isinstance(d, str):
@@ -75,8 +87,7 @@ class Test创建终端类型对话:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -104,9 +115,7 @@ class Test创建终端类型对话:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -134,10 +143,7 @@ class Test创建终端类型对话:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": "",
-    "auto-gen-qa-tasks_id": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -192,9 +198,7 @@ class Test创建终端类型对话:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -214,11 +218,8 @@ class Test创建终端类型对话:
         url = f"{BASE_URL}https://metahuman-prod.wair.ac.cn/metaman/api/dialogs/delete"
         url = resolve_template(url, self.context)
         headers = {
-    "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NjExODcxMTEsImlhdCI6MTc2MTEwMDcxMSwiand0VXNlcklkIjoyMzN9.6faq4aRBsTK8VQisr3OaZfPv71KKbW0vaxnmY12z3YU",
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {

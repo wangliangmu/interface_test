@@ -40,7 +40,19 @@ def resolve_template(text, context):
 
 def resolve_dict(d, context):
     if isinstance(d, dict):
-        return {k: resolve_dict(v, context) for k, v in d.items()}
+        result = {}
+        for k, v in d.items():
+            if isinstance(v, str):
+                import re
+                match = re.search(r'\{\{(\w+)\}\}', v)
+                if match:
+                    var_name = match.group(1)
+                    result[k] = context.get(var_name, v)
+                else:
+                    result[k] = resolve_template(v, context)
+            else:
+                result[k] = resolve_dict(v, context)
+        return result
     elif isinstance(d, list):
         return [resolve_dict(v, context) for v in d]
     elif isinstance(d, str):
@@ -75,8 +87,7 @@ class Test自主创建faq:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -104,9 +115,7 @@ class Test自主创建faq:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -131,9 +140,7 @@ class Test自主创建faq:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -158,9 +165,7 @@ class Test自主创建faq:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -185,9 +190,7 @@ class Test自主创建faq:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -211,9 +214,7 @@ class Test自主创建faq:
         url = f"{BASE_URL}/metaman/api/asset/knowledge/excelfile/getdownloadUrl"
         url = resolve_template(url, self.context)
         headers = {
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         response = self.session.request(
@@ -229,9 +230,7 @@ class Test自主创建faq:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -253,9 +252,7 @@ class Test自主创建faq:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -278,9 +275,7 @@ class Test自主创建faq:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {

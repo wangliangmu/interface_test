@@ -40,7 +40,19 @@ def resolve_template(text, context):
 
 def resolve_dict(d, context):
     if isinstance(d, dict):
-        return {k: resolve_dict(v, context) for k, v in d.items()}
+        result = {}
+        for k, v in d.items():
+            if isinstance(v, str):
+                import re
+                match = re.search(r'\{\{(\w+)\}\}', v)
+                if match:
+                    var_name = match.group(1)
+                    result[k] = context.get(var_name, v)
+                else:
+                    result[k] = resolve_template(v, context)
+            else:
+                result[k] = resolve_dict(v, context)
+        return result
     elif isinstance(d, list):
         return [resolve_dict(v, context) for v in d]
     elif isinstance(d, str):
@@ -74,8 +86,7 @@ class Test语义理解服务探活:
         url = f"{BASE_URL}https://platform-h20.wair.ac.cn/api/v1/infer/11120"
         url = resolve_template(url, self.context)
         headers = {
-    "Content-Type": "application/json",
-    "Authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiJ9.j6-hUMaFYdSIzfc6i6TJ5DaS96Z9I78SrjxAOg-71yE"
+    "Content-Type": "application/json"
 }
         headers = resolve_dict(headers, self.context)
         body = {

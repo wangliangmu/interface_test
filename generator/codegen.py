@@ -30,11 +30,16 @@ def to_py_repr(obj):
 
 def needs_polling(step):
     path = step.get("path", "").lower()
+    extracts = step.get("extracts", [])
     polling_keywords = [
         "photoclone", "video", "clone", "generate", "create",
         "voiceclone", "audio", "合成", "checkwer"
     ]
-    return any(keyword in path for keyword in polling_keywords)
+    has_status_extraction = any(
+        "status" in str(ext.get("expression", "")).lower() 
+        for ext in extracts
+    )
+    return any(keyword in path for keyword in polling_keywords) and has_status_extraction
 
 
 def make_func_name(step, index):
@@ -61,7 +66,11 @@ def process_step(step, index, next_steps=None):
         for h in step.get("headers", []):
             name = h["name"]
             value = h.get("sample_value") or h.get("value", "")
-            headers[name] = value
+            name_lower = name.lower()
+            if name_lower in ("authorization", "token", "auto-gen-qa-tasks_id"):
+                continue
+            if value and value != "":
+                headers[name] = value
 
         body = step.get("body")
         body_py = to_py_repr(body) if body else None

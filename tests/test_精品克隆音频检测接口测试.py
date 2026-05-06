@@ -40,7 +40,19 @@ def resolve_template(text, context):
 
 def resolve_dict(d, context):
     if isinstance(d, dict):
-        return {k: resolve_dict(v, context) for k, v in d.items()}
+        result = {}
+        for k, v in d.items():
+            if isinstance(v, str):
+                import re
+                match = re.search(r'\{\{(\w+)\}\}', v)
+                if match:
+                    var_name = match.group(1)
+                    result[k] = context.get(var_name, v)
+                else:
+                    result[k] = resolve_template(v, context)
+            else:
+                result[k] = resolve_dict(v, context)
+        return result
     elif isinstance(d, list):
         return [resolve_dict(v, context) for v in d]
     elif isinstance(d, str):
@@ -75,8 +87,7 @@ class Test精品克隆音频检测接口测试:
         url = resolve_template(url, self.context)
         headers = {
     "content-type": "application/json",
-    "priority": "u=1, i",
-    "token": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {
@@ -103,13 +114,9 @@ class Test精品克隆音频检测接口测试:
         url = f"{BASE_URL}/metaman/api/asset/voiceclone/checkwer"
         url = resolve_template(url, self.context)
         headers = {
-    "authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjQ5MTg0MTM2MjMsImlhdCI6MTc2NDgxMzYyMywiand0VXNlcklkIjoyMzN9.a2uH3TVcIxBjL_ZLBqr0HbVXcCSlt9baYAVToDyLgnw",
     "content-type": "application/json",
     "pragma": "no-cache",
-    "priority": "u=1, i",
-    "token": "",
-    "Authorization": "",
-    "auto-gen-qa-tasks_id": ""
+    "priority": "u=1, i"
 }
         headers = resolve_dict(headers, self.context)
         body = {

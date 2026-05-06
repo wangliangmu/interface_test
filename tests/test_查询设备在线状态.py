@@ -40,7 +40,19 @@ def resolve_template(text, context):
 
 def resolve_dict(d, context):
     if isinstance(d, dict):
-        return {k: resolve_dict(v, context) for k, v in d.items()}
+        result = {}
+        for k, v in d.items():
+            if isinstance(v, str):
+                import re
+                match = re.search(r'\{\{(\w+)\}\}', v)
+                if match:
+                    var_name = match.group(1)
+                    result[k] = context.get(var_name, v)
+                else:
+                    result[k] = resolve_template(v, context)
+            else:
+                result[k] = resolve_dict(v, context)
+        return result
     elif isinstance(d, list):
         return [resolve_dict(v, context) for v in d]
     elif isinstance(d, str):
@@ -73,16 +85,10 @@ class Test查询设备在线状态:
         self._apply_common_headers()
         url = f"{BASE_URL}https://webapi.teamviewer.com/api/v1//managed/groups/70fb0608-6492-4d5c-89f7-dc3cbb554f0d/devices/"
         url = resolve_template(url, self.context)
-        headers = {
-    "Authorization": "",
-    "token": "",
-    "auto-gen-qa-tasks_id": ""
-}
-        headers = resolve_dict(headers, self.context)
+        headers = {}
         response = self.session.request(
             method="GET",
             url=url,
-            headers=headers,
         )
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
