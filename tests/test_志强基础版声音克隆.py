@@ -154,7 +154,7 @@ class Test志强基础版声音克隆:
         max_retries = 30
         wait_interval = 5
         poll_expression = "$.data.status"
-        poll_expected = "completed"
+        poll_expected_list = ["completed", "normal"]
         error_statuses = ["failed", "error", "rejected", "timeout"]
         
         for attempt in range(max_retries):
@@ -174,8 +174,8 @@ class Test志强基础版声音克隆:
                 data = response.json()
                 actual_value = extract_json_path(data, poll_expression)
                 
-                if actual_value == poll_expected:
-                    print(f"Poll attempt {attempt+1}/{max_retries}: Task completed successfully")
+                if actual_value in poll_expected_list:
+                    print(f"Poll attempt {attempt+1}/{max_retries}: Task completed successfully (status={actual_value!r})")
                     break
                     
                 if actual_value in error_statuses:

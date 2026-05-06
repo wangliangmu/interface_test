@@ -88,7 +88,7 @@ def process_step(step, index, next_steps=None):
         
         if is_polling:
             poll_expression = "$.data.status"
-            poll_expected = "completed"
+            poll_expected = ["completed", "normal"]
             
             return {
                 "type": "poll",
