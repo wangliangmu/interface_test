@@ -33,13 +33,19 @@ def needs_polling(step):
     extracts = step.get("extracts", [])
     polling_keywords = [
         "photoclone", "video", "clone", "generate", "create",
-        "voiceclone", "audio", "合成", "checkwer"
+        "voiceclone", "audio", "合成", "checkwer", "human/add", "human/get",
+        "voiceclone/get", "video/get"
     ]
     has_status_extraction = any(
         "status" in str(ext.get("expression", "")).lower() 
         for ext in extracts
     )
-    return any(keyword in path for keyword in polling_keywords) and has_status_extraction
+    has_id_extraction = any(
+        "id" in str(ext.get("expression", "")).lower()
+        for ext in extracts
+    )
+    path_has_polling_keyword = any(keyword in path for keyword in polling_keywords)
+    return path_has_polling_keyword or has_status_extraction or has_id_extraction
 
 
 def make_func_name(step, index):
@@ -78,7 +84,7 @@ def process_step(step, index, next_steps=None):
         extracts = step.get("extracts", [])
         assertions = generate_assertions(step)
         
-        is_polling = needs_polling(step) and len(extracts) > 0
+        is_polling = needs_polling(step)
         
         if is_polling:
             poll_expression = "$.data.status"
@@ -99,8 +105,8 @@ def process_step(step, index, next_steps=None):
                 "poll_expression": poll_expression,
                 "poll_expected": poll_expected,
                 "poll_expected_py": repr(poll_expected),
-                "max_retries": 30,
-                "wait_interval": 5,
+                "max_retries": 60,
+                "wait_interval": 3,
             }
         else:
             return {
