@@ -28,9 +28,20 @@ def to_py_repr(obj):
     return s
 
 
+def needs_polling(step):
+    path = step.get("path", "").lower()
+    polling_keywords = [
+        "photoclone", "video", "clone", "generate", "create",
+        "voiceclone", "audio", "合成", "checkwer"
+    ]
+    return any(keyword in path for keyword in polling_keywords)
+
+
 def make_func_name(step, index):
     if step["type"] == "wait":
         return f"wait_{index + 1}"
+    if step["type"] == "poll":
+        return f"poll_{index + 1}"
     path = step.get("path", "")
     method = step.get("method", "get").lower()
     parts = [p for p in path.split("/") if p and not p.startswith("{")]
@@ -42,10 +53,10 @@ def make_func_name(step, index):
     return f"{method}_{name}"[:50]
 
 
-def process_step(step, index):
+def process_step(step, index, next_steps=None):
     if step["type"] == "http":
         func_name = make_func_name(step, index)
-
+        
         headers = {}
         for h in step.get("headers", []):
             name = h["name"]
@@ -55,20 +66,48 @@ def process_step(step, index):
         body = step.get("body")
         body_py = to_py_repr(body) if body else None
 
-        return {
-            "type": "http",
-            "index": index,
-            "func_name": func_name,
-            "name": step.get("name", ""),
-            "method": step.get("method", "GET"),
-            "path": step.get("path", ""),
-            "headers": headers if headers else None,
-            "headers_py": to_py_repr(headers) if headers else None,
-            "body": body,
-            "body_py": body_py,
-            "extracts": step.get("extracts", []),
-            "assertions": generate_assertions(step),
-        }
+        extracts = step.get("extracts", [])
+        assertions = generate_assertions(step)
+        
+        is_polling = needs_polling(step) and len(extracts) > 0
+        
+        if is_polling:
+            poll_expression = "$.data.status"
+            poll_expected = "completed"
+            
+            return {
+                "type": "poll",
+                "index": index,
+                "func_name": func_name,
+                "name": step.get("name", ""),
+                "method": step.get("method", "GET"),
+                "path": step.get("path", ""),
+                "headers": headers if headers else None,
+                "headers_py": to_py_repr(headers) if headers else None,
+                "body": body,
+                "body_py": body_py,
+                "extracts": extracts,
+                "poll_expression": poll_expression,
+                "poll_expected": poll_expected,
+                "poll_expected_py": repr(poll_expected),
+                "max_retries": 30,
+                "wait_interval": 5,
+            }
+        else:
+            return {
+                "type": "http",
+                "index": index,
+                "func_name": func_name,
+                "name": step.get("name", ""),
+                "method": step.get("method", "GET"),
+                "path": step.get("path", ""),
+                "headers": headers if headers else None,
+                "headers_py": to_py_repr(headers) if headers else None,
+                "body": body,
+                "body_py": body_py,
+                "extracts": extracts,
+                "assertions": assertions,
+            }
     elif step["type"] == "wait":
         return {
             "type": "wait",
@@ -181,7 +220,7 @@ def generate_tests(data_path=None):
 
         processed_steps = []
         for i, step in enumerate(steps):
-            processed = process_step(step, i)
+            processed = process_step(step, i, steps[i+1:] if i+1 < len(steps) else None)
             if processed["type"] != "skip":
                 processed_steps.append(processed)
 

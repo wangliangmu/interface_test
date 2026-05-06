@@ -58,6 +58,56 @@ class Test{{ class_name }}:
         self._apply_common_headers()
 {% if step.type == "wait" %}
         time.sleep({{ step.duration / 1000.0 }})
+{% elif step.type == "poll" %}
+        url = f"{BASE_URL}{{ step.path }}"
+        url = resolve_template(url, self.context)
+{% if step.headers %}
+        headers = {{ step.headers_py }}
+        headers = resolve_dict(headers, self.context)
+{% else %}
+        headers = {}
+{% endif %}
+{% if step.body_py %}
+        body = {{ step.body_py }}
+        body = resolve_dict(body, self.context)
+{% endif %}
+        
+        max_retries = {{ step.max_retries }}
+        wait_interval = {{ step.wait_interval }}
+        poll_expression = "{{ step.poll_expression }}"
+        poll_expected = {{ step.poll_expected_py }}
+        
+        for attempt in range(max_retries):
+            response = self.session.request(
+                method="{{ step.method }}",
+                url=url,
+{% if step.body_py %}
+                json=body,
+{% endif %}
+{% if step.headers %}
+                headers=headers,
+{% endif %}
+            )
+            if response.status_code == 200:
+                try:
+                    actual_value = extract_json_path(response.json(), poll_expression)
+                    if actual_value == poll_expected:
+                        break
+                except Exception:
+                    pass
+            time.sleep(wait_interval)
+        else:
+            raise TimeoutError(f"Polling timeout after {max_retries * wait_interval} seconds")
+        
+{% if step.extracts %}
+{% for extract in step.extracts %}
+        try:
+            self.context["{{ extract.variable_name }}"] = extract_json_path(response.json(), "{{ extract.expression }}")
+        except Exception:
+            self.context["{{ extract.variable_name }}"] = None
+{% endfor %}
+{% endif %}
+        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
 {% elif step.type == "http" %}
         url = f"{BASE_URL}{{ step.path }}"
         url = resolve_template(url, self.context)

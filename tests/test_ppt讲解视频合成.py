@@ -115,12 +115,30 @@ class TestPpt讲解视频合成:
     "format": "MP4"
 }
         body = resolve_dict(body, self.context)
-        response = self.session.request(
-            method="POST",
-            url=url,
-            json=body,
-            headers=headers,
-        )
+        
+        max_retries = 30
+        wait_interval = 5
+        poll_expression = "$.data.status"
+        poll_expected = 'completed'
+        
+        for attempt in range(max_retries):
+            response = self.session.request(
+                method="POST",
+                url=url,
+                json=body,
+                headers=headers,
+            )
+            if response.status_code == 200:
+                try:
+                    actual_value = extract_json_path(response.json(), poll_expression)
+                    if actual_value == poll_expected:
+                        break
+                except Exception:
+                    pass
+            time.sleep(wait_interval)
+        else:
+            raise TimeoutError(f"Polling timeout after {max_retries * wait_interval} seconds")
+        
         try:
             self.context["compose_id"] = extract_json_path(response.json(), "$.data.id")
         except Exception:
