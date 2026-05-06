@@ -2,6 +2,7 @@ import os
 
 
 def load_config(env: str = "prod") -> dict:
+    """Load test configuration based on environment"""
     configs = {
         "prod": {
             "base_url": "https://metahuman-prod.wair.ac.cn",
