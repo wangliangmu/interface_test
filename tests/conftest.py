@@ -1,8 +1,8 @@
 import pytest
 import requests
 
-from .config import BASE_URL, COMMON_HEADERS
-from .utils import resolve_template, resolve_dict, extract_json_path
+from config import BASE_URL, COMMON_HEADERS
+from utils import resolve_template, resolve_dict, extract_json_path
 
 
 def pytest_configure(config):

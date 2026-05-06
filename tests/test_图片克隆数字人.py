@@ -3,9 +3,8 @@ import requests
 import json
 import time
 
-from .utils import resolve_template, resolve_dict, extract_json_path
-from .config import BASE_URL, COMMON_HEADERS, DEFAULT_POLL_CONFIG
-
+from utils import resolve_template, resolve_dict, extract_json_path
+from config import BASE_URL, COMMON_HEADERS, DEFAULT_POLL_CONFIG
 
 @pytest.mark.smoke
 @pytest.mark.clone
