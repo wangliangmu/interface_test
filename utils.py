@@ -14,7 +14,10 @@ def resolve_template(text: str, context: dict) -> str:
             beijing_time = datetime.now(timezone.utc) + timedelta(hours=8)
             return beijing_time.strftime("%m%d_%H%M")
         if var_name in context:
-            return str(context[var_name])
+            value = context[var_name]
+            if isinstance(value, (int, float, bool)) and not isinstance(value, bool):
+                return str(value)
+            return str(value)
         return match.group(0)
     
     return re.sub(r'\{\{(\S+?)\}\}', replacer, text)
@@ -25,12 +28,30 @@ def resolve_dict(d, context: dict):
         result = {}
         for k, v in d.items():
             if isinstance(v, str):
-                match = re.search(r'\{\{(\w+)\}\}', v)
-                if match:
-                    var_name = match.group(1)
-                    result[k] = context.get(var_name, v)
+                processed = resolve_template(v, context)
+                # 如果原始值只是一个变量占位符，尝试把处理后的结果转换成合适的类型
+                if v.startswith('{{') and v.endswith('}}'):
+                    # 尝试把处理后的字符串转换为数字、布尔值等
+                    try:
+                        if processed.lower() == 'true':
+                            result[k] = True
+                        elif processed.lower() == 'false':
+                            result[k] = False
+                        elif processed.lower() == 'null':
+                            result[k] = None
+                        else:
+                            # 先尝试解析成整数，再尝试解析成浮点数
+                            if '.' in processed:
+                                result[k] = float(processed)
+                            else:
+                                result[k] = int(processed)
+                    except (ValueError, TypeError):
+                        # 如果转换失败，就保持字符串类型
+                        result[k] = processed
                 else:
-                    result[k] = resolve_template(v, context)
+                    # 对于像 _raw 这样的字段，它是内嵌的 JSON 字符串，也要处理其中的占位符
+                    # 但是要注意，处理后保持为字符串，不要转换为对象！
+                    result[k] = processed
             else:
                 result[k] = resolve_dict(v, context)
         return result
@@ -47,3 +68,48 @@ def extract_json_path(data, path: str):
     if matches:
         return matches[0].value
     return None
+
+
+def poll_until(session, url, body, headers, poll_config, context=None):
+    max_retries = poll_config.get("max_retries", 30)
+    wait_interval = poll_config.get("wait_interval", 5)
+    poll_expression = poll_config.get("poll_expression", "$.data.status")
+    expected_statuses = poll_config.get("poll_expected_list", ["completed", "normal", "success"])
+    error_statuses = poll_config.get("error_statuses", ["failed", "error", "rejected", "timeout", "canceled"])
+    
+    from time import sleep
+    
+    for attempt in range(max_retries):
+        response = session.request(
+            method="POST",
+            url=url,
+            json=body,
+            headers=headers
+        )
+        
+        if response.status_code != 200:
+            print(f"Poll attempt {attempt+1}/{max_retries}: HTTP {response.status_code}")
+            sleep(wait_interval)
+            continue
+        
+        try:
+            data = response.json()
+            current_status = extract_json_path(data, poll_expression)
+            
+            if current_status in expected_statuses:
+                print(f"Poll attempt {attempt+1}/{max_retries}: Task completed successfully (status={current_status!r})")
+                return response
+            
+            if current_status in error_statuses:
+                raise RuntimeError(f"Task failed with status: {current_status}")
+            
+            print(f"Poll attempt {attempt+1}/{max_retries}: Current status = {current_status!r}, waiting...")
+        
+        except json.JSONDecodeError:
+            print(f"Poll attempt {attempt+1}/{max_retries}: Failed to parse JSON response")
+        except Exception as e:
+            print(f"Poll attempt {attempt+1}/{max_retries}: Error - {str(e)}")
+        
+        sleep(wait_interval)
+    
+    raise TimeoutError(f"Polling timeout after {max_retries * wait_interval} seconds")
