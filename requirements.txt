@@ -4,3 +4,5 @@ requests
 jinja2
 python-dotenv
 jsonpath-ng
+pytest-html
+pytest-reportlog
