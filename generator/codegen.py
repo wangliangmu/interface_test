@@ -105,8 +105,8 @@ def process_step(step, index, next_steps=None):
                 "poll_expression": poll_expression,
                 "poll_expected": poll_expected,
                 "poll_expected_py": repr(poll_expected),
-                "max_retries": 60,
-                "wait_interval": 3,
+                "max_retries": 30,
+                "wait_interval": 5,
             }
         else:
             return {

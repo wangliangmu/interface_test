@@ -141,7 +141,7 @@ class Test2d换脸克隆:
 }
         body = resolve_dict(body, self.context)
         
-        max_retries = 60
+        max_retries = 30
         wait_interval = 5
         poll_expression = "$.data.status"
         poll_expected = "completed"

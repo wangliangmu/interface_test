@@ -194,8 +194,8 @@ class Test图片克隆数字人:
 }
         body = resolve_dict(body, self.context)
         
-        max_retries = 60
-        wait_interval = 3
+        max_retries = 30
+        wait_interval = 5
         poll_expression = "$.data.status"
         poll_expected = "completed"
         error_statuses = ["failed", "error", "rejected", "timeout"]
