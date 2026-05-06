@@ -174,6 +174,7 @@ class Test测试:
         wait_interval = 5
         poll_expression = "$.data.status"
         poll_expected = 'completed'
+        error_statuses = ["failed", "error", "rejected", "timeout"]
         
         for attempt in range(max_retries):
             response = self.session.request(
@@ -182,13 +183,30 @@ class Test测试:
                 json=body,
                 headers=headers,
             )
-            if response.status_code == 200:
-                try:
-                    actual_value = extract_json_path(response.json(), poll_expression)
-                    if actual_value == poll_expected:
-                        break
-                except Exception:
-                    pass
+            
+            if response.status_code != 200:
+                print(f"Poll attempt {attempt+1}/{max_retries}: HTTP {response.status_code}")
+                time.sleep(wait_interval)
+                continue
+            
+            try:
+                data = response.json()
+                actual_value = extract_json_path(data, poll_expression)
+                
+                if actual_value == poll_expected:
+                    print(f"Poll attempt {attempt+1}/{max_retries}: Task completed successfully")
+                    break
+                    
+                if actual_value in error_statuses:
+                    raise RuntimeError(f"Task failed with status: {actual_value}")
+                    
+                print(f"Poll attempt {attempt+1}/{max_retries}: Current status = {actual_value!r}, waiting...")
+                
+            except json.JSONDecodeError:
+                print(f"Poll attempt {attempt+1}/{max_retries}: Failed to parse JSON response")
+            except Exception as e:
+                print(f"Poll attempt {attempt+1}/{max_retries}: Error - {str(e)}")
+            
             time.sleep(wait_interval)
         else:
             raise TimeoutError(f"Polling timeout after {max_retries * wait_interval} seconds")
