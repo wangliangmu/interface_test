@@ -1,0 +1,101 @@
+import pytest
+import requests
+import json
+import re
+import time
+from datetime import datetime
+
+BASE_URL = "{{ base_url }}"
+COMMON_HEADERS = {{ common_headers_py }}
+
+
+def resolve_template(text, context):
+    if not isinstance(text, str):
+        return text
+    def replacer(match):
+        var_name = match.group(1)
+        if var_name.startswith("$date"):
+            return datetime.now().strftime("%m%d_%H%M")
+        if var_name in context:
+            return str(context[var_name])
+        return match.group(0)
+    return re.sub(r'\{\{(\S+?)\}\}', replacer, text)
+
+
+def resolve_dict(d, context):
+    if isinstance(d, dict):
+        return {k: resolve_dict(v, context) for k, v in d.items()}
+    elif isinstance(d, list):
+        return [resolve_dict(v, context) for v in d]
+    elif isinstance(d, str):
+        return resolve_template(d, context)
+    return d
+
+
+def extract_json_path(data, path):
+    import jsonpath_ng
+    expr = jsonpath_ng.parse(path)
+    matches = expr.find(data)
+    if matches:
+        return matches[0].value
+    return None
+
+
+class Test{{ class_name }}:
+    @classmethod
+    def setup_class(cls):
+        cls.session = requests.Session()
+        cls.context = {}
+
+    def _apply_common_headers(self):
+        for h in COMMON_HEADERS:
+            if h.get("enable", True):
+                resolved_value = resolve_template(h["value"], self.context)
+                self.session.headers[h["name"]] = resolved_value
+
+{% for step in steps %}
+    def test_step_{{ "%02d" | format(step.index + 1) }}_{{ step.func_name }}(self):
+        self._apply_common_headers()
+{% if step.type == "wait" %}
+        time.sleep({{ step.duration / 1000.0 }})
+{% elif step.type == "http" %}
+        url = f"{BASE_URL}{{ step.path }}"
+        url = resolve_template(url, self.context)
+{% if step.headers %}
+        headers = {{ step.headers_py }}
+        headers = resolve_dict(headers, self.context)
+{% else %}
+        headers = {}
+{% endif %}
+{% if step.body_py %}
+        body = {{ step.body_py }}
+        body = resolve_dict(body, self.context)
+{% endif %}
+        response = self.session.request(
+            method="{{ step.method }}",
+            url=url,
+{% if step.body_py %}
+            json=body,
+{% endif %}
+{% if step.headers %}
+            headers=headers,
+{% endif %}
+        )
+{% if step.extracts %}
+{% for extract in step.extracts %}
+        try:
+            self.context["{{ extract.variable_name }}"] = extract_json_path(response.json(), "{{ extract.expression }}")
+        except Exception:
+            self.context["{{ extract.variable_name }}"] = None
+{% endfor %}
+{% endif %}
+{% if step.assertions %}
+{% for assertion in step.assertions %}
+        {{ assertion }}
+{% endfor %}
+{% else %}
+        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+{% endif %}
+{% endif %}
+
+{% endfor %}

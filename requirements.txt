@@ -1,0 +1,6 @@
+playwright
+pytest
+requests
+jinja2
+python-dotenv
+jsonpath-ng
