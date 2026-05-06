@@ -1,6 +1,15 @@
 import pytest
 import requests
 import json
+import time
+
+from .utils import resolve_template, resolve_dict, extract_json_path
+from .config import BASE_URL, COMMON_HEADERS, DEFAULT_POLL_CONFIG
+
+
+import pytest
+import requests
+import json
 import re
 import time
 from datetime import datetime, timezone, timedelta
@@ -70,6 +79,8 @@ def extract_json_path(data, path):
     return None
 
 
+@pytest.mark.smoke
+@pytest.mark.clone
 class Test图片克隆数字人:
     @classmethod
     def setup_class(cls):
@@ -195,11 +206,11 @@ class Test图片克隆数字人:
 }
         body = resolve_dict(body, self.context)
         
-        max_retries = 30
-        wait_interval = 5
-        poll_expression = "$.data.status"
-        poll_expected_list = ["completed", "normal"]
-        error_statuses = ["failed", "error", "rejected", "timeout"]
+        max_retries = DEFAULT_POLL_CONFIG["max_retries"]
+        wait_interval = DEFAULT_POLL_CONFIG["wait_interval"]
+        poll_expression = DEFAULT_POLL_CONFIG["poll_expression"]
+        poll_expected_list = DEFAULT_POLL_CONFIG["poll_expected_list"]
+        error_statuses = DEFAULT_POLL_CONFIG["error_statuses"]
         
         for attempt in range(max_retries):
             response = self.session.request(

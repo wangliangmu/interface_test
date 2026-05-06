@@ -1,75 +1,14 @@
 import pytest
 import requests
 import json
-import re
 import time
-from datetime import datetime, timezone, timedelta, timezone, timedelta
 
-BASE_URL = "https://metahuman-prod.wair.ac.cn"
-COMMON_HEADERS = [
-    {
-        "name": "token",
-        "value": "{{token}}",
-        "enable": True
-    },
-    {
-        "name": "Authorization",
-        "value": "Bearer {{token}}",
-        "enable": True
-    },
-    {
-        "name": "auto-gen-qa-tasks_id",
-        "value": "{{auto-gen-qa-tasks_id}}",
-        "enable": True
-    }
-]
+from .utils import resolve_template, resolve_dict, extract_json_path
+from .config import BASE_URL, COMMON_HEADERS, DEFAULT_POLL_CONFIG
 
 
-def resolve_template(text, context):
-    if not isinstance(text, str):
-        return text
-    def replacer(match):
-        var_name = match.group(1)
-        if var_name.startswith("$date"):
-            beijing_time = datetime.now(timezone.utc) + timedelta(hours=8)
-            return beijing_time.strftime("%m%d_%H%M")
-        if var_name in context:
-            return str(context[var_name])
-        return match.group(0)
-    return re.sub(r'\{\{(\S+?)\}\}', replacer, text)
-
-
-def resolve_dict(d, context):
-    if isinstance(d, dict):
-        result = {}
-        for k, v in d.items():
-            if isinstance(v, str):
-                import re
-                match = re.search(r'\{\{(\w+)\}\}', v)
-                if match:
-                    var_name = match.group(1)
-                    result[k] = context.get(var_name, v)
-                else:
-                    result[k] = resolve_template(v, context)
-            else:
-                result[k] = resolve_dict(v, context)
-        return result
-    elif isinstance(d, list):
-        return [resolve_dict(v, context) for v in d]
-    elif isinstance(d, str):
-        return resolve_template(d, context)
-    return d
-
-
-def extract_json_path(data, path):
-    import jsonpath_ng
-    expr = jsonpath_ng.parse(path)
-    matches = expr.find(data)
-    if matches:
-        return matches[0].value
-    return None
-
-
+@pytest.mark.smoke
+@pytest.mark.clone
 class Test图片克隆数字人:
     @classmethod
     def setup_class(cls):
@@ -195,11 +134,11 @@ class Test图片克隆数字人:
 }
         body = resolve_dict(body, self.context)
         
-        max_retries = 30
-        wait_interval = 5
-        poll_expression = "$.data.status"
-        poll_expected_list = ["completed", "normal"]
-        error_statuses = ["failed", "error", "rejected", "timeout"]
+        max_retries = DEFAULT_POLL_CONFIG["max_retries"]
+        wait_interval = DEFAULT_POLL_CONFIG["wait_interval"]
+        poll_expression = DEFAULT_POLL_CONFIG["poll_expression"]
+        poll_expected_list = DEFAULT_POLL_CONFIG["poll_expected_list"]
+        error_statuses = DEFAULT_POLL_CONFIG["error_statuses"]
         
         for attempt in range(max_retries):
             response = self.session.request(

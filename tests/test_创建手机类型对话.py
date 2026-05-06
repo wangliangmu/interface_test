@@ -1,6 +1,15 @@
 import pytest
 import requests
 import json
+import time
+
+from .utils import resolve_template, resolve_dict, extract_json_path
+from .config import BASE_URL, COMMON_HEADERS, DEFAULT_POLL_CONFIG
+
+
+import pytest
+import requests
+import json
 import re
 import time
 from datetime import datetime, timezone, timedelta
@@ -70,6 +79,7 @@ def extract_json_path(data, path):
     return None
 
 
+@pytest.mark.dialog
 class Test创建手机类型对话:
     @classmethod
     def setup_class(cls):
