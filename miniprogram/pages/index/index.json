@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "文件预览下载",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "file-card": "/components/file-card/index",
+    "empty-state": "/components/empty-state/index"
+  }
+}

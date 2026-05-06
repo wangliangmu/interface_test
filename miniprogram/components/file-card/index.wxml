@@ -1,0 +1,22 @@
+<view class="file-card" bindtap="onTap">
+  <view class="file-card-icon">
+    <text class="icon-text">{{fileIcon}}</text>
+  </view>
+  <view class="file-card-content">
+    <view class="file-card-header">
+      <text class="file-card-title ellipsis">{{file.title}}</text>
+      <view class="tag tag-{{fileType}}" wx:if="{{typeLabel}}">{{typeLabel}}</view>
+    </view>
+    <text class="file-card-desc ellipsis-2" wx:if="{{file.description}}">{{file.description}}</text>
+    <view class="file-card-footer">
+      <view class="file-card-meta">
+        <text class="meta-item" wx:if="{{sizeText}}">{{sizeText}}</text>
+        <text class="meta-item" wx:if="{{file.pages}}">{{file.pages}}页</text>
+      </view>
+      <view class="file-card-price-wrap">
+        <view class="tag tag-purchased" wx:if="{{isPurchased}}">已购买</view>
+        <text class="file-card-price {{file.price === 0 ? 'free' : ''}}" wx:elif="{{file.price !== undefined}}">{{priceText}}</text>
+      </view>
+    </view>
+  </view>
+</view>

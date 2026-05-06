@@ -1,0 +1,163 @@
+page {
+  background-color: #F8F9FE;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: #2D3436;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+.container {
+  padding: 32rpx;
+  box-sizing: border-box;
+  min-height: 100vh;
+  background-color: #F8F9FE;
+}
+
+.card {
+  background-color: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.04);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #4F6EF7, #6C5CE7);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12rpx;
+  padding: 24rpx 48rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+.btn-danger {
+  background: #E17055;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12rpx;
+  padding: 24rpx 48rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-danger::after {
+  border: none;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #4F6EF7;
+  border: 2rpx solid #4F6EF7;
+  border-radius: 12rpx;
+  padding: 22rpx 48rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-outline::after {
+  border: none;
+}
+
+.text-primary {
+  color: #4F6EF7;
+}
+
+.text-secondary {
+  color: #636E72;
+}
+
+.text-success {
+  color: #00B894;
+}
+
+.text-warning {
+  color: #FDCB6E;
+}
+
+.text-danger {
+  color: #E17055;
+}
+
+.text-purple {
+  color: #6C5CE7;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 20rpx;
+  font-weight: 500;
+}
+
+.tag-pdf {
+  background-color: rgba(225, 112, 85, 0.1);
+  color: #E17055;
+}
+
+.tag-docx {
+  background-color: rgba(79, 110, 247, 0.1);
+  color: #4F6EF7;
+}
+
+.tag-purchased {
+  background-color: rgba(0, 184, 148, 0.1);
+  color: #00B894;
+}
+
+.divider {
+  height: 1rpx;
+  background-color: #E9ECF0;
+  margin: 24rpx 0;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flex-between {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ellipsis-2 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

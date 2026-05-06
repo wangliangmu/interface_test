@@ -1,0 +1,47 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/detail/index",
+    "pages/payment/index",
+    "pages/orders/index",
+    "pages/admin-login/index",
+    "pages/admin-dashboard/index",
+    "pages/admin-files/index",
+    "pages/admin-orders/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#4F6EF7",
+    "navigationBarTitleText": "文件预览下载",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F8F9FE"
+  },
+  "tabBar": {
+    "color": "#636E72",
+    "selectedColor": "#4F6EF7",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-active.png"
+      },
+      {
+        "pagePath": "pages/orders/index",
+        "text": "我的订单",
+        "iconPath": "images/order.png",
+        "selectedIconPath": "images/order-active.png"
+      },
+      {
+        "pagePath": "pages/admin-dashboard/index",
+        "text": "管理后台",
+        "iconPath": "images/admin.png",
+        "selectedIconPath": "images/admin-active.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}

@@ -1,0 +1,27 @@
+<view class="modal-mask" wx:if="{{show}}" bindtap="onMaskTap">
+  <view class="modal-container" catchtap="preventBubble">
+    <view class="modal-header">
+      <text class="modal-title">确认购买</text>
+      <view class="modal-close" bindtap="onCancel">
+        <text class="close-icon">✕</text>
+      </view>
+    </view>
+    <view class="modal-body">
+      <view class="pay-info">
+        <text class="pay-label">文件名称</text>
+        <text class="pay-value ellipsis">{{file.title}}</text>
+      </view>
+      <view class="pay-info">
+        <text class="pay-label">支付金额</text>
+        <text class="pay-price">{{priceText}}</text>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <view class="modal-btn btn-cancel" bindtap="onCancel">取消</view>
+      <view class="modal-btn btn-confirm {{loading ? 'disabled' : ''}}" bindtap="onConfirm">
+        <text wx:if="{{loading}}">支付中...</text>
+        <text wx:else>确认支付</text>
+      </view>
+    </view>
+  </view>
+</view>

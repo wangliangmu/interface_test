@@ -1,0 +1,23 @@
+{
+  "name": "wx-file-preview-server",
+  "version": "1.0.0",
+  "description": "WeChat Mini Program File Preview & Download Backend",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "multer": "^1.4.5-lts.1",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^9.4.3",
+    "uuid": "^9.0.0",
+    "crypto-js": "^4.2.0",
+    "helmet": "^7.1.0",
+    "express-rate-limit": "^7.1.5",
+    "dotenv": "^16.3.1"
+  }
+}
