@@ -3,7 +3,7 @@ import requests
 import json
 import re
 import time
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 
 BASE_URL = "https://metahuman-prod.wair.ac.cn"
 COMMON_HEADERS = [
@@ -31,7 +31,8 @@ def resolve_template(text, context):
     def replacer(match):
         var_name = match.group(1)
         if var_name.startswith("$date"):
-            return datetime.now().strftime("%m%d_%H%M")
+            beijing_time = datetime.now(timezone.utc) + timedelta(hours=8)
+            return beijing_time.strftime("%m%d_%H%M")
         if var_name in context:
             return str(context[var_name])
         return match.group(0)
