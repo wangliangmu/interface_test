@@ -186,7 +186,11 @@ class TestRunner:
         # 输出报告路径
         if args.html_report:
             report_file = self.reports_dir / f"report_{self.timestamp}.html"
-            logger.info(f"HTML 报告路径: {report_file}")
+            logger.info(f"详细报告路径: {report_file}")
+
+        summary_files = sorted(self.reports_dir.glob("summary_*.html"), key=lambda p: p.stat().st_mtime, reverse=True)
+        if summary_files:
+            logger.info(f"按类汇总报告: {summary_files[0]}")
 
         logger.info("=" * 80)
 
