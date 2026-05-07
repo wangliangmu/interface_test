@@ -6,6 +6,7 @@ import time
 from utils import resolve_template, resolve_dict, extract_json_path
 from config import BASE_URL, COMMON_HEADERS, DEFAULT_POLL_CONFIG
 
+@pytest.mark.dialog
 class Test创建网页类型对话3d数字人:
     @classmethod
     def setup_class(cls):
