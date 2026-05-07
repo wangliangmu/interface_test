@@ -38,7 +38,7 @@ COMMON_HEADERS = [
 ]
 
 DEFAULT_POLL_CONFIG = {
-    "max_retries": 60,
+    "max_retries": 120,
     "wait_interval": 5,
     "poll_expression": "$.data.status",
     "poll_expected_list": ["completed", "normal", "success"],
