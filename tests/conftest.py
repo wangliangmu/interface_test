@@ -91,7 +91,7 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
 
     from datetime import datetime
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-    report_path = os.path.join(reports_dir, f"api_test_report_{timestamp}.html")
+    report_path = os.path.join(reports_dir, f"api_test_summary_{timestamp}.html")
 
     total_classes = len(class_data)
     total_passed = sum(v["passed"] for v in class_data.values())

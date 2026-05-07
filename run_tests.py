@@ -74,9 +74,11 @@ class TestRunner:
             pytest_args.extend(["--reruns", str(args.rerun)])
             logger.info(f"失败重试次数: {args.rerun}")
 
-        # 生成 HTML 报告（由 conftest 自动生成按类汇总报告）
+        # 生成 HTML 详细报告（pytest-html，每个测试步骤的详细结果）
         if args.html_report:
-            logger.info(f"HTML 报告将自动生成到 reports/ 目录")
+            detail_file = self.reports_dir / f"api_test_detail_{self.timestamp}.html"
+            pytest_args.extend(["--html", str(detail_file), "--self-contained-html"])
+            logger.info(f"详细报告: {detail_file}")
 
         # 生成 JUnit XML 报告（CI 集成用）
         if args.junit:
@@ -184,9 +186,13 @@ class TestRunner:
             logger.error(f"结果: 未知退出码 {exit_code}")
 
         # 输出报告路径
-        report_files = sorted(self.reports_dir.glob("api_test_report_*.html"), key=lambda p: p.stat().st_mtime, reverse=True)
-        if report_files:
-            logger.info(f"测试报告: {report_files[0]}")
+        summary_files = sorted(self.reports_dir.glob("api_test_summary_*.html"), key=lambda p: p.stat().st_mtime, reverse=True)
+        if summary_files:
+            logger.info(f"汇总报告: {summary_files[0]}")
+
+        detail_files = sorted(self.reports_dir.glob("api_test_detail_*.html"), key=lambda p: p.stat().st_mtime, reverse=True)
+        if detail_files:
+            logger.info(f"详细报告: {detail_files[0]}")
 
         # 给日志文件添加 UTF-8 BOM（解决 Windows 记事本乱码）
         if self._log_file_path and os.path.isfile(self._log_file_path):
