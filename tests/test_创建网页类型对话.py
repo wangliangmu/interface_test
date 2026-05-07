@@ -1,75 +1,16 @@
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import pytest
 import requests
 import json
-import re
 import time
-from datetime import datetime, timezone, timedelta
 
-BASE_URL = "https://metahuman-prod.wair.ac.cn"
-COMMON_HEADERS = [
-    {
-        "name": "token",
-        "value": "{{token}}",
-        "enable": True
-    },
-    {
-        "name": "Authorization",
-        "value": "Bearer {{token}}",
-        "enable": True
-    },
-    {
-        "name": "auto-gen-qa-tasks_id",
-        "value": "{{auto-gen-qa-tasks_id}}",
-        "enable": True
-    }
-]
+from utils import resolve_template, resolve_dict, extract_json_path
+from config import BASE_URL, COMMON_HEADERS, DEFAULT_POLL_CONFIG
 
-
-def resolve_template(text, context):
-    if not isinstance(text, str):
-        return text
-    def replacer(match):
-        var_name = match.group(1)
-        if var_name.startswith("$date"):
-            beijing_time = datetime.now(timezone.utc) + timedelta(hours=8)
-            return beijing_time.strftime("%m%d_%H%M")
-        if var_name in context:
-            return str(context[var_name])
-        return match.group(0)
-    return re.sub(r'\{\{(\S+?)\}\}', replacer, text)
-
-
-def resolve_dict(d, context):
-    if isinstance(d, dict):
-        result = {}
-        for k, v in d.items():
-            if isinstance(v, str):
-                import re
-                match = re.search(r'\{\{(\w+)\}\}', v)
-                if match:
-                    var_name = match.group(1)
-                    result[k] = context.get(var_name, v)
-                else:
-                    result[k] = resolve_template(v, context)
-            else:
-                result[k] = resolve_dict(v, context)
-        return result
-    elif isinstance(d, list):
-        return [resolve_dict(v, context) for v in d]
-    elif isinstance(d, str):
-        return resolve_template(d, context)
-    return d
-
-
-def extract_json_path(data, path):
-    import jsonpath_ng
-    expr = jsonpath_ng.parse(path)
-    matches = expr.find(data)
-    if matches:
-        return matches[0].value
-    return None
-
-
+@pytest.mark.dialog
 class Test创建网页类型对话:
     @classmethod
     def setup_class(cls):
@@ -120,7 +61,7 @@ class Test创建网页类型对话:
 }
         headers = resolve_dict(headers, self.context)
         body = {
-    "name": "网页_接口测试",
+    "name": "网页_接口测试{{$date.now|format('MMdd_HHmm')}}",
     "type": "2d",
     "machine_type": 1,
     "scale": "16:9"
@@ -148,7 +89,7 @@ class Test创建网页类型对话:
 }
         headers = resolve_dict(headers, self.context)
         body = {
-    "_raw": "{\r\n    \"id\": {{dialogs_id}},\r\n    \"name\": \"网页_接口测试DATE_FORMAT_PLACEHOLDER\",\r\n    \"type\": \"2d\",\r\n    \"machine_type\": 1,\r\n    \"agent_type\": 1,\r\n    \"bot_id\": \"\",\r\n    \"create_time\": 1761113732,\r\n    \"update_time\": 1761113732,\r\n    \"scale\": \"16:9\",\r\n    \"human_id\": 2654,\r\n    \"voice_id\": 1440,\r\n    \"expand\": \"{\\\"bg\\\":{\\\"size\\\":{\\\"width\\\":1920,\\\"height\\\":1080}},\\\"human\\\":{\\\"position\\\":{\\\"x\\\":660,\\\"y\\\":7},\\\"scale\\\":{\\\"x\\\":1,\\\"y\\\":1},\\\"size\\\":{\\\"width\\\":600,\\\"height\\\":1067},\\\"source\\\":{\\\"id\\\":2654,\\\"path\\\":\\\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/origin/177/黛玉.png\\\"}},\\\"page\\\":[{\\\"id\\\":\\\"[drag]-human\\\",\\\"type\\\":\\\"Human\\\",\\\"visible\\\":True,\\\"style\\\":{\\\"x\\\":660,\\\"y\\\":7,\\\"scaleX\\\":1,\\\"scaleY\\\":1,\\\"width\\\":600,\\\"height\\\":1067,\\\"zIndex\\\":1},\\\"source\\\":{\\\"id\\\":2654,\\\"path\\\":\\\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/origin/177/黛玉.png\\\"}}],\\\"voice\\\":{\\\"source\\\":{\\\"id\\\":1440,\\\"name\\\":\\\"S_JM0DTk1B1\\\"}},\\\"actionMap\\\":{\\\"broadCast\\\":[388]}}\",\r\n    \"word_action\": \"\",\r\n    \"word_ssml\": \"\",\r\n    \"word\": \"你好，我是黛玉\",\r\n    \"cover_img\": \"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/233/580a927f-5bd5-4243-bd4c-dbfc69bc0f13.jpeg\",\r\n    \"speak_rate\": 0,\r\n    \"bg_path\": \"\",\r\n    \"bc_path\": \"\",\r\n    \"status\": \"normal\",\r\n    \"reason\": \"\",\r\n    \"is_default\": 1,\r\n    \"style\": 0,\r\n    \"knowledge_ids\": None,\r\n    \"nickname\": \"\",\r\n    \"temperature\": 0,\r\n    \"mark\": False,\r\n    \"backupChat\": False,\r\n    \"tipsText\": \"\",\r\n    \"chatMode\": 0,\r\n    \"isMulChat\": 2,\r\n    \"interaction\": \"{\\\"greet\\\":{\\\"hostess_mode\\\":True,\\\"welcome_wordlist\\\":[\\\"您好[称呼]，有什么可以帮您？\\\"],\\\"face_sourceid\\\":\\\"\\\"},\\\"revoke\\\":{\\\"wake_words\\\":\\\"你好小初\\\",\\\"covert_wake_words\\\":\\\"n ǐ h ǎo x iǎo ch ū @你好小初\\\"}}\"\r\n}"
+    "_raw": "{\r\n    \"id\": {{dialogs_id}},\r\n    \"name\": \"网页_接口测试{{$date.now|format('MMdd_HHmm')}}\",\r\n    \"type\": \"2d\",\r\n    \"machine_type\": 1,\r\n    \"agent_type\": 1,\r\n    \"bot_id\": \"\",\r\n    \"create_time\": 1761113732,\r\n    \"update_time\": 1761113732,\r\n    \"scale\": \"16:9\",\r\n    \"human_id\": 2654,\r\n    \"voice_id\": 1440,\r\n    \"expand\": \"{\\\"bg\\\":{\\\"size\\\":{\\\"width\\\":1920,\\\"height\\\":1080}},\\\"human\\\":{\\\"position\\\":{\\\"x\\\":660,\\\"y\\\":7},\\\"scale\\\":{\\\"x\\\":1,\\\"y\\\":1},\\\"size\\\":{\\\"width\\\":600,\\\"height\\\":1067},\\\"source\\\":{\\\"id\\\":2654,\\\"path\\\":\\\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/origin/177/黛玉.png\\\"}},\\\"page\\\":[{\\\"id\\\":\\\"[drag]-human\\\",\\\"type\\\":\\\"Human\\\",\\\"visible\\\":True,\\\"style\\\":{\\\"x\\\":660,\\\"y\\\":7,\\\"scaleX\\\":1,\\\"scaleY\\\":1,\\\"width\\\":600,\\\"height\\\":1067,\\\"zIndex\\\":1},\\\"source\\\":{\\\"id\\\":2654,\\\"path\\\":\\\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/origin/177/黛玉.png\\\"}}],\\\"voice\\\":{\\\"source\\\":{\\\"id\\\":1440,\\\"name\\\":\\\"S_JM0DTk1B1\\\"}},\\\"actionMap\\\":{\\\"broadCast\\\":[388]}}\",\r\n    \"word_action\": \"\",\r\n    \"word_ssml\": \"\",\r\n    \"word\": \"你好，我是黛玉\",\r\n    \"cover_img\": \"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/233/580a927f-5bd5-4243-bd4c-dbfc69bc0f13.jpeg\",\r\n    \"speak_rate\": 0,\r\n    \"bg_path\": \"\",\r\n    \"bc_path\": \"\",\r\n    \"status\": \"normal\",\r\n    \"reason\": \"\",\r\n    \"is_default\": 1,\r\n    \"style\": 0,\r\n    \"knowledge_ids\": None,\r\n    \"nickname\": \"\",\r\n    \"temperature\": 0,\r\n    \"mark\": False,\r\n    \"backupChat\": False,\r\n    \"tipsText\": \"\",\r\n    \"chatMode\": 0,\r\n    \"isMulChat\": 2,\r\n    \"interaction\": \"{\\\"greet\\\":{\\\"hostess_mode\\\":True,\\\"welcome_wordlist\\\":[\\\"您好[称呼]，有什么可以帮您？\\\"],\\\"face_sourceid\\\":\\\"\\\"},\\\"revoke\\\":{\\\"wake_words\\\":\\\"你好小初\\\",\\\"covert_wake_words\\\":\\\"n ǐ h ǎo x iǎo ch ū @你好小初\\\"},\\\"hotword\\\":{\\\"hotword_sourceid\\\":\\\"\\\"}}\",\r\n    \"actionType\": 0,\r\n    \"prompt\": \"\",\r\n    \"appConfig\": \"\",\r\n    \"difyBotId\": \"\"\r\n}"
 }
         body = resolve_dict(body, self.context)
         response = self.session.request(
@@ -179,4 +120,3 @@ class Test创建网页类型对话:
             headers=headers,
         )
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
-
