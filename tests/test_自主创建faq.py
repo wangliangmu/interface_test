@@ -56,7 +56,7 @@ class Test自主创建faq:
 }
         headers = resolve_dict(headers, self.context)
         body = {
-    "name": "接口测试"
+    "name": "接口测试{{$date.now|format('MMdd_HHmm')}}"
 }
         body = resolve_dict(body, self.context)
         response = self.session.request(
