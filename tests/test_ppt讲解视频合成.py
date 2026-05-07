@@ -48,7 +48,7 @@ class TestPpt讲解视频合成:
 
     def test_step_02_post_14_compose(self):
         self._apply_common_headers()
-        url = f"{BASE_URL}/appset/v1/ppt-video/drafts/14/compose"
+        url = f"{BASE_URL}/mammoth/v1/ppt-video/drafts/14/compose"
         url = resolve_template(url, self.context)
         headers = {}
         body = {
@@ -71,7 +71,7 @@ class TestPpt讲解视频合成:
 
     def test_step_04_get_pptvideo_taskspage_size1page1typeppttask_typev(self):
         self._apply_common_headers()
-        url = "https://metahuman-prod.wair.ac.cn/appset/v1/ppt-video/tasks?page_size=1&page=1&type=ppt&task_type=video_merge"
+        url = f"{BASE_URL}/mammoth/v1/ppt-video/tasks?page_size=1&page=1&type=ppt&task_type=video_merge"
         url = resolve_template(url, self.context)
         headers = {
     "priority": "u=1, i"
@@ -86,7 +86,7 @@ class TestPpt讲解视频合成:
 
     def test_step_05_delete_pptvideo_tasks(self):
         self._apply_common_headers()
-        url = f"{BASE_URL}/appset/v1/ppt-video/tasks/{{compose_id}}"
+        url = f"{BASE_URL}/mammoth/v1/ppt-video/tasks/{{compose_id}}"
         url = resolve_template(url, self.context)
         headers = {}
         response = self.session.request(
