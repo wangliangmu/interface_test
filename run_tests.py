@@ -73,11 +73,9 @@ class TestRunner:
             pytest_args.extend(["--reruns", str(args.rerun)])
             logger.info(f"失败重试次数: {args.rerun}")
 
-        # 生成 HTML 报告
+        # 生成 HTML 报告（由 conftest 自动生成按类汇总报告）
         if args.html_report:
-            report_file = self.reports_dir / f"report_{self.timestamp}.html"
-            pytest_args.extend(["--html", str(report_file), "--self-contained-html"])
-            logger.info(f"HTML 报告: {report_file}")
+            logger.info(f"HTML 报告将自动生成到 reports/ 目录")
 
         # 生成 JUnit XML 报告（CI 集成用）
         if args.junit:
@@ -87,9 +85,12 @@ class TestRunner:
 
         # 日志文件配置
         if args.log_file:
-            log_file = self.logs_dir / f"test_{self.timestamp}.log"
+            log_file = self.logs_dir / f"api_test_{self.timestamp}.log"
+            log_file_str = str(log_file)
+            with open(log_file_str, "w", encoding="utf-8-sig") as f:
+                f.write("")
             pytest_args.extend([
-                "--log-file", str(log_file),
+                "--log-file", log_file_str,
                 "--log-file-level", "DEBUG",
                 "--log-file-format", "%(asctime)s [%(levelname)s] %(name)s - %(message)s",
                 "--log-file-date-format", "%Y-%m-%d %H:%M:%S"
@@ -184,13 +185,9 @@ class TestRunner:
             logger.error(f"结果: 未知退出码 {exit_code}")
 
         # 输出报告路径
-        if args.html_report:
-            report_file = self.reports_dir / f"report_{self.timestamp}.html"
-            logger.info(f"详细报告路径: {report_file}")
-
-        summary_files = sorted(self.reports_dir.glob("summary_*.html"), key=lambda p: p.stat().st_mtime, reverse=True)
-        if summary_files:
-            logger.info(f"按类汇总报告: {summary_files[0]}")
+        report_files = sorted(self.reports_dir.glob("api_test_report_*.html"), key=lambda p: p.stat().st_mtime, reverse=True)
+        if report_files:
+            logger.info(f"测试报告: {report_files[0]}")
 
         logger.info("=" * 80)
 
