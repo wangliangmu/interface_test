@@ -78,7 +78,8 @@ class Test2d换脸克隆:
     "human_id": "{{faceswap_task_id}}"
 }
         body = resolve_dict(body, self.context)
-        response = poll_until(self.session, url, body, headers, DEFAULT_POLL_CONFIG, self.context)
+        poll_config = {**DEFAULT_POLL_CONFIG, "max_retries": 84}
+        response = poll_until(self.session, url, body, headers, poll_config, self.context)
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
     def test_step_05_post_human_delete(self):

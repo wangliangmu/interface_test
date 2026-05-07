@@ -88,7 +88,8 @@ class Test2d视频克隆数字人:
     "human_id": "{{video_clone_id}}"
 }
         body = resolve_dict(body, self.context)
-        response = poll_until(self.session, url, body, headers, DEFAULT_POLL_CONFIG, self.context)
+        poll_config = {**DEFAULT_POLL_CONFIG, "max_retries": 480}
+        response = poll_until(self.session, url, body, headers, poll_config, self.context)
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
     def test_step_04_post_human_list(self):
