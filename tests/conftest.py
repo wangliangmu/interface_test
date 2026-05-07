@@ -7,7 +7,6 @@ from config import BASE_URL, COMMON_HEADERS
 from utils import resolve_template, resolve_dict, extract_json_path, LoggingSession
 
 
-_class_results = {}
 _class_failed = {}
 
 
@@ -39,57 +38,70 @@ def pytest_runtest_makereport(item, call):
     report = outcome.get_result()
     if report.when != "call":
         return
-
-    class_name = item.cls.__name__ if item.cls else item.module.__name__
-    file_name = os.path.basename(str(item.module.__file__))
-    if class_name not in _class_results:
-        _class_results[class_name] = {
-            "file": file_name,
-            "passed": 0,
-            "failed": 0,
-            "skipped": 0,
-            "errors": 0,
-            "total": 0,
-            "failed_tests": [],
-        }
-    entry = _class_results[class_name]
-    entry["total"] += 1
-
-    if report.passed:
-        entry["passed"] += 1
-    elif report.failed:
-        entry["failed"] += 1
-        entry["failed_tests"].append(item.name)
-        if item.cls and class_name not in _class_failed:
+    if report.failed and item.cls:
+        class_name = item.cls.__name__
+        if class_name not in _class_failed:
             _class_failed[class_name] = item.name
-    elif report.skipped:
-        entry["skipped"] += 1
-
-    if hasattr(report, "longrepr") and report.longrepr:
-        if report.outcome == "error" or (report.failed and call.excinfo and call.excinfo.typename != "AssertionError"):
-            entry["errors"] += 1
 
 
-def pytest_sessionfinish(session, exitstatus):
-    if not _class_results:
+def pytest_terminal_summary(terminalreporter, exitstatus, config):
+    all_reports = terminalreporter.stats
+
+    class_data = {}
+    for status in ("passed", "failed", "skipped", "error"):
+        for report in all_reports.get(status, []):
+            if not hasattr(report, "nodeid") or "::" not in report.nodeid:
+                continue
+            parts = report.nodeid.split("::")
+            if len(parts) < 2:
+                continue
+            class_name = parts[1]
+            file_name = parts[0].split("/")[-1] if "/" in parts[0] else parts[0]
+            test_name = parts[-1] if len(parts) >= 3 else ""
+
+            if class_name not in class_data:
+                class_data[class_name] = {
+                    "file": file_name,
+                    "passed": 0,
+                    "failed": 0,
+                    "skipped": 0,
+                    "errors": 0,
+                    "total": 0,
+                    "failed_tests": [],
+                }
+            entry = class_data[class_name]
+            entry["total"] += 1
+
+            if status == "passed":
+                entry["passed"] += 1
+            elif status == "failed":
+                entry["failed"] += 1
+                if test_name:
+                    entry["failed_tests"].append(test_name)
+            elif status == "skipped":
+                entry["skipped"] += 1
+            elif status == "error":
+                entry["errors"] += 1
+
+    if not class_data:
         return
 
-    reports_dir = os.path.join(str(session.config.rootdir), "reports")
+    reports_dir = os.path.join(str(config.rootdir), "reports")
     os.makedirs(reports_dir, exist_ok=True)
 
     from datetime import datetime
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     report_path = os.path.join(reports_dir, f"summary_{timestamp}.html")
 
-    total_classes = len(_class_results)
-    total_passed = sum(v["passed"] for v in _class_results.values())
-    total_failed = sum(v["failed"] for v in _class_results.values())
-    total_skipped = sum(v["skipped"] for v in _class_results.values())
-    total_tests = sum(v["total"] for v in _class_results.values())
+    total_classes = len(class_data)
+    total_passed = sum(v["passed"] for v in class_data.values())
+    total_failed = sum(v["failed"] for v in class_data.values())
+    total_skipped = sum(v["skipped"] for v in class_data.values())
+    total_tests = sum(v["total"] for v in class_data.values())
     pass_rate = (total_passed / total_tests * 100) if total_tests > 0 else 0
 
     rows_html = ""
-    for idx, (cls_name, data) in enumerate(_class_results.items(), 1):
+    for idx, (cls_name, data) in enumerate(sorted(class_data.items()), 1):
         cls_pass_rate = (data["passed"] / data["total"] * 100) if data["total"] > 0 else 0
         status_class = "status-pass" if data["failed"] == 0 and data["errors"] == 0 else "status-fail"
         status_text = "通过" if data["failed"] == 0 and data["errors"] == 0 else "失败"
