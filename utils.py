@@ -26,12 +26,21 @@ def resolve_template(text: str, context: dict) -> str:
 def resolve_dict(d, context: dict):
     if isinstance(d, dict):
         result = {}
+        raw_value = None
         for k, v in d.items():
+            if k == '_raw' and isinstance(v, str):
+                processed = resolve_template(v, context)
+                processed = re.sub(r'\bTrue\b', 'true', processed)
+                processed = re.sub(r'\bFalse\b', 'false', processed)
+                processed = re.sub(r'\bNone\b', 'null', processed)
+                try:
+                    raw_value = json.loads(processed)
+                except (json.JSONDecodeError, ValueError):
+                    raw_value = processed
+                continue
             if isinstance(v, str):
                 processed = resolve_template(v, context)
-                # 如果原始值只是一个变量占位符，尝试把处理后的结果转换成合适的类型
                 if v.startswith('{{') and v.endswith('}}'):
-                    # 尝试把处理后的字符串转换为数字、布尔值等
                     try:
                         if processed.lower() == 'true':
                             result[k] = True
@@ -40,20 +49,22 @@ def resolve_dict(d, context: dict):
                         elif processed.lower() == 'null':
                             result[k] = None
                         else:
-                            # 先尝试解析成整数，再尝试解析成浮点数
                             if '.' in processed:
                                 result[k] = float(processed)
                             else:
                                 result[k] = int(processed)
                     except (ValueError, TypeError):
-                        # 如果转换失败，就保持字符串类型
                         result[k] = processed
                 else:
-                    # 对于像 _raw 这样的字段，它是内嵌的 JSON 字符串，也要处理其中的占位符
-                    # 但是要注意，处理后保持为字符串，不要转换为对象！
                     result[k] = processed
             else:
                 result[k] = resolve_dict(v, context)
+        if raw_value is not None:
+            if isinstance(raw_value, dict):
+                raw_value.update(result)
+                result = raw_value
+            else:
+                result['_raw'] = raw_value
         return result
     elif isinstance(d, list):
         return [resolve_dict(v, context) for v in d]
