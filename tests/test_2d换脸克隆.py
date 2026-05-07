@@ -69,7 +69,6 @@ class Test2d换脸克隆:
             self.context["faceswap_task_id"] = None
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
-    @pytest.mark.skip(reason="Task takes too long to complete, marked as skipped temporarily")
     def test_step_04_post_human_get(self):
         self._apply_common_headers()
         url = f"{BASE_URL}/metaman/api/asset/human/get"
