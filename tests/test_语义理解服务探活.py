@@ -21,7 +21,6 @@ class Test语义理解服务探活:
     def test_step_01_post_infer_11120(self):
         self._apply_common_headers()
         url = "https://platform-h20.wair.ac.cn/api/v1/infer/11120"
-        url = resolve_template(url, self.context)
         headers = {
     "Content-Type": "application/json"
 }
