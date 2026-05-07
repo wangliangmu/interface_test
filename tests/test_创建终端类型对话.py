@@ -85,7 +85,41 @@ class Test创建终端类型对话:
 }
         headers = resolve_dict(headers, self.context)
         body = {
-    "_raw": "{\r\n    \"id\": {{dialogs_id}},\r\n    \"name\": \"终端_接口测试DATE_FORMAT_PLACEHOLDER\",\r\n    \"type\": \"2d\",\r\n    \"machine_type\": 2,\r\n    \"agent_type\": 1,\r\n    \"bot_id\": \"\",\r\n    \"create_time\": 1764829391,\r\n    \"update_time\": 1764829391,\r\n    \"scale\": \"9:16\",\r\n    \"human_id\": 3726,\r\n    \"background_id\": 7850,\r\n    \"expand\": \"{\\\"bg\\\":{\\\"size\\\":{\\\"width\\\":1080,\\\"height\\\":1920},\\\"source\\\":{\\\"id\\\":7850,\\\"path\\\":\\\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/bg_image/177/46f18c65-9135-437f-ba0a-779d4a5365e0.png\\\"}},\\\"human\\\":{\\\"position\\\":{\\\"x\\\":-10,\\\"y\\\":30},\\\"scale\\\":{\\\"x\\\":1,\\\"y\\\":1},\\\"size\\\":{\\\"width\\\":1081,\\\"height\\\":1922},\\\"source\\\":{\\\"id\\\":3726,\\\"path\\\":\\\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/origin/177/小初.png\\\"}},\\\"page\\\":[{\\\"id\\\":\\\"[drag]-dialogue\\\",\\\"type\\\":\\\"Dialogue\\\",\\\"style\\\":{\\\"width\\\":984,\\\"height\\\":384,\\\"x\\\":48,\\\"y\\\":790,\\\"zIndex\\\":2,\\\"scaleX\\\":1,\\\"scaleY\\\":1,\\\"rotate\\\":0,\\\"_userBg\\\":\\\"#006AFF\\\",\\\"_userColor\\\":\\\"#fff\\\",\\\"_robotBg\\\":\\\"#FFFFFF\\\",\\\"_robotColor\\\":\\\"#222222\\\",\\\"_Type\\\":\\\"vertical\\\"}},{\\\"id\\\":\\\"[drag]-hotRequest\\\",\\\"type\\\":\\\"HotRequest\\\",\\\"style\\\":{\\\"width\\\":764,\\\"height\\\":80,\\\"x\\\":48,\\\"y\\\":124,\\\"zIndex\\\":2,\\\"backgroundColor\\\":\\\"rgba(26, 26, 26, 0.5)\\\",\\\"color\\\":\\\"#FFFFFF\\\",\\\"_Type\\\":\\\"horizontal\\\"}},{\\\"id\\\":\\\"[drag]-wifiStatus\\\",\\\"type\\\":\\\"WifiStatus\\\",\\\"visible\\\":True,\\\"style\\\":{\\\"width\\\":36,\\\"height\\\":36,\\\"x\\\":832,\\\"y\\\":48,\\\"zIndex\\\":2,\\\"color\\\":\\\"#FFFFFF\\\"}},{\\\"id\\\":\\\"[drag]-timeStatus\\\",\\\"type\\\":\\\"TimeStatus\\\",\\\"visible\\\":True,\\\"style\\\":{\\\"width\\\":180,\\\"height\\\":36,\\\"x\\\":876,\\\"y\\\":48,\\\"zIndex\\\":2,\\\"color\\\":\\\"#FFFFFF\\\"}},{\\\"id\\\":\\\"[drag]-camera\\\",\\\"type\\\":\\\"Camera\\\",\\\"style\\\":{\\\"width\\\":210,\\\"height\\\":274,\\\"x\\\":822,\\\"y\\\":124,\\\"zIndex\\\":2,\\\"_tipColor\\\":\\\"#000000\\\",\\\"_tipBgColor\\\":\\\"#FFFFFF\\\"}},{\\\"id\\\":\\\"[drag]-humanStatus\\\",\\\"type\\\":\\\"HumanStatus\\\",\\\"visible\\\":True,\\\"style\\\":{\\\"width\\\":272,\\\"height\\\":84,\\\"x\\\":404,\\\"y\\\":20,\\\"zIndex\\\":2,\\\"color\\\":\\\"#FFFFFF\\\",\\\"backgroundColor\\\":\\\"rgba(51, 51, 51, 0.7)\\\"},\\\"source\\\":{\\\"path\\\":\\\"https://taichu-publish-data.wair.ac.cn/metaman-web/create/images/temp_listen.png\\\"}},{\\\"id\\\":\\\"[drag]-image-logo\\\",\\\"type\\\":\\\"Image\\\",\\\"renderType\\\":\\\"image\\\",\\\"style\\\":{\\\"width\\\":176,\\\"height\\\":40,\\\"x\\\":48,\\\"y\\\":48,\\\"zIndex\\\":101},\\\"source\\\":{\\\"path\\\":\\\"https://taichu-publish-data.wair.ac.cn/metaman-web/create/images/temp_logo_dark2.png\\\"}},{\\\"id\\\":\\\"[drag]-changeBtn\\\",\\\"type\\\":\\\"ChangeBtn\\\",\\\"style\\\":{\\\"width\\\":100,\\\"height\\\":96,\\\"x\\\":932,\\\"y\\\":410,\\\"zIndex\\\":2,\\\"backgroundColor\\\":\\\"rgba(26, 26, 26, 0.5)\\\",\\\"color\\\":\\\"#FFFFFF\\\",\\\"_iconColor\\\":\\\"#FFFFFF\\\"}},{\\\"id\\\":\\\"[drag]-quitBtn\\\",\\\"type\\\":\\\"QuitBtn\\\",\\\"style\\\":{\\\"width\\\":100,\\\"height\\\":96,\\\"x\\\":820,\\\"y\\\":410,\\\"zIndex\\\":2,\\\"backgroundColor\\\":\\\"rgba(26, 26, 26, 0.5)\\\",\\\"color\\\":\\\"#FFFFFF\\\",\\\"_iconColor\\\":\\\"#FFFFFF\\\"}},{\\\"id\\\":\\\"[drag]-human\\\",\\\"type\\\":\\\"Human\\\",\\\"style\\\":{\\\"x\\\":-10,\\\"y\\\":30,\\\"scaleX\\\":1,\\\"scaleY\\\":1,\\\"width\\\":1081,\\\"height\\\":1922,\\\"zIndex\\\":1},\\\"source\\\":{\\\"id\\\":3726,\\\"path\\\":\\\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/origin/177/小初.png\\\"}}],\\\"voice\\\":{},\\\"actionMap\\\":{}}\",\r\n    \"word_action\": \"\",\r\n    \"word_ssml\": \"\",\r\n    \"word\": \"\",\r\n    \"cover_img\": \"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/233/45804bb0-5ab0-406a-9ae9-23b1dd824bfe.jpeg\",\r\n    \"speak_rate\": 0,\r\n    \"qa_id\": 0,\r\n    \"bg_path\": \"\",\r\n    \"bc_path\": \"\",\r\n    \"status\": \"normal\",\r\n    \"reason\": \"\",\r\n    \"is_default\": 2,\r\n    \"style\": 0,\r\n    \"knowledge_ids\": None,\r\n    \"nickname\": \"\",\r\n    \"temperature\": 0,\r\n    \"mark\": False,\r\n    \"backupChat\": False,\r\n    \"tipsText\": \"\",\r\n    \"chatMode\": 0,\r\n    \"isMulChat\": 0,\r\n    \"actionType\": 0,\r\n    \"prompt\": \"\",\r\n    \"interaction\": \"{\\\"greet\\\":{\\\"hostess_mode\\\":True,\\\"welcome_wordlist\\\":[\\\"您好[称呼]，有什么可以帮您？\\\"],\\\"face_sourceid\\\":\\\"\\\"},\\\"revoke\\\":{\\\"wake_words\\\":\\\"你好小初\\\",\\\"covert_wake_words\\\":\\\"n ǐ h ǎo x iǎo ch ū @你好小初\\\"}}\"\r\n}"
+    "id": "{{dialogs_id}}",
+    "name": "终端_接口测试{{$date.now|format('MMdd_HHmm')}}",
+    "type": "2d",
+    "machine_type": 2,
+    "agent_type": 1,
+    "bot_id": "",
+    "create_time": 1764829391,
+    "update_time": 1764829391,
+    "scale": "9:16",
+    "human_id": 3726,
+    "background_id": 7850,
+    "expand": "{\"bg\":{\"size\":{\"width\":1080,\"height\":1920},\"source\":{\"id\":7850,\"path\":\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/bg_image/177/46f18c65-9135-437f-ba0a-779d4a5365e0.png\"}},\"human\":{\"position\":{\"x\":-10,\"y\":30},\"scale\":{\"x\":1,\"y\":1},\"size\":{\"width\":1081,\"height\":1922},\"source\":{\"id\":3726,\"path\":\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/origin/177/小初.png\"}},\"page\":[{\"id\":\"[drag]-dialogue\",\"type\":\"Dialogue\",\"style\":{\"width\":984,\"height\":384,\"x\":48,\"y\":790,\"zIndex\":2,\"scaleX\":1,\"scaleY\":1,\"rotate\":0,\"_userBg\":\"#006AFF\",\"_userColor\":\"#fff\",\"_robotBg\":\"#FFFFFF\",\"_robotColor\":\"#222222\",\"_Type\":\"vertical\"}},{\"id\":\"[drag]-hotRequest\",\"type\":\"HotRequest\",\"style\":{\"width\":764,\"height\":80,\"x\":48,\"y\":124,\"zIndex\":2,\"backgroundColor\":\"rgba(26, 26, 26, 0.5)\",\"color\":\"#FFFFFF\",\"_Type\":\"horizontal\"}},{\"id\":\"[drag]-wifiStatus\",\"type\":\"WifiStatus\",\"visible\":true,\"style\":{\"width\":36,\"height\":36,\"x\":832,\"y\":48,\"zIndex\":2,\"color\":\"#FFFFFF\"}},{\"id\":\"[drag]-timeStatus\",\"type\":\"TimeStatus\",\"visible\":true,\"style\":{\"width\":180,\"height\":36,\"x\":876,\"y\":48,\"zIndex\":2,\"color\":\"#FFFFFF\"}},{\"id\":\"[drag]-camera\",\"type\":\"Camera\",\"style\":{\"width\":210,\"height\":274,\"x\":822,\"y\":124,\"zIndex\":2,\"_tipColor\":\"#000000\",\"_tipBgColor\":\"#FFFFFF\"}},{\"id\":\"[drag]-humanStatus\",\"type\":\"HumanStatus\",\"visible\":true,\"style\":{\"width\":272,\"height\":84,\"x\":404,\"y\":20,\"zIndex\":2,\"color\":\"#FFFFFF\",\"backgroundColor\":\"rgba(51, 51, 51, 0.7)\"},\"source\":{\"path\":\"https://taichu-publish-data.wair.ac.cn/metaman-web/create/images/temp_listen.png\"}},{\"id\":\"[drag]-image-logo\",\"type\":\"Image\",\"renderType\":\"image\",\"style\":{\"width\":176,\"height\":40,\"x\":48,\"y\":48,\"zIndex\":101},\"source\":{\"path\":\"https://taichu-publish-data.wair.ac.cn/metaman-web/create/images/temp_logo_dark2.png\"}},{\"id\":\"[drag]-changeBtn\",\"type\":\"ChangeBtn\",\"style\":{\"width\":100,\"height\":96,\"x\":932,\"y\":410,\"zIndex\":2,\"backgroundColor\":\"rgba(26, 26, 26, 0.5)\",\"color\":\"#FFFFFF\",\"_iconColor\":\"#FFFFFF\"}},{\"id\":\"[drag]-quitBtn\",\"type\":\"QuitBtn\",\"style\":{\"width\":100,\"height\":96,\"x\":820,\"y\":410,\"zIndex\":2,\"backgroundColor\":\"rgba(26, 26, 26, 0.5)\",\"color\":\"#FFFFFF\",\"_iconColor\":\"#FFFFFF\"}},{\"id\":\"[drag]-human\",\"type\":\"Human\",\"style\":{\"x\":-10,\"y\":30,\"scaleX\":1,\"scaleY\":1,\"width\":1081,\"height\":1922,\"zIndex\":1},\"source\":{\"id\":3726,\"path\":\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/origin/177/小初.png\"}}],\"voice\":{},\"actionMap\":{}}",
+    "word_action": "",
+    "word_ssml": "",
+    "word": "",
+    "cover_img": "https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/233/45804bb0-5ab0-406a-9ae9-23b1dd824bfe.jpeg",
+    "speak_rate": 0,
+    "qa_id": 0,
+    "bg_path": "",
+    "bc_path": "",
+    "status": "normal",
+    "reason": "",
+    "is_default": 2,
+    "style": 0,
+    "knowledge_ids": None,
+    "nickname": "",
+    "temperature": 0,
+    "mark": False,
+    "backupChat": False,
+    "tipsText": "",
+    "chatMode": 0,
+    "isMulChat": 0,
+    "actionType": 0,
+    "prompt": "",
+    "interaction": "{\"greet\":{\"hostess_mode\":true,\"welcome_wordlist\":[\"您好[称呼]，有什么可以帮您？\"],\"face_sourceid\":\"\"},\"revoke\":{\"wake_words\":\"你好小初\",\"covert_wake_words\":\"n ǐ h ǎo x iǎo ch ū @你好小初\"}}"
 }
         body = resolve_dict(body, self.context)
         response = self.session.request(
@@ -116,4 +150,3 @@ class Test创建终端类型对话:
             headers=headers,
         )
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
-
