@@ -8,6 +8,7 @@ from utils import resolve_template, resolve_dict, extract_json_path, LoggingSess
 
 
 _class_results = {}
+_class_failed = {}
 
 
 def pytest_configure(config):
@@ -21,6 +22,15 @@ def pytest_configure(config):
 
 def pytest_sessionstart(session):
     requests.Session = LoggingSession
+
+
+def pytest_runtest_setup(item):
+    if not item.cls:
+        return
+    class_name = item.cls.__name__
+    if class_name in _class_failed:
+        failed_step = _class_failed[class_name]
+        pytest.skip(f"前置步骤 {failed_step} 失败，跳过后续步骤")
 
 
 @pytest.hookimpl(hookwrapper=True)
@@ -50,6 +60,8 @@ def pytest_runtest_makereport(item, call):
     elif report.failed:
         entry["failed"] += 1
         entry["failed_tests"].append(item.name)
+        if item.cls and class_name not in _class_failed:
+            _class_failed[class_name] = item.name
     elif report.skipped:
         entry["skipped"] += 1
 
