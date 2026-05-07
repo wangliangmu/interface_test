@@ -59,7 +59,7 @@ class TestRunner:
 
         # 并行执行
         if args.parallel:
-            workers = args.workers if args.workers else "auto"
+            workers = args.workers if args.workers else "4"
             pytest_args.extend(["-n", workers, "--dist=loadscope"])
             logger.info(f"并行执行模式: {workers} 个 worker")
 
