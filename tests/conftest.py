@@ -2,7 +2,7 @@ import pytest
 import requests
 
 from config import BASE_URL, COMMON_HEADERS
-from utils import resolve_template, resolve_dict, extract_json_path
+from utils import resolve_template, resolve_dict, extract_json_path, LoggingSession
 
 
 def pytest_configure(config):
@@ -12,6 +12,10 @@ def pytest_configure(config):
     config.addinivalue_line("markers", "dialog: 对话创建测试")
     config.addinivalue_line("markers", "login: 登录测试")
     config.addinivalue_line("markers", "risk: 风控测试")
+
+
+def pytest_sessionstart(session):
+    requests.Session = LoggingSession
 
 
 @pytest.fixture(scope="session")

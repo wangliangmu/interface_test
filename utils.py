@@ -1,7 +1,69 @@
 import re
 import json
+import time
+import logging
 import jsonpath_ng
+import requests
 from datetime import datetime, timezone, timedelta
+
+logger = logging.getLogger("api_test")
+
+MAX_RESPONSE_LOG_LENGTH = 5000
+SENSITIVE_HEADER_KEYS = {"authorization", "token", "cookie", "set-cookie"}
+
+
+class LoggingSession(requests.Session):
+    def request(self, method, url, **kwargs):
+        logger.info("=" * 80)
+        logger.info("REQUEST >>> %s %s", method, url)
+
+        req_headers = kwargs.get("headers") or {}
+        if req_headers:
+            safe_headers = _mask_sensitive_headers(dict(req_headers))
+            logger.info("Request Headers:\n%s", json.dumps(safe_headers, ensure_ascii=False, indent=2))
+
+        req_json = kwargs.get("json")
+        req_data = kwargs.get("data")
+        if req_json is not None:
+            body_str = json.dumps(req_json, ensure_ascii=False, indent=2) if isinstance(req_json, (dict, list)) else str(req_json)
+            logger.info("Request Body:\n%s", body_str)
+        elif req_data is not None:
+            logger.info("Request Data:\n%s", str(req_data)[:MAX_RESPONSE_LOG_LENGTH])
+
+        start_time = time.time()
+        response = super().request(method, url, **kwargs)
+        elapsed_ms = (time.time() - start_time) * 1000
+
+        logger.info("RESPONSE <<< %s (耗时: %.0fms)", response.status_code, elapsed_ms)
+
+        resp_headers = dict(response.headers)
+        safe_resp_headers = _mask_sensitive_headers(resp_headers)
+        logger.info("Response Headers:\n%s", json.dumps(safe_resp_headers, ensure_ascii=False, indent=2))
+
+        try:
+            resp_json = response.json()
+            resp_str = json.dumps(resp_json, ensure_ascii=False, indent=2)
+            if len(resp_str) > MAX_RESPONSE_LOG_LENGTH:
+                resp_str = resp_str[:MAX_RESPONSE_LOG_LENGTH] + "\n... (截断，总长度: %d 字符)" % len(resp_str)
+            logger.info("Response Body:\n%s", resp_str)
+        except (json.JSONDecodeError, ValueError):
+            text = response.text[:MAX_RESPONSE_LOG_LENGTH]
+            logger.info("Response Body (text):\n%s", text)
+
+        logger.info("=" * 80)
+
+        return response
+
+
+def _mask_sensitive_headers(headers):
+    masked = {}
+    for k, v in headers.items():
+        if k.lower() in SENSITIVE_HEADER_KEYS:
+            val_str = str(v)
+            masked[k] = "****" + val_str[-4:] if len(val_str) > 4 else "****"
+        else:
+            masked[k] = v
+    return masked
 
 
 def resolve_template(text: str, context: dict) -> str:
@@ -87,9 +149,9 @@ def poll_until(session, url, body, headers, poll_config, context=None):
     poll_expression = poll_config.get("poll_expression", "$.data.status")
     expected_statuses = poll_config.get("poll_expected_list", ["completed", "normal", "success"])
     error_statuses = poll_config.get("error_statuses", ["failed", "error", "rejected", "timeout", "canceled"])
-    
+
     from time import sleep
-    
+
     for attempt in range(max_retries):
         response = session.request(
             method="POST",
@@ -97,30 +159,30 @@ def poll_until(session, url, body, headers, poll_config, context=None):
             json=body,
             headers=headers
         )
-        
+
         if response.status_code != 200:
-            print(f"Poll attempt {attempt+1}/{max_retries}: HTTP {response.status_code}")
+            logger.warning("Poll attempt %d/%d: HTTP %s", attempt + 1, max_retries, response.status_code)
             sleep(wait_interval)
             continue
-        
+
         try:
             data = response.json()
             current_status = extract_json_path(data, poll_expression)
-            
+
             if current_status in expected_statuses:
-                print(f"Poll attempt {attempt+1}/{max_retries}: Task completed successfully (status={current_status!r})")
+                logger.info("Poll attempt %d/%d: Task completed successfully (status=%r)", attempt + 1, max_retries, current_status)
                 return response
-            
+
             if current_status in error_statuses:
                 raise RuntimeError(f"Task failed with status: {current_status}")
-            
-            print(f"Poll attempt {attempt+1}/{max_retries}: Current status = {current_status!r}, waiting...")
-        
+
+            logger.info("Poll attempt %d/%d: Current status = %r, waiting...", attempt + 1, max_retries, current_status)
+
         except json.JSONDecodeError:
-            print(f"Poll attempt {attempt+1}/{max_retries}: Failed to parse JSON response")
+            logger.warning("Poll attempt %d/%d: Failed to parse JSON response", attempt + 1, max_retries)
         except Exception as e:
-            print(f"Poll attempt {attempt+1}/{max_retries}: Error - {str(e)}")
-        
+            logger.error("Poll attempt %d/%d: Error - %s", attempt + 1, max_retries, str(e))
+
         sleep(wait_interval)
-    
+
     raise TimeoutError(f"Polling timeout after {max_retries * wait_interval} seconds")
