@@ -15,8 +15,8 @@ def resolve_template(text: str, context: dict) -> str:
             return beijing_time.strftime("%m%d_%H%M")
         if var_name in context:
             value = context[var_name]
-            if isinstance(value, (int, float, bool)) and not isinstance(value, bool):
-                return str(value)
+            if value is None:
+                return ''
             return str(value)
         return match.group(0)
     

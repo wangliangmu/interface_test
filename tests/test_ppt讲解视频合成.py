@@ -53,7 +53,7 @@ class TestPpt讲解视频合成:
         headers = {}
         body = {
     "id": 14,
-    "name": "自动化接口测试",
+    "name": "PPT视频{{$date.now|format('MMdd_HHmm')}}",
     "quality": "1080P",
     "format": "MP4"
 }

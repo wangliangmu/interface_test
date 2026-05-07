@@ -53,7 +53,7 @@ class Test2d换脸克隆:
         url = resolve_template(url, self.context)
         headers = {}
         body = {
-    "name": "自动化接口测试",
+    "name": "2D换脸{{$date.now|format('MMdd_HHmm')}}",
     "path": "https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/photo/178/00abf0c3-c0ff-497f-ad4a-7da13799c927.jpg",
     "id": 3162
 }

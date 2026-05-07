@@ -53,7 +53,7 @@ class Test3d形象生成:
         url = resolve_template(url, self.context)
         headers = {}
         body = {
-    "name": "自动化接口测试",
+    "name": "3D形象{{$date.now|format('MMdd_HHmm')}}",
     "path": "https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/photo/233/1a30a0d5-8ded-4bd7-8209-9f9b3bccb8ea.png",
     "sex": "女",
     "server_type": "img2img"
