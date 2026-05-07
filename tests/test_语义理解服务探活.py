@@ -22,7 +22,8 @@ class Test语义理解服务探活:
         self._apply_common_headers()
         url = "https://platform-h20.wair.ac.cn/api/v1/infer/11120"
         headers = {
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    "Authorization": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJhZG1pbiJ9.j6-hUMaFYdSIzfc6i6TJ5DaS96Z9I78SrjxAOg-71yE"
 }
         headers = resolve_dict(headers, self.context)
         body = {
