@@ -84,7 +84,41 @@ class Test创建网页类型对话3d数字人:
 }
         headers = resolve_dict(headers, self.context)
         body = {
-    "_raw": "{\r\n    \"id\": {{dialogs_id}},\r\n    \"name\": \"网页_3d数字人DATE_FORMAT_PLACEHOLDER\",\r\n    \"type\": \"3d\",\r\n    \"machine_type\": 1,\r\n    \"agent_type\": 1,\r\n    \"bot_id\": \"\",\r\n    \"create_time\": 1764813728,\r\n    \"update_time\": 1764813728,\r\n    \"scale\": \"16:9\",\r\n    \"human_id\": 3756,\r\n    \"background_id\": 7809,\r\n    \"expand\": \"{\\\"bg\\\":{\\\"source\\\":{\\\"id\\\":7809,\\\"path\\\":\\\"https://publish-data.oss-cn-wuhan-lr.aliyuncs.com:443/metaman/bg_image/177/4d559d5b-b86d-412a-96d0-a270e8d9a679.png\\\"},\\\"size\\\":{\\\"width\\\":1920,\\\"height\\\":1080}},\\\"human\\\":{\\\"position\\\":{\\\"x\\\":660,\\\"y\\\":7},\\\"scale\\\":{\\\"x\\\":1,\\\"y\\\":1},\\\"size\\\":{\\\"width\\\":600,\\\"height\\\":1067},\\\"source\\\":{\\\"id\\\":3756,\\\"path\\\":\\\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/image/177/afd80d18-c1a4-4a41-b204-d8d119b8e15b.png\\\"}},\\\"page\\\":[{\\\"id\\\":\\\"[drag]-human\\\",\\\"type\\\":\\\"Human\\\",\\\"visible\\\":True,\\\"style\\\":{\\\"x\\\":660,\\\"y\\\":7,\\\"scaleX\\\":1,\\\"scaleY\\\":1,\\\"width\\\":600,\\\"height\\\":1067,\\\"zIndex\\\":1},\\\"source\\\":{\\\"id\\\":3756,\\\"path\\\":\\\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/image/177/afd80d18-c1a4-4a41-b204-d8d119b8e15b.png\\\"}}],\\\"voice\\\":{},\\\"actionMap\\\":{}}\",\r\n    \"word_action\": \"\",\r\n    \"word_ssml\": \"\",\r\n    \"word\": \"\",\r\n    \"cover_img\": \"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/233/1e7f1c6b-51b0-429a-9de5-0ac2558ea333.jpeg\",\r\n    \"speak_rate\": 0,\r\n    \"qa_id\": 0,\r\n    \"bg_path\": \"\",\r\n    \"bc_path\": \"\",\r\n    \"status\": \"normal\",\r\n    \"reason\": \"\",\r\n    \"is_default\": 2,\r\n    \"style\": 0,\r\n    \"knowledge_ids\": None,\r\n    \"nickname\": \"\",\r\n    \"temperature\": 0,\r\n    \"mark\": False,\r\n    \"backupChat\": False,\r\n    \"tipsText\": \"\",\r\n    \"chatMode\": 0,\r\n    \"isMulChat\": 0,\r\n    \"actionType\": 0,\r\n    \"prompt\": \"\",\r\n    \"interaction\": \"{\\\"greet\\\":{\\\"hostess_mode\\\":True,\\\"welcome_wordlist\\\":[\\\"您好[称呼]，有什么可以帮您？\\\"],\\\"face_sourceid\\\":\\\"\\\"},\\\"revoke\\\":{\\\"wake_words\\\":\\\"你好小初\\\",\\\"covert_wake_words\\\":\\\"n ǐ h ǎo x iǎo ch ū @你好小初\\\"}}\"\r\n}"
+    "id": "{{dialogs_id}}",
+    "name": "网页_3d数字人{{$date.now|format('MMdd_HHmm')}}",
+    "type": "3d",
+    "machine_type": 1,
+    "agent_type": 1,
+    "bot_id": "",
+    "create_time": 1764813728,
+    "update_time": 1764813728,
+    "scale": "16:9",
+    "human_id": 3756,
+    "background_id": 7809,
+    "expand": "{\"bg\":{\"source\":{\"id\":7809,\"path\":\"https://publish-data.oss-cn-wuhan-lr.aliyuncs.com:443/metaman/bg_image/177/4d559d5b-b86d-412a-96d0-a270e8d9a679.png\"},\"size\":{\"width\":1920,\"height\":1080}},\"human\":{\"position\":{\"x\":660,\"y\":7},\"scale\":{\"x\":1,\"y\":1},\"size\":{\"width\":600,\"height\":1067},\"source\":{\"id\":3756,\"path\":\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/image/177/afd80d18-c1a4-4a41-b204-d8d119b8e15b.png\"}},\"page\":[{\"id\":\"[drag]-human\",\"type\":\"Human\",\"visible\":true,\"style\":{\"x\":660,\"y\":7,\"scaleX\":1,\"scaleY\":1,\"width\":600,\"height\":1067,\"zIndex\":1},\"source\":{\"id\":3756,\"path\":\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/image/177/afd80d18-c1a4-4a41-b204-d8d119b8e15b.png\"}}],\"voice\":{},\"actionMap\":{}}",
+    "word_action": "",
+    "word_ssml": "",
+    "word": "",
+    "cover_img": "https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/233/1e7f1c6b-51b0-429a-9de5-0ac2558ea333.jpeg",
+    "speak_rate": 0,
+    "qa_id": 0,
+    "bg_path": "",
+    "bc_path": "",
+    "status": "normal",
+    "reason": "",
+    "is_default": 2,
+    "style": 0,
+    "knowledge_ids": None,
+    "nickname": "",
+    "temperature": 0,
+    "mark": False,
+    "backupChat": False,
+    "tipsText": "",
+    "chatMode": 0,
+    "isMulChat": 0,
+    "actionType": 0,
+    "prompt": "",
+    "interaction": "{\"greet\":{\"hostess_mode\":true,\"welcome_wordlist\":[\"您好[称呼]，有什么可以帮您？\"],\"face_sourceid\":\"\"},\"revoke\":{\"wake_words\":\"你好小初\",\"covert_wake_words\":\"n ǐ h ǎo x iǎo ch ū @你好小初\"}}"
 }
         body = resolve_dict(body, self.context)
         response = self.session.request(

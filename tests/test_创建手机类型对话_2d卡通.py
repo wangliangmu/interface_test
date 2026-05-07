@@ -84,7 +84,42 @@ class Test创建手机类型对话2d卡通:
 }
         headers = resolve_dict(headers, self.context)
         body = {
-    "_raw": "{\r\n    \"id\": {{dialogs_id}},\r\n    \"name\": \"手机_2D卡通DATE_FORMAT_PLACEHOLDER\",\r\n    \"type\": \"2d\",\r\n    \"machine_type\": 3,\r\n    \"agent_type\": 1,\r\n    \"bot_id\": \"\",\r\n    \"create_time\": 1776847245,\r\n    \"update_time\": 1776847245,\r\n    \"scale\": \"9:16\",\r\n    \"human_id\": 4642,\r\n    \"voice_id\": 0,\r\n    \"expand\": \"{\\\"bg\\\":{\\\"size\\\":{\\\"width\\\":1080,\\\"height\\\":1920}},\\\"human\\\":{\\\"position\\\":{\\\"x\\\":100,\\\"y\\\":178},\\\"scale\\\":{\\\"x\\\":1,\\\"y\\\":1},\\\"size\\\":{\\\"width\\\":880,\\\"height\\\":1564},\\\"source\\\":{\\\"id\\\":4642,\\\"path\\\":\\\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/background/cover/177/新春小马.png\\\"}},\\\"page\\\":[{\\\"id\\\":\\\"[drag]-human\\\",\\\"type\\\":\\\"Human\\\",\\\"visible\\\":True,\\\"style\\\":{\\\"x\\\":100,\\\"y\\\":178,\\\"scaleX\\\":1,\\\"scaleY\\\":1,\\\"width\\\":880,\\\"height\\\":1564,\\\"zIndex\\\":1},\\\"source\\\":{\\\"id\\\":4642,\\\"path\\\":\\\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/background/cover/177/新春小马.png\\\"}}],\\\"voice\\\":{},\\\"actionMap\\\":{},\\\"output_size\\\":{\\\"width\\\":1080,\\\"height\\\":1920}}\",\r\n    \"word_action\": \"\",\r\n    \"word_ssml\": \"\",\r\n    \"word\": \"\",\r\n    \"cover_img\": \"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/image/184/bf1da2f1-1821-4c6a-97eb-0d03c64f1ddd.jpeg\",\r\n    \"speak_rate\": 0,\r\n    \"bg_path\": \"\",\r\n    \"bc_path\": \"\",\r\n    \"status\": \"normal\",\r\n    \"reason\": \"\",\r\n    \"is_default\": 2,\r\n    \"style\": 0,\r\n    \"knowledge_ids\": None,\r\n    \"nickname\": \"\",\r\n    \"temperature\": 0,\r\n    \"mark\": False,\r\n    \"backupChat\": False,\r\n    \"tipsText\": \"\",\r\n    \"chatMode\": 0,\r\n    \"isMulChat\": 2,\r\n    \"actionType\": 0,\r\n    \"prompt\": \"\",\r\n    \"difyBotId\": \"\",\r\n    \"interaction\": \"{\\\"greet\\\":{\\\"hostess_mode\\\":True,\\\"welcome_wordlist\\\":[\\\"您好[称呼]，有什么可以帮您？\\\"],\\\"face_sourceid\\\":\\\"\\\"},\\\"revoke\\\":{\\\"wake_words\\\":\\\"你好小初\\\",\\\"covert_wake_words\\\":\\\"n ǐ h ǎo x iǎo ch ū @你好小初\\\"},\\\"hotword\\\":{\\\"hotword_sourceid\\\":\\\"\\\"}}\",\r\n    \"appConfig\": \"{}\"\r\n}"
+    "id": "{{dialogs_id}}",
+    "name": "手机_2D卡通{{$date.now|format('MMdd_HHmm')}}",
+    "type": "2d",
+    "machine_type": 3,
+    "agent_type": 1,
+    "bot_id": "",
+    "create_time": 1776847245,
+    "update_time": 1776847245,
+    "scale": "9:16",
+    "human_id": 4642,
+    "voice_id": 0,
+    "expand": "{\"bg\":{\"size\":{\"width\":1080,\"height\":1920}},\"human\":{\"position\":{\"x\":100,\"y\":178},\"scale\":{\"x\":1,\"y\":1},\"size\":{\"width\":880,\"height\":1564},\"source\":{\"id\":4642,\"path\":\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/background/cover/177/新春小马.png\"}},\"page\":[{\"id\":\"[drag]-human\",\"type\":\"Human\",\"visible\":true,\"style\":{\"x\":100,\"y\":178,\"scaleX\":1,\"scaleY\":1,\"width\":880,\"height\":1564,\"zIndex\":1},\"source\":{\"id\":4642,\"path\":\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/background/cover/177/新春小马.png\"}}],\"voice\":{},\"actionMap\":{},\"output_size\":{\"width\":1080,\"height\":1920}}",
+    "word_action": "",
+    "word_ssml": "",
+    "word": "",
+    "cover_img": "https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/image/184/bf1da2f1-1821-4c6a-97eb-0d03c64f1ddd.jpeg",
+    "speak_rate": 0,
+    "bg_path": "",
+    "bc_path": "",
+    "status": "normal",
+    "reason": "",
+    "is_default": 2,
+    "style": 0,
+    "knowledge_ids": None,
+    "nickname": "",
+    "temperature": 0,
+    "mark": False,
+    "backupChat": False,
+    "tipsText": "",
+    "chatMode": 0,
+    "isMulChat": 2,
+    "actionType": 0,
+    "prompt": "",
+    "difyBotId": "",
+    "interaction": "{\"greet\":{\"hostess_mode\":true,\"welcome_wordlist\":[\"您好[称呼]，有什么可以帮您？\"],\"face_sourceid\":\"\"},\"revoke\":{\"wake_words\":\"你好小初\",\"covert_wake_words\":\"n ǐ h ǎo x iǎo ch ū @你好小初\"},\"hotword\":{\"hotword_sourceid\":\"\"}}",
+    "appConfig": "{}"
 }
         body = resolve_dict(body, self.context)
         response = self.session.request(

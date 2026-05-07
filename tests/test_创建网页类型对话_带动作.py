@@ -84,7 +84,38 @@ class Test创建网页类型对话带动作:
 }
         headers = resolve_dict(headers, self.context)
         body = {
-    "_raw": "{\r\n    \"id\": {{dialogs_id}},\r\n    \"name\": \"网页_接口测试_带动作DATE_FORMAT_PLACEHOLDER\",\r\n    \"type\": \"2d\",\r\n    \"machine_type\": 1,\r\n    \"agent_type\": 1,\r\n    \"bot_id\": \"\",\r\n    \"create_time\": 1761287504,\r\n    \"update_time\": 1761287504,\r\n    \"scale\": \"16:9\",\r\n    \"human_id\": 2654,\r\n    \"expand\": \"{\\\"bg\\\":{\\\"size\\\":{\\\"width\\\":1920,\\\"height\\\":1080}},\\\"human\\\":{\\\"position\\\":{\\\"x\\\":660,\\\"y\\\":7},\\\"scale\\\":{\\\"x\\\":1,\\\"y\\\":1},\\\"size\\\":{\\\"width\\\":600,\\\"height\\\":1067},\\\"source\\\":{\\\"id\\\":2654,\\\"path\\\":\\\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/origin/177/黛玉.png\\\"}},\\\"page\\\":[{\\\"id\\\":\\\"[drag]-human\\\",\\\"type\\\":\\\"Human\\\",\\\"visible\\\":True,\\\"style\\\":{\\\"x\\\":660,\\\"y\\\":7,\\\"scaleX\\\":1,\\\"scaleY\\\":1,\\\"width\\\":600,\\\"height\\\":1067,\\\"zIndex\\\":1},\\\"source\\\":{\\\"id\\\":2654,\\\"path\\\":\\\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/origin/177/黛玉.png\\\"}}],\\\"voice\\\":{},\\\"actionMap\\\":{\\\"broadCast\\\":[326]}}\",\r\n    \"word_action\": \"\",\r\n    \"word_ssml\": \"\",\r\n    \"word\": \"\",\r\n    \"cover_img\": \"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/233/6af2deee-b1ab-45fd-9da0-cfbe5c8ed29d.jpeg\",\r\n    \"speak_rate\": 0,\r\n    \"qa_id\": 0,\r\n    \"bg_path\": \"\",\r\n    \"bc_path\": \"\",\r\n    \"status\": \"normal\",\r\n    \"reason\": \"\",\r\n    \"is_default\": 1,\r\n    \"style\": 0,\r\n    \"knowledge_ids\": None,\r\n    \"nickname\": \"\",\r\n    \"temperature\": 0,\r\n    \"mark\": False,\r\n    \"backupChat\": False,\r\n    \"tipsText\": \"\",\r\n    \"chatMode\": 0,\r\n    \"isMulChat\": 0,\r\n    \"interaction\": \"{\\\"greet\\\":{\\\"hostess_mode\\\":True,\\\"welcome_wordlist\\\":[\\\"您好[称呼]，有什么可以帮您？\\\"],\\\"face_sourceid\\\":\\\"\\\"},\\\"revoke\\\":{\\\"wake_words\\\":\\\"你好小初\\\",\\\"covert_wake_words\\\":\\\"n ǐ h ǎo x iǎo ch ū @你好小初\\\"}}\"\r\n}"
+    "id": "{{dialogs_id}}",
+    "name": "网页_接口测试_带动作{{$date.now|format('MMdd_HHmm')}}",
+    "type": "2d",
+    "machine_type": 1,
+    "agent_type": 1,
+    "bot_id": "",
+    "create_time": 1761287504,
+    "update_time": 1761287504,
+    "scale": "16:9",
+    "human_id": 2654,
+    "expand": "{\"bg\":{\"size\":{\"width\":1920,\"height\":1080}},\"human\":{\"position\":{\"x\":660,\"y\":7},\"scale\":{\"x\":1,\"y\":1},\"size\":{\"width\":600,\"height\":1067},\"source\":{\"id\":2654,\"path\":\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/origin/177/黛玉.png\"}},\"page\":[{\"id\":\"[drag]-human\",\"type\":\"Human\",\"visible\":true,\"style\":{\"x\":660,\"y\":7,\"scaleX\":1,\"scaleY\":1,\"width\":600,\"height\":1067,\"zIndex\":1},\"source\":{\"id\":2654,\"path\":\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/origin/177/黛玉.png\"}}],\"voice\":{},\"actionMap\":{\"broadCast\":[326]}}",
+    "word_action": "",
+    "word_ssml": "",
+    "word": "",
+    "cover_img": "https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/233/6af2deee-b1ab-45fd-9da0-cfbe5c8ed29d.jpeg",
+    "speak_rate": 0,
+    "qa_id": 0,
+    "bg_path": "",
+    "bc_path": "",
+    "status": "normal",
+    "reason": "",
+    "is_default": 1,
+    "style": 0,
+    "knowledge_ids": None,
+    "nickname": "",
+    "temperature": 0,
+    "mark": False,
+    "backupChat": False,
+    "tipsText": "",
+    "chatMode": 0,
+    "isMulChat": 0,
+    "interaction": "{\"greet\":{\"hostess_mode\":true,\"welcome_wordlist\":[\"您好[称呼]，有什么可以帮您？\"],\"face_sourceid\":\"\"},\"revoke\":{\"wake_words\":\"你好小初\",\"covert_wake_words\":\"n ǐ h ǎo x iǎo ch ū @你好小初\"}}"
 }
         body = resolve_dict(body, self.context)
         response = self.session.request(
