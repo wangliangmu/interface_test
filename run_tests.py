@@ -37,6 +37,7 @@ class TestRunner:
         self.reports_dir = self.project_root / "reports"
         self.logs_dir = self.project_root / "logs"
         self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        self._log_file_path = None
 
     def setup_directories(self):
         """创建必要的目录"""
@@ -86,11 +87,9 @@ class TestRunner:
         # 日志文件配置
         if args.log_file:
             log_file = self.logs_dir / f"api_test_{self.timestamp}.log"
-            log_file_str = str(log_file)
-            with open(log_file_str, "w", encoding="utf-8-sig") as f:
-                f.write("")
+            self._log_file_path = str(log_file)
             pytest_args.extend([
-                "--log-file", log_file_str,
+                "--log-file", self._log_file_path,
                 "--log-file-level", "DEBUG",
                 "--log-file-format", "%(asctime)s [%(levelname)s] %(name)s - %(message)s",
                 "--log-file-date-format", "%Y-%m-%d %H:%M:%S"
@@ -189,9 +188,24 @@ class TestRunner:
         if report_files:
             logger.info(f"测试报告: {report_files[0]}")
 
+        # 给日志文件添加 UTF-8 BOM（解决 Windows 记事本乱码）
+        if self._log_file_path and os.path.isfile(self._log_file_path):
+            self._add_utf8_bom(self._log_file_path)
+
         logger.info("=" * 80)
 
         return exit_code
+
+    @staticmethod
+    def _add_utf8_bom(file_path):
+        try:
+            with open(file_path, "rb") as f:
+                content = f.read()
+            if not content.startswith(b"\xef\xbb\xbf"):
+                with open(file_path, "wb") as f:
+                    f.write(b"\xef\xbb\xbf" + content)
+        except Exception:
+            pass
 
 
 def main():
