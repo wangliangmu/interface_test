@@ -85,8 +85,8 @@ class Test3d形象生成:
         body = {"human_id": "{{3d_id}}"}
         body = resolve_dict(body, self.context)
         
-        max_retries = 15
-        wait_interval = 60
+        max_retries = 22
+        wait_interval = 30
         response = None
         
         for attempt in range(max_retries):
@@ -102,7 +102,7 @@ class Test3d形象生成:
                 ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
                 
                 response_json = response.json()
-                status = extract_json_path(response_json, "$.data.status")
+                status = extract_json_path(response_json, "$.data.data.status")
                 
                 if status in ["normal", "failed"]:
                     break
@@ -123,7 +123,7 @@ class Test3d形象生成:
         
         try:
             response_json = response.json()
-            status = extract_json_path(response_json, "$.data.status")
+            status = extract_json_path(response_json, "$.data.data.status")
             assert (
                 status == "normal"
             ), f"Expected status 'normal', got '{status}': {response.text[:200]}"
