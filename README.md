@@ -12,12 +12,11 @@ interface_test/
 ├── pytest.ini          # pytest 配置文件
 ├── requirements.txt     # 项目依赖
 ├── .env.example         # 环境变量示例
-├── tests/              # 测试用例目录
-│   ├── conftest.py     # pytest fixtures 和钩子
-│   ├── test_*.py        # 各模块测试用例（26个）
-│   └── __init__.py
-├── reports/            # HTML 测试报告输出目录
-└── logs/               # 日志文件输出目录
+├── .gitignore           # Git 忽略配置
+└── tests/              # 测试用例目录
+    ├── conftest.py      # pytest fixtures 和钩子
+    ├── __init__.py
+    └── test_*.py         # 各模块测试用例（26个测试文件，105个测试函数）
 ```
 
 ## 快速开始
@@ -86,7 +85,7 @@ python run_tests.py --help
 | `login` | 登录测试 | 1 |
 | `risk` | 风控测试 | 1 |
 
-### 全部测试用例（共 26 个测试文件，103 个测试函数）
+### 全部测试用例（共 26 个测试文件，105 个测试函数）
 
 - `test_登录.py` - 登录接口测试
 - `test_首页接口测试.py` - 首页接口测试
