@@ -3,7 +3,7 @@ import requests
 import json
 import time
 
-from utils import resolve_template, resolve_dict, extract_json_path
+from utils import resolve_template, resolve_dict, extract_json_path, poll_until
 from config import BASE_URL, COMMON_HEADERS, DEFAULT_POLL_CONFIG
 
 @pytest.mark.dialog
@@ -144,11 +144,43 @@ class Test创建手机类型对话2d卡通:
     "id": "{{dialogs_id}}"
 }
         body = resolve_dict(body, self.context)
-        response = self.session.request(
-            method="POST",
-            url=url,
-            json=body,
-            headers=headers,
-        )
+        
+        max_retries = 18
+        wait_interval = 30
+        response = None
+        
+        for attempt in range(max_retries):
+            response = self.session.request(
+                method="POST",
+                url=url,
+                json=body,
+                headers=headers,
+            )
+            assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+            
+            try:
+                response_json = response.json()
+                status = extract_json_path(response_json, "$.data.data.status")
+                
+                if status in ["success", "failed"]:
+                    break
+                elif status == "producing":
+                    print(f"Status is 'producing', waiting {wait_interval} seconds...")
+                    time.sleep(wait_interval)
+                else:
+                    print(f"Unknown status: {status}, continuing to poll...")
+                    time.sleep(wait_interval)
+            except Exception as e:
+                print(f"Failed to parse status: {e}")
+                time.sleep(wait_interval)
+        
+        assert response is not None, "No response received after polling"
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        
+        try:
+            response_json = response.json()
+            status = extract_json_path(response_json, "$.data.data.status")
+            assert status == "success", f"Expected status 'success', got '{status}': {response.text[:200]}"
+        except Exception as e:
+            assert False, f"Failed to parse response or check status: {e}"
 

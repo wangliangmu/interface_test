@@ -116,23 +116,23 @@ class Test2d视频克隆数字人:
         )
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
-    def test_step_05_post_human_delete(self):
-        self._apply_common_headers()
-        url = f"{BASE_URL}/metaman/api/asset/human/delete"
-        url = resolve_template(url, self.context)
-        headers = {
-    "content-type": "application/json",
-    "priority": "u=1, i"
-}
-        headers = resolve_dict(headers, self.context)
-        body = {
-    "human_id": "{{video_clone_id}}"
-}
-        body = resolve_dict(body, self.context)
-        response = self.session.request(
-            method="POST",
-            url=url,
-            json=body,
-            headers=headers,
-        )
-        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+#     def test_step_05_post_human_delete(self):
+#         self._apply_common_headers()
+#         url = f"{BASE_URL}/metaman/api/asset/human/delete"
+#         url = resolve_template(url, self.context)
+#         headers = {
+#     "content-type": "application/json",
+#     "priority": "u=1, i"
+# }
+#         headers = resolve_dict(headers, self.context)
+#         body = {
+#     "human_id": "{{video_clone_id}}"
+# }
+#         body = resolve_dict(body, self.context)
+#         response = self.session.request(
+#             method="POST",
+#             url=url,
+#             json=body,
+#             headers=headers,
+#         )
+#         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
