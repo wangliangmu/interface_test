@@ -96,3 +96,4 @@ class Test创建语音聊天对话(BaseTest):
         body = {"id": ["{{dialogs_id}}"]}
         response = self._request("POST", url, json=body, headers=headers)
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.msg") == "Success", f"Expected msg=Success, got {response.text[:200]}"
