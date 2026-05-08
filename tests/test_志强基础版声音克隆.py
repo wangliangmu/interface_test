@@ -89,46 +89,42 @@ class Test志强基础版声音克隆:
 }
         body = resolve_dict(body, self.context)
         
-        max_retries = DEFAULT_POLL_CONFIG["max_retries"]
-        wait_interval = DEFAULT_POLL_CONFIG["wait_interval"]
-        poll_expression = DEFAULT_POLL_CONFIG["poll_expression"]
-        poll_expected_list = DEFAULT_POLL_CONFIG["poll_expected_list"]
-        error_statuses = DEFAULT_POLL_CONFIG["error_statuses"]
+        max_retries = 30
+        wait_interval = 20
+        response = None
         
         for attempt in range(max_retries):
-            response = self.session.request(
-                method="POST",
-                url=url,
-                json=body,
-                headers=headers,
-            )
-            
-            if response.status_code != 200:
-                print(f"Poll attempt {attempt+1}/{max_retries}: HTTP {response.status_code}")
-                time.sleep(wait_interval)
-                continue
-            
             try:
-                data = response.json()
-                actual_value = extract_json_path(data, poll_expression)
+                response = self.session.request(
+                    method="POST",
+                    url=url,
+                    json=body,
+                    headers=headers,
+                )
+                assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
                 
-                if actual_value in poll_expected_list:
-                    print(f"Poll attempt {attempt+1}/{max_retries}: Task completed successfully (status={actual_value!r})")
+                response_json = response.json()
+                status = extract_json_path(response_json, "$.data.data.status")
+                
+                if status in ["normal", "failed"]:
                     break
-                    
-                if actual_value in error_statuses:
-                    raise RuntimeError(f"Task failed with status: {actual_value}")
-                    
-                print(f"Poll attempt {attempt+1}/{max_retries}: Current status = {actual_value!r}, waiting...")
-                
-            except json.JSONDecodeError:
-                print(f"Poll attempt {attempt+1}/{max_retries}: Failed to parse JSON response")
+                elif status == "producing":
+                    print(f"Status is 'producing', waiting {wait_interval} seconds...")
+                    time.sleep(wait_interval)
+                else:
+                    print(f"Unknown status: {status}, continuing to poll...")
+                    time.sleep(wait_interval)
             except Exception as e:
-                print(f"Poll attempt {attempt+1}/{max_retries}: Error - {str(e)}")
-            
-            time.sleep(wait_interval)
-        else:
-            raise TimeoutError(f"Polling timeout after {max_retries * wait_interval} seconds")
+                print(f"Error occurred, skipping to next iteration: {e}")
+                time.sleep(wait_interval)
         
+        assert response is not None, "No response received after polling"
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        
+        try:
+            response_json = response.json()
+            status = extract_json_path(response_json, "$.data.data.status")
+            assert status == "normal", f"Expected status 'normal', got '{status}': {response.text[:200]}"
+        except Exception as e:
+            assert False, f"Failed to parse response or check status: {e}"
 
