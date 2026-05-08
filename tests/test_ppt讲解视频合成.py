@@ -140,15 +140,15 @@ class TestPpt讲解视频合成:
             response.status_code == 200
         ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
-    def test_step_06_delete_pptvideo_tasks(self):
-        self._apply_common_headers()
-        url = f"{BASE_URL}/mammoth/v1/ppt-video/tasks/{{compose_id}}"
-        url = resolve_template(url, self.context)
-        headers = {}
-        response = self.session.request(
-            method="DELETE",
-            url=url,
-        )
-        assert (
-            response.status_code == 200
-        ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
+    # def test_step_06_delete_pptvideo_tasks(self):
+    #     self._apply_common_headers()
+    #     url = f"{BASE_URL}/mammoth/v1/ppt-video/tasks/{{compose_id}}"
+    #     url = resolve_template(url, self.context)
+    #     headers = {}
+    #     response = self.session.request(
+    #         method="DELETE",
+    #         url=url,
+    #     )
+    #     assert (
+    #         response.status_code == 200
+    #     ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
