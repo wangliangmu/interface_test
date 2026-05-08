@@ -86,6 +86,8 @@ class Test创建语音聊天对话(BaseTest):
         }
         response = self._request("POST", url, json=body, headers=headers)
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.msg") == "Success", f"Expected msg=Success, got {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.data.channelInfo.status") == 1, f"Expected channelInfo.status=1, got {response.text[:200]}"
 
     def test_step_05_post_dialogs_delete(self):
         self._apply_common_headers()

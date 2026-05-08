@@ -21,3 +21,5 @@ class Test语义理解服务探活(BaseTest):
         }
         response = self._request("POST", url, json=body, headers=headers)
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.top_base_id") == 10000, f"Expected top_base_id=10000, got {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.status_message") == "ok", f"Expected status_message=ok, got {response.text[:200]}"

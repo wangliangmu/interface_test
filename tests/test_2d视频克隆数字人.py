@@ -80,3 +80,4 @@ class Test2d视频克隆数字人(BaseTest):
         body = {"page": 1, "page_size": 10, "org": 2, "type": 3}
         response = self._request("POST", url, json=body, headers=headers)
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.data.status") == "normal", f"Expected status=normal, got {response.text[:200]}"

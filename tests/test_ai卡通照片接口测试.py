@@ -45,3 +45,4 @@ class TestAi卡通照片接口测试(BaseTest):
 
         response = self._request("POST", url, json=body, headers=headers)
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.data.status") == "success", f"Expected status=success, got {response.text[:200]}"

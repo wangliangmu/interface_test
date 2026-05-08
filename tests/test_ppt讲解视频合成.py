@@ -77,3 +77,5 @@ class TestPpt讲解视频合成(BaseTest):
         headers = {"priority": "u=1, i"}
         response = self._request("GET", url, headers=headers)
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.data.list[0].id") == self.context.get("compose_id"), f"Expected list[0].id={{compose_id}}, got {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.data.list[0].status") == 2, f"Expected list[0].status=2, got {response.text[:200]}"
