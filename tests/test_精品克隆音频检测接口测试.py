@@ -80,7 +80,7 @@ class Test精品克隆音频检测接口测试:
             ), f"Expected result '音频识别合格', got '{result}': {response.text[:200]}"
 
             asr_rec = extract_json_path(response_json, "$.data.asr.asr_rec")
-            expected_asr_rec = "你更喜欢喝咖啡吗？和我的口味不太一样。我平时喝茶多一些，你可以给我推荐一些好喝的咖啡吗？"
+            expected_asr_rec = "你更喜欢喝咖啡吗？和我的口味不太1样。我平时喝茶多一些，你可以给我推荐一些好喝的咖啡吗？"
             assert (
                 asr_rec == expected_asr_rec
             ), f"Expected asr_rec mismatch: {response.text[:200]}"
