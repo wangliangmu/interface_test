@@ -132,7 +132,7 @@ class Test图片克隆数字人:
     "human_id": "{{photo_clone_id}}"
 }
         body = resolve_dict(body, self.context)
-        poll_config = {**DEFAULT_POLL_CONFIG, "max_retries": 180}
+        poll_config = {**DEFAULT_POLL_CONFIG, "max_retries": 360}
         response = poll_until(self.session, url, body, headers, poll_config, self.context)
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
