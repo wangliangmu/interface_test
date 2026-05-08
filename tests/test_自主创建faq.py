@@ -38,6 +38,7 @@ class Test自主创建faq(BaseTest):
         }
         response = self._request("POST", url, json=body, headers=headers)
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.data.id") is not None, f"Expected $.data.id to exist, got {response.text[:200]}"
 
     def test_step_04_post_qa_add(self):
         self._apply_common_headers()
@@ -52,6 +53,7 @@ class Test自主创建faq(BaseTest):
         }
         response = self._request("POST", url, json=body, headers=headers)
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.data.id") is not None, f"Expected $.data.id to exist, got {response.text[:200]}"
 
     def test_step_05_post_qa_add(self):
         self._apply_common_headers()
@@ -66,6 +68,7 @@ class Test自主创建faq(BaseTest):
         }
         response = self._request("POST", url, json=body, headers=headers)
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.data.id") is not None, f"Expected $.data.id to exist, got {response.text[:200]}"
 
     def test_step_06_get_excelfile_getdownloadUrl(self):
         self._apply_common_headers()
@@ -73,6 +76,8 @@ class Test自主创建faq(BaseTest):
         headers = {"priority": "u=1, i"}
         response = self._request("GET", url, headers=headers)
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.msg") == "Success", f"Expected $.msg=Success, got {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.data.url") is not None, f"Expected $.data.url to exist, got {response.text[:200]}"
 
     def test_step_07_post_excelfile_import(self):
         self._apply_common_headers()
@@ -84,6 +89,8 @@ class Test自主创建faq(BaseTest):
         }
         response = self._request("POST", url, json=body, headers=headers)
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.msg") == "Success", f"Expected $.msg=Success, got {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.data.total") == 6, f"Expected $.data.total=6, got {response.text[:200]}"
 
     def test_step_08_post_qa_list(self):
         self._apply_common_headers()
@@ -96,6 +103,7 @@ class Test自主创建faq(BaseTest):
         }
         response = self._request("POST", url, json=body, headers=headers)
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert extract_json_path(response.json(), "$.data.total") == 9, f"Expected $.data.total=9, got {response.text[:200]}"
 
     def test_step_09_post_knowledge_delete(self):
         self._apply_common_headers()
