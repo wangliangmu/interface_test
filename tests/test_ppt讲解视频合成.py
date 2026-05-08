@@ -6,6 +6,7 @@ import time
 from utils import resolve_template, resolve_dict, extract_json_path
 from config import BASE_URL, COMMON_HEADERS, DEFAULT_POLL_CONFIG
 
+
 @pytest.mark.ai
 class TestPpt讲解视频合成:
     @classmethod
@@ -23,17 +24,14 @@ class TestPpt讲解视频合成:
         self._apply_common_headers()
         url = f"{BASE_URL}/metaman/api/account/login"
         url = resolve_template(url, self.context)
-        headers = {
-    "content-type": "application/json",
-    "priority": "u=1, i"
-}
+        headers = {"content-type": "application/json", "priority": "u=1, i"}
         headers = resolve_dict(headers, self.context)
         body = {
-    "source": "show",
-    "username": "auto_test_jxm",
-    "password": "auto_test_jxm123",
-    "permission": "on"
-}
+            "source": "show",
+            "username": "auto_test_jxm",
+            "password": "auto_test_jxm123",
+            "permission": "on",
+        }
         body = resolve_dict(body, self.context)
         response = self.session.request(
             method="POST",
@@ -45,7 +43,9 @@ class TestPpt讲解视频合成:
             self.context["token"] = extract_json_path(response.json(), "$.data.token")
         except Exception:
             self.context["token"] = None
-        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert (
+            response.status_code == 200
+        ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
     def test_step_02_post_14_compose(self):
         self._apply_common_headers()
@@ -53,11 +53,11 @@ class TestPpt讲解视频合成:
         url = resolve_template(url, self.context)
         headers = {}
         body = {
-    "id": 14,
-    "name": "PPT视频{{$date.now|format('MMdd_HHmm')}}",
-    "quality": "1080P",
-    "format": "MP4"
-}
+            "id": 14,
+            "name": "PPT视频{{$date.now|format('MMdd_HHmm')}}",
+            "quality": "1080P",
+            "format": "MP4",
+        }
         body = resolve_dict(body, self.context)
         response = self.session.request(
             method="POST",
@@ -68,21 +68,21 @@ class TestPpt讲解视频合成:
             self.context["compose_id"] = extract_json_path(response.json(), "$.data.id")
         except Exception:
             self.context["compose_id"] = None
-        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert (
+            response.status_code == 200
+        ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
     def test_step_04_get_pptvideo_taskspage_size1page1typeppttask_typev(self):
         self._apply_common_headers()
         url = f"{BASE_URL}/mammoth/v1/ppt-video/tasks?page_size=1&page=1&type=ppt&task_type=video_merge"
         url = resolve_template(url, self.context)
-        headers = {
-    "priority": "u=1, i"
-}
+        headers = {"priority": "u=1, i"}
         headers = resolve_dict(headers, self.context)
-        
+
         max_retries = 36
         wait_interval = 10
         response = None
-        
+
         for attempt in range(max_retries):
             try:
                 response = self.session.request(
@@ -90,15 +90,19 @@ class TestPpt讲解视频合成:
                     url=url,
                     headers=headers,
                 )
-                assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
-                
+                assert (
+                    response.status_code == 200
+                ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
+
                 response_json = response.json()
                 status = extract_json_path(response_json, "$.data.list[0].status")
-                
+
                 if status in [2, 3]:
                     break
                 elif status == 1:
-                    print(f"Status is 1 (processing), waiting {wait_interval} seconds...")
+                    print(
+                        f"Status is 1 (processing), waiting {wait_interval} seconds..."
+                    )
                     time.sleep(wait_interval)
                 else:
                     print(f"Unknown status: {status}, continuing to poll...")
@@ -106,18 +110,37 @@ class TestPpt讲解视频合成:
             except Exception as e:
                 print(f"Error occurred, skipping to next iteration: {e}")
                 time.sleep(wait_interval)
-        
+
         assert response is not None, "No response received after polling"
-        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
-        
+        assert (
+            response.status_code == 200
+        ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
+
         try:
             response_json = response.json()
             status = extract_json_path(response_json, "$.data.list[0].status")
-            assert status == 2, f"Expected status 2 (success), got '{status}': {response.text[:200]}"
+            assert (
+                status == 2
+            ), f"Expected status 2 (success), got '{status}': {response.text[:200]}"
         except Exception as e:
             assert False, f"Failed to parse response or check status: {e}"
 
-    def test_step_05_delete_pptvideo_tasks(self):
+    def test_step_05_get_pptvideo_taskspage_size1page1typeppttask_typev(self):
+        self._apply_common_headers()
+        url = f"{BASE_URL}/mammoth/v1/ppt-video/tasks?page_size=1&page=1&type=ppt&task_type=video_merge"
+        url = resolve_template(url, self.context)
+        headers = {"priority": "u=1, i"}
+        headers = resolve_dict(headers, self.context)
+        response = self.session.request(
+            method="GET",
+            url=url,
+            headers=headers,
+        )
+        assert (
+            response.status_code == 200
+        ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
+
+    def test_step_06_delete_pptvideo_tasks(self):
         self._apply_common_headers()
         url = f"{BASE_URL}/mammoth/v1/ppt-video/tasks/{{compose_id}}"
         url = resolve_template(url, self.context)
@@ -126,5 +149,6 @@ class TestPpt讲解视频合成:
             method="DELETE",
             url=url,
         )
-        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
-
+        assert (
+            response.status_code == 200
+        ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
