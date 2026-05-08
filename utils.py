@@ -5,11 +5,16 @@ import logging
 import jsonpath_ng
 import requests
 from datetime import datetime, timezone, timedelta
+from functools import wraps
 
 logger = logging.getLogger("api_test")
 
 MAX_RESPONSE_LOG_LENGTH = 5000
 SENSITIVE_HEADER_KEYS = {"authorization", "token", "cookie", "set-cookie"}
+
+RETRY_STATUS_CODES = {500, 502, 503, 504}
+DEFAULT_RETRY_COUNT = 3
+DEFAULT_RETRY_DELAY = 5
 
 
 class LoggingSession(requests.Session):
@@ -141,6 +146,61 @@ def extract_json_path(data, path: str):
     if matches:
         return matches[0].value
     return None
+
+
+def retry_on_server_errors(max_retries=DEFAULT_RETRY_COUNT, delay=DEFAULT_RETRY_DELAY):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            last_exception = None
+            for attempt in range(max_retries):
+                try:
+                    response = func(*args, **kwargs)
+                    if response.status_code in RETRY_STATUS_CODES:
+                        logger.warning(f"请求失败，HTTP状态码 {response.status_code}，第 {attempt + 1}/{max_retries} 次尝试")
+                        last_exception = Exception(f"HTTP {response.status_code}: {response.text[:200]}")
+                        time.sleep(delay * (2 ** attempt))
+                        continue
+                    return response
+                except requests.exceptions.RequestException as e:
+                    logger.warning(f"请求异常: {e}，第 {attempt + 1}/{max_retries} 次尝试")
+                    last_exception = e
+                    time.sleep(delay * (2 ** attempt))
+
+            logger.error(f"请求失败，已重试 {max_retries} 次")
+            if last_exception:
+                raise last_exception
+            raise Exception(f"请求失败，已重试 {max_retries} 次")
+        return wrapper
+    return decorator
+
+
+class RetrySession(requests.Session):
+    def __init__(self, max_retries=DEFAULT_RETRY_COUNT, delay=DEFAULT_RETRY_DELAY):
+        super().__init__()
+        self.max_retries = max_retries
+        self.delay = delay
+
+    def request(self, method, url, **kwargs):
+        last_exception = None
+        for attempt in range(self.max_retries):
+            try:
+                response = super().request(method, url, **kwargs)
+                if response.status_code in RETRY_STATUS_CODES:
+                    logger.warning(f"请求失败，HTTP状态码 {response.status_code}，第 {attempt + 1}/{self.max_retries} 次尝试")
+                    last_exception = Exception(f"HTTP {response.status_code}: {response.text[:200]}")
+                    time.sleep(self.delay * (2 ** attempt))
+                    continue
+                return response
+            except requests.exceptions.RequestException as e:
+                logger.warning(f"请求异常: {e}，第 {attempt + 1}/{self.max_retries} 次尝试")
+                last_exception = e
+                time.sleep(self.delay * (2 ** attempt))
+
+        logger.error(f"请求失败，已重试 {self.max_retries} 次")
+        if last_exception:
+            raise last_exception
+        raise Exception(f"请求失败，已重试 {self.max_retries} 次")
 
 
 def poll_until(session, url, body, headers, poll_config, context=None):

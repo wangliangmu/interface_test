@@ -1,3 +1,4 @@
+import logging
 import os
 import html as html_lib
 import pytest
@@ -6,6 +7,7 @@ import requests
 from config import BASE_URL, COMMON_HEADERS
 from utils import resolve_template, resolve_dict, extract_json_path, LoggingSession
 
+logger = logging.getLogger("api_test")
 
 _class_failed = {}
 
@@ -234,7 +236,7 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
     with open(report_path, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    print(f"\n按类汇总报告: {report_path}")
+    logger.info(f"\n按类汇总报告: {report_path}")
 
 
 @pytest.fixture(scope="session")
