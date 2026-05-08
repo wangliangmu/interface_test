@@ -131,9 +131,19 @@ class TestRunner:
         # 构建 pytest 命令
         pytest_args = self.build_pytest_args(args)
 
-        # 添加 pythonpath
+        # 添加环境变量
         env = os.environ.copy()
         env["PYTHONPATH"] = str(self.project_root)
+        
+        # 根据选择的环境设置 API_BASE_URL
+        env_configs = {
+            "prod": "https://metahuman-prod.wair.ac.cn",
+            "staging": "https://metahuman-staging.wair.ac.cn",
+            "dev": "http://47.122.125.208:51064",
+        }
+        api_base_url = env_configs.get(args.env, env_configs["prod"])
+        env["API_BASE_URL"] = api_base_url
+        logger.info(f"测试环境: {args.env} ({api_base_url})")
 
         logger.info("=" * 80)
         logger.info("开始执行接口测试")
@@ -221,8 +231,11 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 示例用法:
-  # 运行所有测试（默认配置）
+  # 运行所有测试（默认配置，prod环境）
   python run_tests.py
+
+  # 指定运行环境（dev/staging/prod）
+  python run_tests.py --env dev
 
   # 并行执行所有测试
   python run_tests.py -p
@@ -244,7 +257,18 @@ def main():
 
   # 详细输出模式
   python run_tests.py -vv
+
+  # 完整示例：在dev环境运行AI测试，并行执行，生成报告
+  python run_tests.py --env dev -m ai -p --html --log
         """
+    )
+
+    # 环境选择
+    parser.add_argument(
+        "-e", "--env",
+        choices=["dev", "staging", "prod"],
+        default="prod",
+        help="指定测试环境（dev/staging/prod），默认 prod"
     )
 
     # 测试选择
