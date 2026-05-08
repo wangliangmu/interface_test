@@ -189,4 +189,10 @@ class Test2d离线播报数字人:
             headers=headers,
         )
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        try:
+            response_json = response.json()
+            status = extract_json_path(response_json, "$.data.status")
+            assert status == "normal", f"Expected status 'normal', got '{status}': {response.text[:200]}"
+        except Exception as e:
+            assert False, f"Failed to parse response or check status: {e}"
 
