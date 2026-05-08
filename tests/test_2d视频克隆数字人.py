@@ -55,6 +55,10 @@ class Test2d视频克隆数字人(BaseTest):
                 response_json = response.json()
                 status = extract_json_path(response_json, "$.data.status")
 
+                if status is None:
+                    logger.error(f"无法提取 status 字段，响应: {response.text[:500]}")
+                    pytest.fail(f"无法提取 status 字段，响应: {response.text[:500]}")
+
                 if status in ["normal", "failed"]:
                     break
                 elif status == "producing":

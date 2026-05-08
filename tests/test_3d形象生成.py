@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import logging
@@ -34,7 +35,9 @@ class Test3d形象生成(BaseTest):
             logger.info(f"创建3D形象任务成功，任务ID: {self.context['3d_id']}")
         except Exception:
             self.context["3d_id"] = None
-        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert (
+            response.status_code == 200
+        ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
     def test_step_04_post_human_get(self):
         self._apply_common_headers()
@@ -49,10 +52,16 @@ class Test3d形象生成(BaseTest):
         for attempt in range(max_retries):
             try:
                 response = self._request("POST", url, json=body, headers=headers)
-                assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+                assert (
+                    response.status_code == 200
+                ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
                 response_json = response.json()
-                status = extract_json_path(response_json, "$.data.data.status")
+                status = extract_json_path(response_json, "$.data.status")
+
+                if status is None:
+                    logger.error(f"无法提取 status 字段，响应: {response.text[:500]}")
+                    pytest.fail(f"无法提取 status 字段，响应: {response.text[:500]}")
 
                 if status in ["normal", "failed"]:
                     break
@@ -67,11 +76,15 @@ class Test3d形象生成(BaseTest):
                 time.sleep(wait_interval)
 
         assert response is not None, "轮询后未收到响应"
-        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert (
+            response.status_code == 200
+        ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
         try:
             response_json = response.json()
-            status = extract_json_path(response_json, "$.data.data.status")
-            assert status == "normal", f"期望状态 'normal'，实际状态 '{status}': {response.text[:200]}"
+            status = extract_json_path(response_json, "$.data.status")
+            assert (
+                status == "normal"
+            ), f"期望状态 'normal'，实际状态 '{status}': {response.text[:200]}"
         except Exception as e:
             assert False, f"解析响应或检查状态失败: {e}"

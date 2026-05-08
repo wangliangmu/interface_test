@@ -1,5 +1,6 @@
 import sys
 from pathlib import Path
+
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import logging
@@ -27,7 +28,7 @@ class Test创建手机类型对话2d卡通(BaseTest):
             "name": "手机_2D卡通{{$date.now|format('MMdd_HHmm')}}",
             "type": "2d",
             "machine_type": 3,
-            "scale": "9:16"
+            "scale": "9:16",
         }
         response = self._request("POST", url, json=body, headers=headers)
         try:
@@ -35,7 +36,9 @@ class Test创建手机类型对话2d卡通(BaseTest):
             logger.info(f"创建手机2D卡通对话成功，对话ID: {self.context['dialogs_id']}")
         except Exception:
             self.context["dialogs_id"] = None
-        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert (
+            response.status_code == 200
+        ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
     def test_step_03_post_dialogs_edit(self):
         self._apply_common_headers()
@@ -53,7 +56,7 @@ class Test创建手机类型对话2d卡通(BaseTest):
             "scale": "9:16",
             "human_id": 4642,
             "voice_id": 0,
-            "expand": "{\"bg\":{\"size\":{\"width\":1080,\"height\":1920}},\"human\":{\"position\":{\"x\":100,\"y\":178},\"scale\":{\"x\":1,\"y\":1},\"size\":{\"width\":880,\"height\":1564},\"source\":{\"id\":4642,\"path\":\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/background/cover/177/新春小马.png\"}},\"page\":[{\"id\":\"[drag]-human\",\"type\":\"Human\",\"visible\":true,\"style\":{\"x\":100,\"y\":178,\"scaleX\":1,\"scaleY\":1,\"width\":880,\"height\":1564,\"zIndex\":1},\"source\":{\"id\":4642,\"path\":\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/background/cover/177/新春小马.png\"}}],\"voice\":{},\"actionMap\":{},\"output_size\":{\"width\":1080,\"height\":1920}}",
+            "expand": '{"bg":{"size":{"width":1080,"height":1920}},"human":{"position":{"x":100,"y":178},"scale":{"x":1,"y":1},"size":{"width":880,"height":1564},"source":{"id":4642,"path":"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/background/cover/177/新春小马.png"}},"page":[{"id":"[drag]-human","type":"Human","visible":true,"style":{"x":100,"y":178,"scaleX":1,"scaleY":1,"width":880,"height":1564,"zIndex":1},"source":{"id":4642,"path":"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/background/cover/177/新春小马.png"}}],"voice":{},"actionMap":{},"output_size":{"width":1080,"height":1920}}',
             "word_action": "",
             "word_ssml": "",
             "word": "",
@@ -76,11 +79,13 @@ class Test创建手机类型对话2d卡通(BaseTest):
             "actionType": 0,
             "prompt": "",
             "difyBotId": "",
-            "interaction": "{\"greet\":{\"hostess_mode\":true,\"welcome_wordlist\":[\"您好[称呼]，有什么可以帮您？\"],\"face_sourceid\":\"\"},\"revoke\":{\"wake_words\":\"你好小初\",\"covert_wake_words\":\"n ǐ h ǎo x iǎo ch ū @你好小初\"},\"hotword\":{\"hotword_sourceid\":\"\"}}",
-            "appConfig": "{}"
+            "interaction": '{"greet":{"hostess_mode":true,"welcome_wordlist":["您好[称呼]，有什么可以帮您？"],"face_sourceid":""},"revoke":{"wake_words":"你好小初","covert_wake_words":"n ǐ h ǎo x iǎo ch ū @你好小初"},"hotword":{"hotword_sourceid":""}}',
+            "appConfig": "{}",
         }
         response = self._request("POST", url, json=body, headers=headers)
-        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert (
+            response.status_code == 200
+        ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
     def test_step_05_post_dialogs_get(self):
         self._apply_common_headers()
@@ -94,11 +99,17 @@ class Test创建手机类型对话2d卡通(BaseTest):
 
         for attempt in range(max_retries):
             response = self._request("POST", url, json=body, headers=headers)
-            assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+            assert (
+                response.status_code == 200
+            ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
             try:
                 response_json = response.json()
-                status = extract_json_path(response_json, "$.data.data.status")
+                status = extract_json_path(response_json, "$.data.status")
+
+                if status is None:
+                    logger.error(f"无法提取 status 字段，响应: {response.text[:500]}")
+                    pytest.fail(f"无法提取 status 字段，响应: {response.text[:500]}")
 
                 if status in ["success", "failed"]:
                     break
@@ -113,11 +124,15 @@ class Test创建手机类型对话2d卡通(BaseTest):
                 time.sleep(wait_interval)
 
         assert response is not None, "轮询后未收到响应"
-        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+        assert (
+            response.status_code == 200
+        ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
         try:
             response_json = response.json()
-            status = extract_json_path(response_json, "$.data.data.status")
-            assert status == "success", f"期望状态 'success'，实际状态 '{status}': {response.text[:200]}"
+            status = extract_json_path(response_json, "$.data.status")
+            assert (
+                status == "success"
+            ), f"期望状态 'success'，实际状态 '{status}': {response.text[:200]}"
         except Exception as e:
             assert False, f"解析响应或检查状态失败: {e}"
