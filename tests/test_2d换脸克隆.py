@@ -30,9 +30,7 @@ class Test2d换脸克隆(BaseTest):
             self.context["faceswap_task_id"] = extract_json_path(response.json(), "$.data.id")
             logger.info(f"创建换脸任务成功，任务ID: {self.context['faceswap_task_id']}")
         except Exception:
-            sel(
-            f.context["faceswap_task_id
-        )"] = None
+            self.context["faceswap_task_id"] = None
         assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
     def test_step_04_post_human_get(self):
@@ -46,7 +44,7 @@ class Test2d换脸克隆(BaseTest):
 
         for attempt in range(max_retries):
             response = self._request("POST", url, json=body)
-            assert response.status_co,de == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
+            assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
 
             try:
                 response_json = response.json()
