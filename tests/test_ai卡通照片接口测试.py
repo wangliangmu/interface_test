@@ -91,7 +91,7 @@ class TestAi卡通照片接口测试:
         body = {"id": "{{img2img_id}}"}
         body = resolve_dict(body, self.context)
 
-        wait_seconds = 600
+        wait_seconds = 60
         print(f"Waiting {wait_seconds} seconds for AI cartoon photo generation...")
         time.sleep(wait_seconds)
 
