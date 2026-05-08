@@ -7,7 +7,7 @@ import time
 
 import pytest
 
-from base_test import BaseTest
+from .base_test import BaseTest
 from config import BASE_URL
 from utils import extract_json_path
 

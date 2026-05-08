@@ -5,7 +5,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 import logging
 import pytest
 
-from base_test import BaseTest
+from .base_test import BaseTest
 from utils import extract_json_path
 
 logger = logging.getLogger("api_test")

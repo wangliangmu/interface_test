@@ -6,7 +6,7 @@ import logging
 
 import pytest
 
-from base_test import BaseTest
+from .base_test import BaseTest
 from config import BASE_URL
 
 logger = logging.getLogger("api_test")
