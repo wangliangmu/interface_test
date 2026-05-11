@@ -2,12 +2,13 @@
 """
 接口测试统一入口文件
 功能：
-1. 自动运行项目内所有测试用例
-2. 生成日志文件
-3. 生成 HTML 测试报告
-4. 支持并行执行
-5. 支持按标记筛选测试
-6. 支持失败重试
+1. 自动检查和安装项目依赖
+2. 自动运行项目内所有测试用例
+3. 生成日志文件
+4. 生成 HTML 测试报告
+5. 支持并行执行
+6. 支持按标记筛选测试
+7. 支持失败重试
 """
 
 import os
@@ -17,6 +18,66 @@ import subprocess
 import logging
 from datetime import datetime
 from pathlib import Path
+
+
+def ensure_dependencies():
+    """确保所有依赖已安装"""
+    requirements_file = Path(__file__).parent / "requirements.txt"
+    if not requirements_file.exists():
+        return True
+    
+    logger = logging.getLogger(__name__)
+    logger.info("检查项目依赖...")
+    
+    try:
+        import pkg_resources
+    except ImportError:
+        logger.warning("pkg_resources 不可用，尝试使用 pip 安装依赖")
+        subprocess.run([
+            sys.executable, "-m", "pip", "install", "-r", str(requirements_file)
+        ], check=False)
+        return True
+    
+    installed_packages = {pkg.key for pkg in pkg_resources.working_set}
+    
+    missing_packages = []
+    with open(requirements_file, "r", encoding="utf-8") as f:
+        for line in f:
+            line = line.strip()
+            if not line or line.startswith("#"):
+                continue
+            
+            if ">=" in line:
+                package_name = line.split(">=")[0].strip()
+            elif "==" in line:
+                package_name = line.split("==")[0].strip()
+            elif "<=" in line:
+                package_name = line.split("<=")[0].strip()
+            else:
+                package_name = line.strip()
+            
+            if package_name.lower() not in installed_packages:
+                missing_packages.append(line)
+    
+    if missing_packages:
+        logger.info(f"发现 {len(missing_packages)} 个未安装的依赖包，正在安装...")
+        for pkg in missing_packages:
+            logger.info(f"  安装: {pkg}")
+        
+        pip_cmd = [sys.executable, "-m", "pip", "install"]
+        if logger.level <= logging.INFO:
+            pip_cmd.append("-v")
+        pip_cmd.extend(missing_packages)
+        
+        result = subprocess.run(pip_cmd, capture_output=True, text=True)
+        if result.returncode != 0:
+            logger.error(f"依赖安装失败: {result.stderr}")
+            return False
+        logger.info("依赖安装完成 ✓")
+    else:
+        logger.info("所有依赖已安装 ✓")
+    
+    return True
 
 
 # 配置日志
@@ -121,6 +182,10 @@ class TestRunner:
 
     def run(self, args) -> int:
         """运行测试"""
+        if not ensure_dependencies():
+            logger.error("依赖安装失败，测试无法继续")
+            return 1
+        
         self.setup_directories()
 
         # 检查测试目录是否存在
