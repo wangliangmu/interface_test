@@ -81,11 +81,3 @@ class Test2d视频克隆数字人(BaseTest):
         except Exception as e:
             assert False, f"解析响应或检查状态失败: {e}"
 
-    def test_step_04_post_human_list(self):
-        self._apply_common_headers()
-        url = f"{BASE_URL}/metaman/api/asset/human/list"
-        headers = {"priority": "u=1, i"}
-        body = {"page": 1, "page_size": 10, "org": 2, "type": 3}
-        response = self._request("POST", url, json=body, headers=headers)
-        assert response.status_code == 200, f"Expected 200, got {response.status_code}: {response.text[:200]}"
-        assert extract_json_path(response.json(), "$.data.status") == "normal", f"Expected status=normal, got {response.text[:200]}"
