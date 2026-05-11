@@ -1,0 +1,192 @@
+- generic [ref=e4]:
+  - complementary [ref=e5]:
+    - generic [ref=e7]:
+      - img "logo" [ref=e9]
+      - main [ref=e10]:
+        - menu [ref=e11]:
+          - menuitem "logo 首页" [ref=e12] [cursor=pointer]:
+            - img "logo" [ref=e13]
+            - generic [ref=e14]: 首页
+          - menuitem "创建内容" [expanded] [ref=e15] [cursor=pointer]:
+            - generic [ref=e16]: 创建内容
+          - menu [ref=e17]:
+            - menuitem "logo 数字人" [ref=e18] [cursor=pointer]:
+              - img "logo" [ref=e19]
+              - generic [ref=e20]: 数字人
+            - menuitem "logo 语音聊天" [ref=e21] [cursor=pointer]:
+              - img "logo" [ref=e22]
+              - generic [ref=e23]: 语音聊天
+            - menuitem "logo 数字人视频" [ref=e24] [cursor=pointer]:
+              - img "logo" [ref=e25]
+              - generic [ref=e26]: 数字人视频
+          - menuitem "创建素材" [expanded] [ref=e27] [cursor=pointer]:
+            - generic [ref=e28]: 创建素材
+          - menu [ref=e29]:
+            - menuitem "logo 创建形象" [ref=e30] [cursor=pointer]:
+              - img "logo" [ref=e31]
+              - generic [ref=e32]: 创建形象
+            - menuitem "logo 创建声音" [ref=e33] [cursor=pointer]:
+              - img "logo" [ref=e34]
+              - generic [ref=e35]: 创建声音
+            - menuitem "logo 创建FAQ" [ref=e36] [cursor=pointer]:
+              - img "logo" [ref=e37]
+              - generic [ref=e38]: 创建FAQ
+            - menuitem "logo 创建热词库" [ref=e39] [cursor=pointer]:
+              - img "logo" [ref=e40]
+              - generic [ref=e41]: 创建热词库
+            - menuitem "logo 创建知识库" [ref=e42] [cursor=pointer]:
+              - img "logo" [ref=e43]
+              - generic [ref=e44]: 创建知识库
+          - menuitem "AI创意工具" [expanded] [ref=e45] [cursor=pointer]:
+            - generic [ref=e46]: AI创意工具
+          - menu [ref=e47]:
+            - menuitem "logo AI配音" [ref=e48] [cursor=pointer]:
+              - img "logo" [ref=e49]
+              - generic [ref=e50]: AI配音
+            - menuitem "logo AI照片" [ref=e51] [cursor=pointer]:
+              - img "logo" [ref=e52]
+              - generic [ref=e53]: AI照片
+          - menuitem "个人中心" [expanded] [ref=e54] [cursor=pointer]:
+            - generic [ref=e55]: 个人中心
+          - menu [ref=e56]:
+            - menuitem "logo 我的素材" [ref=e57] [cursor=pointer]:
+              - img "logo" [ref=e58]
+              - generic [ref=e59]: 我的素材
+            - menuitem "logo 我的作品" [ref=e60] [cursor=pointer]:
+              - img "logo" [ref=e61]
+              - generic [ref=e62]: 我的作品
+            - menuitem "logo 我的终端" [ref=e63] [cursor=pointer]:
+              - img "logo" [ref=e64]
+              - generic [ref=e65]: 我的终端
+            - menuitem "logo 我的账号" [ref=e66] [cursor=pointer]:
+              - img "logo" [ref=e67]
+              - generic [ref=e68]: 我的账号
+      - generic [ref=e70] [cursor=pointer]:
+        - img "avatar" [ref=e71]
+        - generic [ref=e72]: auto_test_jxm
+  - main [ref=e73]:
+    - generic [ref=e77]:
+      - img [ref=e78]
+      - generic [ref=e79]:
+        - generic [ref=e80]:
+          - generic [ref=e81]: 创建数字人
+          - generic [ref=e82]: 使用数字人帮助您快速提供AI对话服务
+          - img [ref=e83]
+          - button "开始制作" [ref=e84] [cursor=pointer]:
+            - generic [ref=e85]: 开始制作
+        - generic [ref=e86]:
+          - generic [ref=e87]: 制作数字人视频
+          - generic [ref=e88]: 无需真出镜，快速生成高质量口播视频
+          - img [ref=e89]
+          - button "开始制作" [ref=e90] [cursor=pointer]:
+            - generic [ref=e91]: 开始制作
+      - generic [ref=e92]:
+        - generic [ref=e93]: 精品数字人
+        - generic [ref=e94]:
+          - generic [ref=e96] [cursor=pointer]:
+            - generic [ref=e97]:
+              - generic [ref=e98]: 妙趣养生唐大师
+              - generic [ref=e99]: 巧解日常养生惑，常伴安康乐生活
+              - generic [ref=e100]:
+                - button "体验对话" [ref=e101]:
+                  - generic [ref=e102]: 体验对话
+                - button "一键复制" [ref=e103]:
+                  - generic [ref=e104]: 一键复制
+            - img "妙趣养生唐大师"
+          - generic [ref=e106] [cursor=pointer]:
+            - generic [ref=e107]:
+              - generic [ref=e108]: 黛玉问卜
+              - generic [ref=e109]: 泪眼婆娑看红尘，且听黛玉为你解那命中缘劫
+              - generic [ref=e110]:
+                - button "体验对话" [ref=e111]:
+                  - generic [ref=e112]: 体验对话
+                - button "一键复制" [ref=e113]:
+                  - generic [ref=e114]: 一键复制
+            - img "黛玉问卜"
+          - generic [ref=e116] [cursor=pointer]:
+            - generic [ref=e117]:
+              - generic [ref=e118]: 小绘时光画影
+              - generic [ref=e119]: 穿越年龄与职业，让你的奇思妙想跃然纸上
+              - generic [ref=e120]:
+                - button "体验对话" [ref=e121]:
+                  - generic [ref=e122]: 体验对话
+                - button "一键复制" [ref=e123]:
+                  - generic [ref=e124]: 一键复制
+            - img "小绘时光画影"
+      - generic [ref=e125]:
+        - generic [ref=e126]: 公共素材
+        - generic [ref=e127]:
+          - tablist [ref=e128]:
+            - generic [ref=e130]:
+              - tab "形象" [selected] [ref=e132] [cursor=pointer]
+              - tab "声音" [ref=e134] [cursor=pointer]
+          - tabpanel "形象" [ref=e137]:
+            - generic [ref=e138]:
+              - generic [ref=e140]:
+                - generic [ref=e141] [cursor=pointer]:
+                  - generic [ref=e142]: 2D极速
+                  - generic [ref=e144]:
+                    - img "exclamation-circle" [ref=e145]:
+                      - img [ref=e146]
+                    - text: 克隆失败
+                  - img "数字人" [ref=e149]
+                - paragraph [ref=e150]: 小初3.0
+              - generic [ref=e152]:
+                - generic [ref=e153] [cursor=pointer]:
+                  - generic [ref=e154]: 2D精品
+                  - generic [ref=e156]:
+                    - img "exclamation-circle" [ref=e157]:
+                      - img [ref=e158]
+                    - text: 克隆失败
+                  - img "数字人" [ref=e161]
+                - paragraph [ref=e162]: 小初02
+              - generic [ref=e164]:
+                - generic [ref=e165] [cursor=pointer]:
+                  - generic [ref=e166]: 2D卡通
+                  - img "数字人" [ref=e167]
+                - paragraph [ref=e168]: 小龙虾
+              - generic [ref=e170]:
+                - generic [ref=e171] [cursor=pointer]:
+                  - generic [ref=e172]: 2D卡通
+                  - img "数字人" [ref=e173]
+                - paragraph [ref=e174]: 新春小马
+              - generic [ref=e176]:
+                - generic [ref=e177] [cursor=pointer]:
+                  - generic [ref=e178]: 2D精品
+                  - img "数字人" [ref=e179]
+                - paragraph [ref=e180]: 维修工
+              - generic [ref=e182]:
+                - generic [ref=e183] [cursor=pointer]:
+                  - generic [ref=e184]: 2D精品
+                  - img "数字人" [ref=e185]
+                - paragraph [ref=e186]: 新春数字人
+              - generic [ref=e188]:
+                - generic [ref=e189] [cursor=pointer]:
+                  - generic [ref=e190]: 2D精品
+                  - img "数字人" [ref=e191]
+                - paragraph [ref=e192]: 紫瑶
+              - generic [ref=e194]:
+                - generic [ref=e195] [cursor=pointer]:
+                  - generic [ref=e196]: 3D精品
+                  - img "数字人" [ref=e197]
+                - paragraph [ref=e198]: 紫霓
+              - generic [ref=e200]:
+                - generic [ref=e201] [cursor=pointer]:
+                  - generic [ref=e202]: 2D极速
+                  - img "数字人" [ref=e203]
+                - paragraph [ref=e204]: 小初
+              - generic [ref=e206]:
+                - generic [ref=e207] [cursor=pointer]:
+                  - generic [ref=e208]: 2D精品
+                  - img "数字人" [ref=e209]
+                - paragraph [ref=e210]: 湖北文旅数字人
+              - generic [ref=e212]:
+                - generic [ref=e213] [cursor=pointer]:
+                  - generic [ref=e214]: 2D极速
+                  - img "数字人" [ref=e215]
+                - paragraph [ref=e216]: 紫林
+              - generic [ref=e218]:
+                - generic [ref=e219] [cursor=pointer]:
+                  - generic [ref=e220]: 2D极速
+                  - img "数字人" [ref=e221]
+                - paragraph [ref=e222]: 紫韵

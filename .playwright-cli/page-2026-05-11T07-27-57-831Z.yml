@@ -1,0 +1,390 @@
+- generic [ref=e4]:
+  - complementary [ref=e5]:
+    - generic [ref=e7]:
+      - img "logo" [ref=e9]
+      - main [ref=e10]:
+        - menu [ref=e11]:
+          - menuitem "logo 首页" [ref=e12] [cursor=pointer]:
+            - img "logo" [ref=e13]
+            - generic [ref=e14]: 首页
+          - menuitem "创建内容" [expanded] [ref=e15] [cursor=pointer]:
+            - generic [ref=e16]: 创建内容
+          - menu [ref=e17]:
+            - menuitem "logo 数字人" [ref=e18] [cursor=pointer]:
+              - img "logo" [ref=e19]
+              - generic [ref=e20]: 数字人
+            - menuitem "logo 语音聊天" [ref=e21] [cursor=pointer]:
+              - img "logo" [ref=e22]
+              - generic [ref=e23]: 语音聊天
+            - menuitem "logo 数字人视频" [ref=e24] [cursor=pointer]:
+              - img "logo" [ref=e25]
+              - generic [ref=e26]: 数字人视频
+          - menuitem "创建素材" [expanded] [ref=e27] [cursor=pointer]:
+            - generic [ref=e28]: 创建素材
+          - menu [ref=e29]:
+            - menuitem "logo 创建形象" [ref=e30] [cursor=pointer]:
+              - img "logo" [ref=e31]
+              - generic [ref=e32]: 创建形象
+            - menuitem "logo 创建声音" [ref=e33] [cursor=pointer]:
+              - img "logo" [ref=e34]
+              - generic [ref=e35]: 创建声音
+            - menuitem "logo 创建FAQ" [ref=e36] [cursor=pointer]:
+              - img "logo" [ref=e37]
+              - generic [ref=e38]: 创建FAQ
+            - menuitem "logo 创建热词库" [ref=e39] [cursor=pointer]:
+              - img "logo" [ref=e40]
+              - generic [ref=e41]: 创建热词库
+            - menuitem "logo 创建知识库" [ref=e42] [cursor=pointer]:
+              - img "logo" [ref=e43]
+              - generic [ref=e44]: 创建知识库
+          - menuitem "AI创意工具" [expanded] [ref=e45] [cursor=pointer]:
+            - generic [ref=e46]: AI创意工具
+          - menu [ref=e47]:
+            - menuitem "logo AI配音" [ref=e48] [cursor=pointer]:
+              - img "logo" [ref=e49]
+              - generic [ref=e50]: AI配音
+            - menuitem "logo AI照片" [ref=e51] [cursor=pointer]:
+              - img "logo" [ref=e52]
+              - generic [ref=e53]: AI照片
+          - menuitem "个人中心" [expanded] [ref=e54] [cursor=pointer]:
+            - generic [ref=e55]: 个人中心
+          - menu [ref=e56]:
+            - menuitem "logo 我的素材" [ref=e57] [cursor=pointer]:
+              - img "logo" [ref=e58]
+              - generic [ref=e59]: 我的素材
+            - menuitem "logo 我的作品" [ref=e60] [cursor=pointer]:
+              - img "logo" [ref=e61]
+              - generic [ref=e62]: 我的作品
+            - menuitem "logo 我的终端" [ref=e63] [cursor=pointer]:
+              - img "logo" [ref=e64]
+              - generic [ref=e65]: 我的终端
+            - menuitem "logo 我的账号" [ref=e66] [cursor=pointer]:
+              - img "logo" [ref=e67]
+              - generic [ref=e68]: 我的账号
+      - generic [ref=e70] [cursor=pointer]:
+        - img "avatar" [ref=e75]
+        - generic [ref=e71]: auto_test_jxm
+  - main [ref=e72]:
+    - generic [ref=e73]:
+      - generic [ref=e223]:
+        - generic [ref=e224]: 创建数字人
+        - generic [ref=e225]:
+          - generic [ref=e227]:
+            - paragraph [ref=e228]: 终端数字人
+            - generic [ref=e229]:
+              - generic [ref=e230]: 人机交互
+              - generic [ref=e231]: 沉浸对话
+            - button "开始制作" [ref=e232] [cursor=pointer]
+          - generic [ref=e234]:
+            - paragraph [ref=e235]: 网页数字人
+            - generic [ref=e236]:
+              - generic [ref=e237]: 快速搭建
+              - generic [ref=e238]: 极速体验
+            - button "开始制作" [ref=e239] [cursor=pointer]
+          - generic [ref=e241]:
+            - paragraph [ref=e242]: 手机数字人
+            - generic [ref=e243]:
+              - generic [ref=e244]: 方便快捷
+              - generic [ref=e245]: 随时触达
+            - button "开始制作" [ref=e246] [cursor=pointer]
+      - generic [ref=e247]: 我的数字人
+      - generic [ref=e248]:
+        - generic [ref=e256]:
+          - textbox "请输入名称进行搜索" [ref=e257]
+          - img "search" [ref=e259]
+        - table [ref=e267]:
+          - rowgroup [ref=e278]:
+            - row "Select all 名称 ID 类型 创建时间 最后编辑时间 状态 评测状态 操作 question-circle" [ref=e279]:
+              - columnheader "Select all" [ref=e280]:
+                - checkbox "Select all" [ref=e284] [cursor=pointer]
+              - columnheader "名称" [ref=e286]
+              - columnheader "ID" [ref=e287]
+              - columnheader "类型" [ref=e288]
+              - columnheader "创建时间" [ref=e289]
+              - columnheader "最后编辑时间" [ref=e290]
+              - columnheader "状态" [ref=e291]
+              - columnheader "评测状态" [ref=e292]
+              - columnheader "操作 question-circle" [ref=e293]:
+                - generic [ref=e294]:
+                  - generic [ref=e295]: 操作
+                  - img "question-circle" [ref=e296] [cursor=pointer]:
+                    - img [ref=e297]
+          - rowgroup [ref=e300]:
+            - row "网页_接口测试_带动作0511_0807 6081 网页 2026-05-11 00:07:25 2026-05-11 01:38:26 已发布 未测评 ellipsis" [ref=e301]:
+              - cell [ref=e302]:
+                - checkbox [ref=e305] [cursor=pointer]
+              - cell "网页_接口测试_带动作0511_0807" [ref=e307]:
+                - generic [ref=e308]:
+                  - img [ref=e309] [cursor=pointer]
+                  - generic [ref=e310] [cursor=pointer]: 网页_接口测试_带动作0511_0807
+              - cell "6081" [ref=e311]
+              - cell "网页" [ref=e312]
+              - cell "2026-05-11 00:07:25" [ref=e313]
+              - cell "2026-05-11 01:38:26" [ref=e314]
+              - cell "已发布" [ref=e315]:
+                - generic [ref=e317] [cursor=pointer]: 已发布
+              - cell "未测评" [ref=e318]:
+                - generic [ref=e321] [cursor=pointer]: 未测评
+              - cell "ellipsis" [ref=e322]:
+                - generic [ref=e323]:
+                  - button [ref=e325] [cursor=pointer]:
+                    - img [ref=e326]
+                  - button [ref=e329] [cursor=pointer]:
+                    - img [ref=e330]
+                  - button "ellipsis" [ref=e333] [cursor=pointer]:
+                    - img "ellipsis" [ref=e334]:
+                      - img [ref=e335]
+            - row "网页_接口测试_带动作0511_0919 6089 网页 2026-05-11 01:19:39 2026-05-11 01:28:20 已发布 未测评 ellipsis" [ref=e337]:
+              - cell [ref=e338]:
+                - checkbox [ref=e341] [cursor=pointer]
+              - cell "网页_接口测试_带动作0511_0919" [ref=e343]:
+                - generic [ref=e344]:
+                  - img [ref=e345] [cursor=pointer]
+                  - generic [ref=e346] [cursor=pointer]: 网页_接口测试_带动作0511_0919
+              - cell "6089" [ref=e347]
+              - cell "网页" [ref=e348]
+              - cell "2026-05-11 01:19:39" [ref=e349]
+              - cell "2026-05-11 01:28:20" [ref=e350]
+              - cell "已发布" [ref=e351]:
+                - generic [ref=e353] [cursor=pointer]: 已发布
+              - cell "未测评" [ref=e354]:
+                - generic [ref=e357] [cursor=pointer]: 未测评
+              - cell "ellipsis" [ref=e358]:
+                - generic [ref=e359]:
+                  - button [ref=e361] [cursor=pointer]:
+                    - img [ref=e362]
+                  - button [ref=e365] [cursor=pointer]:
+                    - img [ref=e366]
+                  - button "ellipsis" [ref=e369] [cursor=pointer]:
+                    - img "ellipsis" [ref=e370]:
+                      - img [ref=e371]
+            - row "手机_接口测试0511_0913 6087 手机 2026-05-11 01:13:17 2026-05-11 01:14:40 已发布 未测评 ellipsis" [ref=e373]:
+              - cell [ref=e374]:
+                - checkbox [ref=e377] [cursor=pointer]
+              - cell "手机_接口测试0511_0913" [ref=e379]:
+                - generic [ref=e380]:
+                  - img [ref=e381] [cursor=pointer]
+                  - generic [ref=e382] [cursor=pointer]: 手机_接口测试0511_0913
+              - cell "6087" [ref=e383]
+              - cell "手机" [ref=e384]
+              - cell "2026-05-11 01:13:17" [ref=e385]
+              - cell "2026-05-11 01:14:40" [ref=e386]
+              - cell "已发布" [ref=e387]:
+                - generic [ref=e389] [cursor=pointer]: 已发布
+              - cell "未测评" [ref=e390]:
+                - generic [ref=e393] [cursor=pointer]: 未测评
+              - cell "ellipsis" [ref=e394]:
+                - generic [ref=e395]:
+                  - button [ref=e397] [cursor=pointer]:
+                    - img [ref=e399]
+                  - button [ref=e403] [cursor=pointer]:
+                    - img [ref=e404]
+                  - button "ellipsis" [ref=e407] [cursor=pointer]:
+                    - img "ellipsis" [ref=e408]:
+                      - img [ref=e409]
+            - row "终端_接口测试_带动作0511_0902 6083 入门版终端 2026-05-11 01:02:36 2026-05-11 01:04:07 已发布 未测评 ellipsis" [ref=e411]:
+              - cell [ref=e412]:
+                - checkbox [ref=e415] [cursor=pointer]
+              - cell "终端_接口测试_带动作0511_0902" [ref=e417]:
+                - generic [ref=e418]:
+                  - img [ref=e419] [cursor=pointer]
+                  - generic [ref=e420] [cursor=pointer]: 终端_接口测试_带动作0511_0902
+              - cell "6083" [ref=e421]
+              - cell "入门版终端" [ref=e422]
+              - cell "2026-05-11 01:02:36" [ref=e423]
+              - cell "2026-05-11 01:04:07" [ref=e424]
+              - cell "已发布" [ref=e425]:
+                - generic [ref=e427] [cursor=pointer]: 已发布
+              - cell "未测评" [ref=e428]:
+                - generic [ref=e431] [cursor=pointer]: 未测评
+              - cell "ellipsis" [ref=e432]:
+                - generic [ref=e433]:
+                  - button [ref=e435] [cursor=pointer]:
+                    - img [ref=e437]
+                  - button [ref=e441] [cursor=pointer]:
+                    - img [ref=e442]
+                  - button "ellipsis" [ref=e445] [cursor=pointer]:
+                    - img "ellipsis" [ref=e446]:
+                      - img [ref=e447]
+            - row "终端_接口测试_带动作0511_0809 6082 入门版终端 2026-05-11 00:09:39 2026-05-11 00:18:57 已发布 未测评 ellipsis" [ref=e449]:
+              - cell [ref=e450]:
+                - checkbox [ref=e453] [cursor=pointer]
+              - cell "终端_接口测试_带动作0511_0809" [ref=e455]:
+                - generic [ref=e456]:
+                  - img [ref=e457] [cursor=pointer]
+                  - generic [ref=e458] [cursor=pointer]: 终端_接口测试_带动作0511_0809
+              - cell "6082" [ref=e459]
+              - cell "入门版终端" [ref=e460]
+              - cell "2026-05-11 00:09:39" [ref=e461]
+              - cell "2026-05-11 00:18:57" [ref=e462]
+              - cell "已发布" [ref=e463]:
+                - generic [ref=e465] [cursor=pointer]: 已发布
+              - cell "未测评" [ref=e466]:
+                - generic [ref=e469] [cursor=pointer]: 未测评
+              - cell "ellipsis" [ref=e470]:
+                - generic [ref=e471]:
+                  - button [ref=e473] [cursor=pointer]:
+                    - img [ref=e475]
+                  - button [ref=e479] [cursor=pointer]:
+                    - img [ref=e480]
+                  - button "ellipsis" [ref=e483] [cursor=pointer]:
+                    - img "ellipsis" [ref=e484]:
+                      - img [ref=e485]
+            - row "网页_3d-带动作0511_0807 6080 网页 2026-05-11 00:07:23 2026-05-11 00:07:24 已发布 未测评 ellipsis" [ref=e487]:
+              - cell [ref=e488]:
+                - checkbox [ref=e491] [cursor=pointer]
+              - cell "网页_3d-带动作0511_0807" [ref=e493]:
+                - generic [ref=e494]:
+                  - img [ref=e495] [cursor=pointer]
+                  - generic [ref=e496] [cursor=pointer]: 网页_3d-带动作0511_0807
+              - cell "6080" [ref=e497]
+              - cell "网页" [ref=e498]
+              - cell "2026-05-11 00:07:23" [ref=e499]
+              - cell "2026-05-11 00:07:24" [ref=e500]
+              - cell "已发布" [ref=e501]:
+                - generic [ref=e503] [cursor=pointer]: 已发布
+              - cell "未测评" [ref=e504]:
+                - generic [ref=e507] [cursor=pointer]: 未测评
+              - cell "ellipsis" [ref=e508]:
+                - generic [ref=e509]:
+                  - button [ref=e511] [cursor=pointer]:
+                    - img [ref=e512]
+                  - button [ref=e515] [cursor=pointer]:
+                    - img [ref=e516]
+                  - button "ellipsis" [ref=e519] [cursor=pointer]:
+                    - img "ellipsis" [ref=e520]:
+                      - img [ref=e521]
+            - row "网页_3d数字人0511_0807 6079 网页 2026-05-11 00:07:22 2026-05-11 00:07:23 已发布 未测评 ellipsis" [ref=e523]:
+              - cell [ref=e524]:
+                - checkbox [ref=e527] [cursor=pointer]
+              - cell "网页_3d数字人0511_0807" [ref=e529]:
+                - generic [ref=e530]:
+                  - img [ref=e531] [cursor=pointer]
+                  - generic [ref=e532] [cursor=pointer]: 网页_3d数字人0511_0807
+              - cell "6079" [ref=e533]
+              - cell "网页" [ref=e534]
+              - cell "2026-05-11 00:07:22" [ref=e535]
+              - cell "2026-05-11 00:07:23" [ref=e536]
+              - cell "已发布" [ref=e537]:
+                - generic [ref=e539] [cursor=pointer]: 已发布
+              - cell "未测评" [ref=e540]:
+                - generic [ref=e543] [cursor=pointer]: 未测评
+              - cell "ellipsis" [ref=e544]:
+                - generic [ref=e545]:
+                  - button [ref=e547] [cursor=pointer]:
+                    - img [ref=e548]
+                  - button [ref=e551] [cursor=pointer]:
+                    - img [ref=e552]
+                  - button "ellipsis" [ref=e555] [cursor=pointer]:
+                    - img "ellipsis" [ref=e556]:
+                      - img [ref=e557]
+            - row "网页_接口测试0511_0805 6078 网页 2026-05-11 00:05:50 2026-05-11 00:07:02 已发布 未测评 ellipsis" [ref=e559]:
+              - cell [ref=e560]:
+                - checkbox [ref=e563] [cursor=pointer]
+              - cell "网页_接口测试0511_0805" [ref=e565]:
+                - generic [ref=e566]:
+                  - img [ref=e567] [cursor=pointer]
+                  - generic [ref=e568] [cursor=pointer]: 网页_接口测试0511_0805
+              - cell "6078" [ref=e569]
+              - cell "网页" [ref=e570]
+              - cell "2026-05-11 00:05:50" [ref=e571]
+              - cell "2026-05-11 00:07:02" [ref=e572]
+              - cell "已发布" [ref=e573]:
+                - generic [ref=e575] [cursor=pointer]: 已发布
+              - cell "未测评" [ref=e576]:
+                - generic [ref=e579] [cursor=pointer]: 未测评
+              - cell "ellipsis" [ref=e580]:
+                - generic [ref=e581]:
+                  - button [ref=e583] [cursor=pointer]:
+                    - img [ref=e584]
+                  - button [ref=e587] [cursor=pointer]:
+                    - img [ref=e588]
+                  - button "ellipsis" [ref=e591] [cursor=pointer]:
+                    - img "ellipsis" [ref=e592]:
+                      - img [ref=e593]
+            - row "终端_2D卡通0511_0805 6077 入门版终端 2026-05-11 00:05:18 2026-05-11 00:05:23 已发布 未测评 ellipsis" [ref=e595]:
+              - cell [ref=e596]:
+                - checkbox [ref=e599] [cursor=pointer]
+              - cell "终端_2D卡通0511_0805" [ref=e601]:
+                - generic [ref=e602]:
+                  - img [ref=e603] [cursor=pointer]
+                  - generic [ref=e604] [cursor=pointer]: 终端_2D卡通0511_0805
+              - cell "6077" [ref=e605]
+              - cell "入门版终端" [ref=e606]
+              - cell "2026-05-11 00:05:18" [ref=e607]
+              - cell "2026-05-11 00:05:23" [ref=e608]
+              - cell "已发布" [ref=e609]:
+                - generic [ref=e611] [cursor=pointer]: 已发布
+              - cell "未测评" [ref=e612]:
+                - generic [ref=e615] [cursor=pointer]: 未测评
+              - cell "ellipsis" [ref=e616]:
+                - generic [ref=e617]:
+                  - button [ref=e619] [cursor=pointer]:
+                    - img [ref=e621]
+                  - button [ref=e625] [cursor=pointer]:
+                    - img [ref=e626]
+                  - button "ellipsis" [ref=e629] [cursor=pointer]:
+                    - img "ellipsis" [ref=e630]:
+                      - img [ref=e631]
+            - row "终端_接口测试0511_0804 6076 入门版终端 2026-05-11 00:04:16 2026-05-11 00:05:12 已发布 未测评 ellipsis" [ref=e633]:
+              - cell [ref=e634]:
+                - checkbox [ref=e637] [cursor=pointer]
+              - cell "终端_接口测试0511_0804" [ref=e639]:
+                - generic [ref=e640]:
+                  - img [ref=e641] [cursor=pointer]
+                  - generic [ref=e642] [cursor=pointer]: 终端_接口测试0511_0804
+              - cell "6076" [ref=e643]
+              - cell "入门版终端" [ref=e644]
+              - cell "2026-05-11 00:04:16" [ref=e645]
+              - cell "2026-05-11 00:05:12" [ref=e646]
+              - cell "已发布" [ref=e647]:
+                - generic [ref=e649] [cursor=pointer]: 已发布
+              - cell "未测评" [ref=e650]:
+                - generic [ref=e653] [cursor=pointer]: 未测评
+              - cell "ellipsis" [ref=e654]:
+                - generic [ref=e655]:
+                  - button [ref=e657] [cursor=pointer]:
+                    - img [ref=e659]
+                  - button [ref=e663] [cursor=pointer]:
+                    - img [ref=e664]
+                  - button "ellipsis" [ref=e667] [cursor=pointer]:
+                    - img "ellipsis" [ref=e668]:
+                      - img [ref=e669]
+        - list [ref=e672]:
+          - listitem "上一页" [ref=e673]:
+            - button "left" [disabled] [ref=e674]:
+              - img "left" [ref=e675]:
+                - img [ref=e676]
+          - listitem "1" [ref=e678] [cursor=pointer]:
+            - generic [ref=e679]: "1"
+          - listitem "2" [ref=e680] [cursor=pointer]:
+            - generic [ref=e681]: "2"
+          - listitem "3" [ref=e682] [cursor=pointer]:
+            - generic [ref=e683]: "3"
+          - listitem "4" [ref=e684] [cursor=pointer]:
+            - generic [ref=e685]: "4"
+          - listitem "5" [ref=e686] [cursor=pointer]:
+            - generic [ref=e687]: "5"
+          - listitem "向后 5 页" [ref=e688] [cursor=pointer]:
+            - generic [ref=e690]:
+              - img "double-right" [ref=e691]:
+                - img [ref=e692]
+              - generic [ref=e694]: •••
+          - listitem "67" [ref=e695] [cursor=pointer]:
+            - generic [ref=e696]: "67"
+          - listitem "下一页" [ref=e697] [cursor=pointer]:
+            - button "right" [ref=e698]:
+              - img "right" [ref=e699]:
+                - img [ref=e700]
+          - listitem [ref=e702]:
+            - generic "页码" [ref=e703] [cursor=pointer]:
+              - generic [ref=e705]:
+                - combobox "页码" [ref=e707]
+                - generic "10 条/页" [ref=e708]
+              - generic:
+                - img:
+                  - img
+            - generic [ref=e709]:
+              - text: 跳至
+              - textbox "页" [ref=e710]
+              - text: 页

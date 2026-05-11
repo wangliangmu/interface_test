@@ -1,0 +1,67 @@
+- generic [ref=e4]:
+  - complementary [ref=e5]:
+    - generic [ref=e7]:
+      - img "logo" [ref=e9]
+      - main [ref=e10]:
+        - menu [ref=e11]:
+          - menuitem "logo 首页" [ref=e12] [cursor=pointer]:
+            - img "logo" [ref=e13]
+            - generic [ref=e14]: 首页
+          - menuitem "创建内容" [expanded] [ref=e15] [cursor=pointer]:
+            - generic [ref=e16]: 创建内容
+          - menu [ref=e17]:
+            - menuitem "logo 数字人" [ref=e18] [cursor=pointer]:
+              - img "logo" [ref=e19]
+              - generic [ref=e20]: 数字人
+            - menuitem "logo 语音聊天" [ref=e21] [cursor=pointer]:
+              - img "logo" [ref=e22]
+              - generic [ref=e23]: 语音聊天
+            - menuitem "logo 数字人视频" [ref=e24] [cursor=pointer]:
+              - img "logo" [ref=e25]
+              - generic [ref=e26]: 数字人视频
+          - menuitem "创建素材" [expanded] [ref=e27] [cursor=pointer]:
+            - generic [ref=e28]: 创建素材
+          - menu [ref=e29]:
+            - menuitem "logo 创建形象" [ref=e30] [cursor=pointer]:
+              - img "logo" [ref=e31]
+              - generic [ref=e32]: 创建形象
+            - menuitem "logo 创建声音" [ref=e33] [cursor=pointer]:
+              - img "logo" [ref=e34]
+              - generic [ref=e35]: 创建声音
+            - menuitem "logo 创建FAQ" [ref=e36] [cursor=pointer]:
+              - img "logo" [ref=e37]
+              - generic [ref=e38]: 创建FAQ
+            - menuitem "logo 创建热词库" [ref=e39] [cursor=pointer]:
+              - img "logo" [ref=e40]
+              - generic [ref=e41]: 创建热词库
+            - menuitem "logo 创建知识库" [ref=e42] [cursor=pointer]:
+              - img "logo" [ref=e43]
+              - generic [ref=e44]: 创建知识库
+          - menuitem "AI创意工具" [expanded] [ref=e45] [cursor=pointer]:
+            - generic [ref=e46]: AI创意工具
+          - menu [ref=e47]:
+            - menuitem "logo AI配音" [ref=e48] [cursor=pointer]:
+              - img "logo" [ref=e49]
+              - generic [ref=e50]: AI配音
+            - menuitem "logo AI照片" [ref=e51] [cursor=pointer]:
+              - img "logo" [ref=e52]
+              - generic [ref=e53]: AI照片
+          - menuitem "个人中心" [expanded] [ref=e54] [cursor=pointer]:
+            - generic [ref=e55]: 个人中心
+          - menu [ref=e56]:
+            - menuitem "logo 我的素材" [ref=e57] [cursor=pointer]:
+              - img "logo" [ref=e58]
+              - generic [ref=e59]: 我的素材
+            - menuitem "logo 我的作品" [ref=e60] [cursor=pointer]:
+              - img "logo" [ref=e61]
+              - generic [ref=e62]: 我的作品
+            - menuitem "logo 我的终端" [ref=e63] [cursor=pointer]:
+              - img "logo" [ref=e64]
+              - generic [ref=e65]: 我的终端
+            - menuitem "logo 我的账号" [ref=e66] [cursor=pointer]:
+              - img "logo" [ref=e67]
+              - generic [ref=e68]: 我的账号
+      - generic [ref=e70] [cursor=pointer]:
+        - img "avatar"
+        - generic [ref=e71]: auto_test_jxm
+  - main [ref=e72]

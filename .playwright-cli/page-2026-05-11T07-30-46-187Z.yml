@@ -1,0 +1,23 @@
+- main [ref=e44]:
+  - complementary [ref=e45]:
+    - generic [ref=e47]: Your browser does not support the video tag.
+  - generic [ref=e48]:
+    - generic [ref=e49] [cursor=pointer]:
+      - paragraph [ref=e79]: 介绍一下你自己
+      - generic [ref=e84]:
+        - img "loading" [ref=e85]:
+          - img [ref=e86]
+        - text: 正在思考中...
+    - generic [ref=e51]:
+      - button "paper-clip" [ref=e55]:
+        - img "paper-clip" [ref=e57] [cursor=pointer]:
+          - img [ref=e58]
+      - textbox "请简单描述您的问题" [disabled] [ref=e60]
+      - generic [ref=e61] [cursor=pointer]:
+        - img [ref=e63]:
+          - img [ref=e64]
+        - separator [ref=e66]
+        - img [ref=e68]:
+          - img [ref=e69]
+  - generic:
+    - img
