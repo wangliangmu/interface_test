@@ -139,7 +139,7 @@ class TestRunner:
         env_configs = {
             "prod": "https://metahuman-prod.wair.ac.cn",
             "staging": "https://metahuman-staging.wair.ac.cn",
-            "dev": "http://47.122.125.208:51064",
+            "dev": "https://metahuman-demo.wair.ac.cn",
         }
         api_base_url = env_configs.get(args.env, env_configs["prod"])
         env["API_BASE_URL"] = api_base_url

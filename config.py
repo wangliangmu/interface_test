@@ -8,7 +8,7 @@ def load_config(env: str = "prod") -> dict:
             "base_url": "https://metahuman-prod.wair.ac.cn",
         },
         "dev": {
-            "base_url": "http://47.122.125.208:51064",
+            "base_url": "https://metahuman-demo.wair.ac.cn",
         },
     }
     return configs.get(env, configs["prod"])
