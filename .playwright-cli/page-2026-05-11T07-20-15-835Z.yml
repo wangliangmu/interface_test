@@ -1,0 +1,19 @@
+- generic [ref=e3]:
+  - banner [ref=e4]:
+    - img "logo"
+    - generic [ref=e5]: 紫东太初
+    - generic [ref=e6]: 紫东太初交互数字人平台
+  - generic [ref=e7]:
+    - generic [ref=e12]:
+      - img "user" [ref=e14]:
+        - img [ref=e15]
+      - textbox "用户名" [ref=e17]
+    - generic [ref=e22]:
+      - img "lock" [ref=e24]:
+        - img [ref=e25]
+      - textbox "密码" [ref=e27]
+      - img "eye-invisible" [ref=e29] [cursor=pointer]:
+        - img [ref=e30]
+    - generic [ref=e36]: 忘记密码？点击这里
+    - button "登 录" [ref=e41] [cursor=pointer]:
+      - generic [ref=e42]: 登 录

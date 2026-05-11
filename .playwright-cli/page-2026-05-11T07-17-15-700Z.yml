@@ -1,0 +1,93 @@
+- main [ref=e4]:
+  - generic [ref=e12]:
+    - generic [ref=e16]:
+      - generic [ref=e18]:
+        - generic:
+          - generic:
+            - generic:
+              - img
+              - generic: 欢迎来到紫东太初数字人创作平台
+              - generic:
+                - img:
+                  - img
+                - generic: 紫东太初数字人创作平台是一个集数字人设计、制作、应用及优化于一体的综合性平台，旨在为用户提供从创意构思到最终应用的全方位、一站式的数字人创作服务。通过集成先进的人工智能技术、高效的创作工具和丰富的应用场景，平台致力于降低数字人创作的门槛，提升创作效率，同时确保数字人形象的高保真度和互动性。
+                - img:
+                  - img
+        - generic [ref=e21]:
+          - img [ref=e22]
+          - generic [ref=e23]: 欢迎来到紫东太初数字人创作平台
+          - generic [ref=e24]:
+            - img "left-circle" [ref=e25] [cursor=pointer]:
+              - img [ref=e26]
+            - generic [ref=e28]: 紫东太初数字人创作平台是一个集数字人设计、制作、应用及优化于一体的综合性平台，旨在为用户提供从创意构思到最终应用的全方位、一站式的数字人创作服务。通过集成先进的人工智能技术、高效的创作工具和丰富的应用场景，平台致力于降低数字人创作的门槛，提升创作效率，同时确保数字人形象的高保真度和互动性。
+            - img "right-circle" [ref=e29] [cursor=pointer]:
+              - img [ref=e30]
+        - generic:
+          - generic:
+            - generic:
+              - img
+              - generic: 欢迎来到紫东太初数字人创作平台
+              - generic:
+                - img:
+                  - img
+                - generic: 紫东太初数字人创作平台是一个集数字人设计、制作、应用及优化于一体的综合性平台，旨在为用户提供从创意构思到最终应用的全方位、一站式的数字人创作服务。通过集成先进的人工智能技术、高效的创作工具和丰富的应用场景，平台致力于降低数字人创作的门槛，提升创作效率，同时确保数字人形象的高保真度和互动性。
+                - img:
+                  - img
+        - generic:
+          - generic:
+            - generic:
+              - img
+              - generic: 欢迎来到紫东太初数字人创作平台
+              - generic:
+                - img:
+                  - img
+                - generic: 紫东太初数字人创作平台是一个集数字人设计、制作、应用及优化于一体的综合性平台，旨在为用户提供从创意构思到最终应用的全方位、一站式的数字人创作服务。通过集成先进的人工智能技术、高效的创作工具和丰富的应用场景，平台致力于降低数字人创作的门槛，提升创作效率，同时确保数字人形象的高保真度和互动性。
+                - img:
+                  - img
+        - generic:
+          - generic:
+            - generic:
+              - img
+              - generic: 欢迎来到紫东太初数字人创作平台
+              - generic:
+                - img:
+                  - img
+                - generic: 紫东太初数字人创作平台是一个集数字人设计、制作、应用及优化于一体的综合性平台，旨在为用户提供从创意构思到最终应用的全方位、一站式的数字人创作服务。通过集成先进的人工智能技术、高效的创作工具和丰富的应用场景，平台致力于降低数字人创作的门槛，提升创作效率，同时确保数字人形象的高保真度和互动性。
+                - img:
+                  - img
+      - list [ref=e32]:
+        - listitem [ref=e33]:
+          - button "1" [ref=e34] [cursor=pointer]
+        - listitem [ref=e35]:
+          - button "2" [ref=e36] [cursor=pointer]
+    - generic [ref=e37]:
+      - generic [ref=e39]:
+        - img "logo" [ref=e40]
+        - generic [ref=e41]: 紫东太初
+        - generic [ref=e42]: 紫东太初数字人创作平台
+      - generic [ref=e49]:
+        - generic [ref=e52]:
+          - tablist [ref=e53]:
+            - generic [ref=e55]:
+              - tab "Verification code" [selected] [ref=e57] [cursor=pointer]
+              - tab "账号登陆" [ref=e59] [cursor=pointer]
+          - generic:
+            - generic:
+              - tabpanel
+        - generic [ref=e62]:
+          - generic "手机号" [ref=e64]: "* 手机号"
+          - textbox "Phone" [ref=e68]
+        - generic [ref=e73]:
+          - generic "验证码" [ref=e75]: "* 验证码"
+          - generic [ref=e81]:
+            - generic [ref=e82]:
+              - img "safety" [ref=e84]:
+                - img [ref=e85]
+              - textbox "Enter your code" [disabled] [ref=e88]
+            - button "Send Code" [disabled] [ref=e90]:
+              - generic: Send Code
+        - generic [ref=e98]:
+          - checkbox [checked] [ref=e101] [cursor=pointer]
+          - text: 我已阅读并同意用户协议 和 隐私政策, 未注册的手机号将自动创建账号
+        - button "Sign In with Verify" [ref=e108] [cursor=pointer]:
+          - generic [ref=e109]: Sign In with Verify
