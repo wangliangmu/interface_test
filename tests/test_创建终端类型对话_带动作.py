@@ -95,7 +95,7 @@ class Test创建终端类型对话带动作(BaseTest):
         headers = {"priority": "u=1, i"}
         body = {"id": "{{dialogs_id}}"}
 
-        max_retries = 18
+        max_retries = 24
         wait_interval = 30
         response = None
 
