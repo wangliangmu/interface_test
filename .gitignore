@@ -1,0 +1,15 @@
+.env
+data/auth_state.json
+data/screenshots/
+data/reports/
+data/page_structure.json
+__pycache__/
+*.pyc
+.pytest_cache/
+reports/
+logs/
+api_test.log
+*.log
+htmlcov/
+.coverage
+

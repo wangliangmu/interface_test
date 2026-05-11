@@ -1,0 +1,120 @@
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+import logging
+import time
+
+import pytest
+
+from .base_test import BaseTest
+from config import BASE_URL
+from utils import extract_json_path
+
+logger = logging.getLogger("api_test")
+
+
+@pytest.mark.smoke
+@pytest.mark.clone
+class Test图片克隆数字人(BaseTest):
+    def test_step_01_post_account_login(self):
+        self._login()
+
+    def test_step_02_post_risk_check(self):
+        self._apply_common_headers()
+        url = f"{BASE_URL}/metaman/api/tool/risk/check"
+        headers = {"priority": "u=1, i"}
+        body = {
+            "content": "https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/photo/233/15b98bb8-376c-430f-b97e-5bb6f016f7ec.jpg",
+            "type": "image",
+        }
+        response = self._request("POST", url, json=body, headers=headers)
+        assert (
+            response.status_code == 200
+        ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
+
+    def test_step_03_post_human_getAlphaPhoto(self):
+        self._apply_common_headers()
+        url = f"{BASE_URL}/metaman/api/asset/human/getAlphaPhoto"
+        headers = {"priority": "u=1, i"}
+        body = {
+            "path": "https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/photo/233/15b98bb8-376c-430f-b97e-5bb6f016f7ec.jpg"
+        }
+        response = self._request("POST", url, json=body, headers=headers)
+        assert (
+            response.status_code == 200
+        ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
+
+    def test_step_04_post_human_photoClone(self):
+        self._apply_common_headers()
+        url = f"{BASE_URL}/metaman/api/asset/human/photoClone"
+        headers = {"priority": "u=1, i"}
+        body = {
+            "name": "图片克隆{{$date.now|format('MMdd_HHmm')}}",
+            "src_path": "https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/photo/233/22ac2320-3103-43e4-b273-1c412141489d.jpg",
+            "alpha_path": "https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/233/9c20e09f-ba7f-4672-9946-77b41c44f299.png",
+            "bUsed": True,
+        }
+        response = self._request("POST", url, json=body, headers=headers)
+        try:
+            self.context["photo_clone_id"] = extract_json_path(
+                response.json(), "$.data.id"
+            )
+            logger.info(
+                f"创建图片克隆任务成功，任务ID: {self.context['photo_clone_id']}"
+            )
+        except Exception:
+            self.context["photo_clone_id"] = None
+        assert (
+            response.status_code == 200
+        ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
+
+    def test_step_06_post_human_get(self):
+        self._apply_common_headers()
+        url = f"{BASE_URL}/metaman/api/asset/human/get"
+        headers = {"priority": "u=1, i"}
+        body = {"human_id": "{{photo_clone_id}}"}
+
+        max_retries = 15
+        wait_interval = 60
+        response = None
+
+        for attempt in range(max_retries):
+            response = self._request("POST", url, json=body, headers=headers)
+            assert (
+                response.status_code == 200
+            ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
+
+            try:
+                response_json = response.json()
+                status = extract_json_path(response_json, "$.data.status")
+
+                if status is None:
+                    logger.error(f"无法提取 status 字段，响应: {response.text[:500]}")
+                    pytest.fail(f"无法提取 status 字段，响应: {response.text[:500]}")
+
+                if status in ["normal", "failed"]:
+                    break
+                elif status == "producing":
+                    logger.info(f"状态为 'producing'，等待 {wait_interval} 秒...")
+                    time.sleep(wait_interval)
+                else:
+                    logger.info(f"未知状态: {status}，继续轮询...")
+                    time.sleep(wait_interval)
+            except Exception as e:
+                logger.error(f"解析状态失败: {e}")
+                time.sleep(wait_interval)
+
+        assert response is not None, "轮询后未收到响应"
+        assert (
+            response.status_code == 200
+        ), f"Expected 200, got {response.status_code}: {response.text[:200]}"
+
+        try:
+            response_json = response.json()
+            status = extract_json_path(response_json, "$.data.status")
+            assert (
+                status == "normal"
+            ), f"期望状态 'normal'，实际状态 '{status}': {response.text[:200]}"
+        except Exception as e:
+            assert False, f"解析响应或检查状态失败: {e}"
