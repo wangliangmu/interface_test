@@ -45,7 +45,7 @@ class Test创建手机类型对话(BaseTest):
         url = f"{BASE_URL}/metaman/api/dialogs/edit"
         headers = {"priority": "u=1, i"}
         body = {
-            "id": {{dialogs_id}},
+            "id": "{{dialogs_id}}",
             "name": "手机_接口测试{{$date.now|format('MMdd_HHmm')}}",
             "type": "2d",
             "machine_type": 3,
