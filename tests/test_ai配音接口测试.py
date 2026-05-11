@@ -32,8 +32,10 @@ class TestAi配音接口测试(BaseTest):
         content_type = response.headers.get("Content-Type", "")
         assert "audio/wav" in content_type, f"Expected Content-Type to contain 'audio/wav', got '{content_type}'"
 
-        content_length = int(response.headers.get("Content-Length", 0))
-        assert content_length > 0, f"Expected audio file size > 0, got {content_length} bytes"
+        content = response.content
+        assert len(content) > 44, f"Expected audio content > 44 bytes (WAV header), got {len(content)} bytes"
+        assert content[:4] == b'RIFF', f"Expected WAV file signature 'RIFF', got {content[:4]}"
+        assert content[8:12] == b'WAVE', f"Expected WAV file signature 'WAVE', got {content[8:12]}"
 
     def test_step_03_post_voice_audition(self):
         self._apply_common_headers()
@@ -50,8 +52,10 @@ class TestAi配音接口测试(BaseTest):
         content_type = response.headers.get("Content-Type", "")
         assert "audio/wav" in content_type, f"Expected Content-Type to contain 'audio/wav', got '{content_type}'"
 
-        content_length = int(response.headers.get("Content-Length", 0))
-        assert content_length > 0, f"Expected audio file size > 0, got {content_length} bytes"
+        content = response.content
+        assert len(content) > 44, f"Expected audio content > 44 bytes (WAV header), got {len(content)} bytes"
+        assert content[:4] == b'RIFF', f"Expected WAV file signature 'RIFF', got {content[:4]}"
+        assert content[8:12] == b'WAVE', f"Expected WAV file signature 'WAVE', got {content[8:12]}"
 
     def test_step_04_post_voice_audition(self):
         self._apply_common_headers()
@@ -68,8 +72,10 @@ class TestAi配音接口测试(BaseTest):
         content_type = response.headers.get("Content-Type", "")
         assert "audio/wav" in content_type, f"Expected Content-Type to contain 'audio/wav', got '{content_type}'"
 
-        content_length = int(response.headers.get("Content-Length", 0))
-        assert content_length > 0, f"Expected audio file size > 0, got {content_length} bytes"
+        content = response.content
+        assert len(content) > 44, f"Expected audio content > 44 bytes (WAV header), got {len(content)} bytes"
+        assert content[:4] == b'RIFF', f"Expected WAV file signature 'RIFF', got {content[:4]}"
+        assert content[8:12] == b'WAVE', f"Expected WAV file signature 'WAVE', got {content[8:12]}"
 
     def test_step_05_post_voice_audition(self):
         self._apply_common_headers()
@@ -86,5 +92,7 @@ class TestAi配音接口测试(BaseTest):
         content_type = response.headers.get("Content-Type", "")
         assert "audio/wav" in content_type, f"Expected Content-Type to contain 'audio/wav', got '{content_type}'"
 
-        content_length = int(response.headers.get("Content-Length", 0))
-        assert content_length > 0, f"Expected audio file size > 0, got {content_length} bytes"
+        content = response.content
+        assert len(content) > 44, f"Expected audio content > 44 bytes (WAV header), got {len(content)} bytes"
+        assert content[:4] == b'RIFF', f"Expected WAV file signature 'RIFF', got {content[:4]}"
+        assert content[8:12] == b'WAVE', f"Expected WAV file signature 'WAVE', got {content[8:12]}"
