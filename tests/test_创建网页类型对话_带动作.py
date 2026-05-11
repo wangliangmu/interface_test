@@ -49,21 +49,22 @@ class Test创建网页类型对话带动作(BaseTest):
             "machine_type": 1,
             "agent_type": 1,
             "bot_id": "",
-            "create_time": 1778128238,
-            "update_time": 1778128381,
+            "create_time": 1778462131,
+            "update_time": 1778462131,
             "scale": "16:9",
-            "human_id": 2654,
+            "human_id": 4438,
             "voice_id": 0,
-            "expand": '{"bg":{"size":{"width":1920,"height":1080}},"human":{"position":{"x":660,"y":7},"scale":{"x":1,"y":1},"size":{"width":600,"height":1067},"source":{"id":2654,"path":"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/origin/177/黛玉.png"}},"page":[{"id":"[drag]-human","source":{"id":2654,"path":"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/origin/177/黛玉.png"},"style":{"height":1067,"scaleX":1,"scaleY":1,"width":600,"x":660,"y":7,"zIndex":1},"type":"Human","visible":true}],"voice":{},"actionMap":{"broadCast":[449,448]},"interrupted_video":["https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/interrupted/20260507123306_216eadd8f9.flv","https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/interrupted/20260507123433_ae2558738f.flv","https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/interrupted/20260507123515_885e4ac9d0.flv"],"output_size":{"width":1920,"height":1080}}',
+            "background_id": 7879,
+            "expand": '{\"bg\":{\"source\":{\"id\":7879,\"path\":\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/bg_image/177/b75014d9-c7cf-4d85-895a-9ff537647396.png\"},\"size\":{\"width\":1920,\"height\":1080}},\"human\":{\"position\":{\"x\":660,\"y\":7},\"scale\":{\"x\":1,\"y\":1},\"size\":{\"width\":600,\"height\":1067},\"source\":{\"id\":4438,\"path\":\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/origin/177/紫瑶.png\"}},\"page\":[{\"id\":\"[drag]-human\",\"type\":\"Human\",\"visible\":true,\"style\":{\"x\":660,\"y\":7,\"scaleX\":1,\"scaleY\":1,\"width\":600,\"height\":1067,\"zIndex\":1},\"source\":{\"id\":4438,\"path\":\"https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/video/origin/177/紫瑶.png\"}}],\"voice\":{},\"actionMap\":{\"broadCast\":[470,469]},\"output_size\":{\"width\":1920,\"height\":1080}}',
             "word_action": "",
             "word_ssml": "",
             "word": "",
-            "cover_img": "https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/image/233/e3cfc2fe-a01b-49a7-9a80-4060184c3e04.jpeg",
+            "cover_img": "https://s3-h20.wair.ac.cn/alluxio/metaman/metaman/image/233/0d7d3d66-3756-47db-b6ef-f9630172fae6.jpeg",
             "speak_rate": 0,
             "qa_id": 0,
             "bg_path": "",
             "bc_path": "",
-            "status": "success",
+            "status": "normal",
             "reason": "",
             "is_default": 2,
             "style": 0,
@@ -73,12 +74,12 @@ class Test创建网页类型对话带动作(BaseTest):
             "mark": False,
             "backupChat": False,
             "tipsText": "",
-            "chatMode": 1,
+            "chatMode": 0,
             "isMulChat": 0,
             "actionType": 0,
             "prompt": "",
             "difyBotId": "",
-            "interaction": '{"greet":{"hostess_mode":true,"welcome_wordlist":["您好[称呼]，有什么可以帮您？"],"face_sourceid":""},"revoke":{"wake_words":"你好小初","covert_wake_words":"n ǐ h ǎo x iǎo ch ū @你好小初"},"hotword":{"hotword_sourceid":""}}',
+            "interaction": '{\"greet\":{\"hostess_mode\":true,\"welcome_wordlist\":[\"您好[称呼]，有什么可以帮您？\"],\"face_sourceid\":\"\"},\"revoke\":{\"wake_words\":\"你好小初\",\"covert_wake_words\":\"n ǐ h ǎo x iǎo ch ū @你好小初\"},\"hotword\":{\"hotword_sourceid\":\"\"}}',
             "appConfig": "{}",
         }
         response = self._request("POST", url, json=body, headers=headers)
@@ -92,7 +93,7 @@ class Test创建网页类型对话带动作(BaseTest):
         headers = {"content-type": "application/json", "priority": "u=1, i"}
         body = {"id": "{{dialogs_id}}"}
 
-        max_retries = 18
+        max_retries = 24
         wait_interval = 30
         response = None
 
