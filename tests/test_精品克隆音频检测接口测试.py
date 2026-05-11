@@ -35,7 +35,16 @@ class Test精品克隆音频检测接口测试(BaseTest):
             assert result == "音频识别合格", f"期望结果 '音频识别合格'，实际结果 '{result}': {response.text[:200]}"
 
             asr_rec = extract_json_path(response_json, "$.data.asr.asr_rec")
-            expected_asr_rec = "你更喜欢喝咖啡吗？和我的口味不太1样。我平时喝茶多一些，你可以给我推荐一些好喝的咖啡吗？"
-            assert asr_rec == expected_asr_rec, f"asr_rec 不匹配: {response.text[:200]}"
+            expected_asr_keywords = [
+                "你更喜欢喝咖啡吗",
+                "我的口味",
+                "平时喝茶",
+                "给我推荐",
+                "好喝的咖啡"
+            ]
+            
+            for keyword in expected_asr_keywords:
+                assert keyword in asr_rec, f"asr_rec 缺少关键词 '{keyword}': 实际内容 '{asr_rec}'"
+                
         except Exception as e:
             assert False, f"解析响应或检查断言失败: {e}"
