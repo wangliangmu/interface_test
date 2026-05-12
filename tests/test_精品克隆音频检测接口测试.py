@@ -34,7 +34,7 @@ class Test精品克隆音频检测接口测试(BaseTest):
             result = extract_json_path(response_json, "$.data.result")
             assert result == "音频识别合格", f"期望结果 '音频识别合格'，实际结果 '{result}': {response.text[:200]}"
 
-            asr_rec = extract_json_path(response_json, "$.data.asr.asr_rec")
+            asr_rec = extract_json_path(response_json, "$.data.asr_rec")
             expected_asr_keywords = [
                 "你更喜欢喝咖啡吗",
                 "我的口味",
@@ -44,7 +44,7 @@ class Test精品克隆音频检测接口测试(BaseTest):
             ]
             
             for keyword in expected_asr_keywords:
-                assert keyword in asr_rec, f"asr_rec 缺少关键词 '{keyword}': 实际内容 '{asr_rec}'"
+                assert asr_rec and keyword in asr_rec, f"asr_rec 缺少关键词 '{keyword}': 实际内容 '{asr_rec}'"
                 
         except Exception as e:
             assert False, f"解析响应或检查断言失败: {e}"
