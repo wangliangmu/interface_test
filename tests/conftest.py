@@ -23,6 +23,7 @@ def pytest_configure(config):
     config.addinivalue_line("markers", "dialog: 对话创建测试")
     config.addinivalue_line("markers", "login: 登录测试")
     config.addinivalue_line("markers", "risk: 风控测试")
+    config.addinivalue_line("markers", "independent_steps: 步骤独立执行，前序步骤失败不跳过后续步骤")
 
 
 def pytest_sessionstart(session):
@@ -34,6 +35,8 @@ def pytest_runtest_setup(item):
         return
     class_name = item.cls.__name__
     if class_name in _class_failed:
+        if item.get_closest_marker("independent_steps"):
+            return
         failed_step = _class_failed[class_name]
         pytest.skip(f"前置步骤 {failed_step} 失败，跳过后续步骤")
 

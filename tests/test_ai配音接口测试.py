@@ -13,6 +13,7 @@ logger = logging.getLogger("api_test")
 
 
 @pytest.mark.ai
+@pytest.mark.independent_steps
 class TestAi配音接口测试(BaseTest):
     def test_step_01_post_account_login(self):
         self._login()
