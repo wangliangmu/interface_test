@@ -17,15 +17,30 @@ import subprocess
 import logging
 from datetime import datetime
 from pathlib import Path
+import time
+import pytz
 
 
 # 配置日志
+def beijing_time(*args):
+    """获取北京时间"""
+    tz = pytz.timezone('Asia/Shanghai')
+    return datetime.now(tz).timetuple()
+
+logging.Formatter.converter = beijing_time
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s [%(levelname)s] %(message)s',
     datefmt='%Y-%m-%d %H:%M:%S'
 )
 logger = logging.getLogger(__name__)
+
+
+def get_beijing_now():
+    """获取当前北京时间的 datetime 对象"""
+    tz = pytz.timezone('Asia/Shanghai')
+    return datetime.now(tz)
 
 
 class TestRunner:
@@ -36,7 +51,7 @@ class TestRunner:
         self.tests_dir = self.project_root / "tests"
         self.reports_dir = self.project_root / "reports"
         self.logs_dir = self.project_root / "logs"
-        self.timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        self.timestamp = get_beijing_now().strftime("%Y%m%d_%H%M%S")
         self._log_file_path = None
 
     def setup_directories(self):
@@ -156,7 +171,7 @@ class TestRunner:
         cmd = [sys.executable, "-m", "pytest"] + pytest_args
         logger.info(f"执行命令: {' '.join(cmd)}")
 
-        start_time = datetime.now()
+        start_time = get_beijing_now()
         try:
             result = subprocess.run(
                 cmd,
@@ -172,7 +187,7 @@ class TestRunner:
             logger.error(f"执行测试时出错: {e}")
             exit_code = 1
 
-        end_time = datetime.now()
+        end_time = get_beijing_now()
         duration = (end_time - start_time).total_seconds()
 
         # 输出汇总信息

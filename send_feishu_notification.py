@@ -2,12 +2,18 @@
 import json
 import requests
 from datetime import datetime
+import pytz
 
 # 飞书 Webhook 地址
 WEBHOOK_URL = "https://open.feishu.cn/open-apis/bot/v2/hook/90050a70-42ce-43ff-81e9-88ba482fbb70"
 
-# 获取当前日期
-current_date = datetime.now().strftime("%Y-%m-%d")
+def get_beijing_now():
+    """获取当前北京时间的 datetime 对象"""
+    tz = pytz.timezone('Asia/Shanghai')
+    return datetime.now(tz)
+
+# 获取当前日期（北京时间）
+current_date = get_beijing_now().strftime("%Y-%m-%d")
 
 # 测试报告数据
 test_data = {
