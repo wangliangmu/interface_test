@@ -16,6 +16,7 @@ logger = logging.getLogger("api_test")
 
 
 @pytest.mark.clone
+@pytest.mark.skip_in_full_run
 class Test2d换脸克隆(BaseTest):
     def test_step_01_post_account_login(self):
         self._login()

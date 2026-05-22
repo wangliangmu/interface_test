@@ -24,10 +24,17 @@ def pytest_configure(config):
     config.addinivalue_line("markers", "login: 登录测试")
     config.addinivalue_line("markers", "risk: 风控测试")
     config.addinivalue_line("markers", "independent_steps: 步骤独立执行，前序步骤失败不跳过后续步骤")
+    config.addinivalue_line("markers", "skip_in_full_run: 在全量运行时跳过，可单独指定执行")
 
 
 def pytest_sessionstart(session):
     requests.Session = LoggingSession
+
+
+def pytest_collection_modifyitems(config, items):
+    for item in items:
+        if item.get_closest_marker("skip_in_full_run"):
+            item.add_marker(pytest.mark.skip(reason="标记为 skip_in_full_run，全量运行时跳过"))
 
 
 def pytest_runtest_setup(item):
