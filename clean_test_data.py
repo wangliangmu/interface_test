@@ -7,15 +7,39 @@ VOICE_LIST_URL = "https://metahuman-prod.wair.ac.cn/metaman/api/asset/voice/user
 VOICE_DELETE_URL = "https://metahuman-prod.wair.ac.cn/metaman/api/asset/voice/delete"
 AI_LIST_URL = "https://metahuman-prod.wair.ac.cn/metaman/api/asset/ai/list"
 AI_DELETE_URL = "https://metahuman-prod.wair.ac.cn/metaman/api/asset/ai/delete"
-TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzk0NDIyNDgsImlhdCI6MTc3Njg1MDI0OCwiand0VXNlcklkIjoyMzN9.H7u1O-xWONyE6M1gpQj39f42WeO-CtFqJ27_oO9kMSM"
-CASDOOR = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImNlcnQtYnVpbHQtaW4iLCJ0eXAiOiJKV1QifQ.eyJhcHBsaWNhdGlvbiI6ImFnZW50IiwiYXVkIjpbIjM3ZThhMzYyMWVmZDliZDU4N2Q4Il0sImRpc3BsYXlOYW1lIjoiYXV0b190ZXN0X2p4bSIsImV4cCI6MTc3OTQ0MjI0OCwiaWF0IjoxNzc2ODUwMjQ4LCJpZCI6IjYxOTUxNzYxNDM1NTgiLCJpc3MiOiJodHRwczovL2F1dGgtaDIwLndhaXIuYWMuY24iLCJqdGkiOiJhZG1pbi8zZWM2M2U3NS1iMjRiLTQwMTEtODE5ZS00NDE1M2FmNjg4ZmUiLCJuYW1lIjoiYXV0b190ZXN0X2p4bSIsIm5iZiI6MTc3Njg1MDI0OCwibm9uY2UiOiIiLCJvd25lciI6ImFnZW50IiwicGFzc3dvcmQiOiIiLCJwaG9uZSI6IiIsInNjb3BlIjoicHJvZmlsZSIsInN1YiI6IjYxOTUxNzYxNDM1NTgiLCJ0YWciOiIiLCJ0b2tlblR5cGUiOiJhY2Nlc3MtdG9rZW4ifQ.SnQXkq-DlXXBusMxOB7dbWmd_o5SVDdXQfYdG1vxpj3DLk6wWIIpV0-r45YvAgrVTnsbFrEICFlTlgM_8u1lENKAIMSsA41LSkOdEAxQL5YuNUKmhnd4JQlu-Ytfs_P2EGhIHHfmhNbvTz-0JSrYafE40fRvLHvkSWCtkFTOBohT0z_WaM_Xo_XRNw8xwD3ygNUD8rADNGf1sKzSwflQkcGVbvfxLhYyG3xcWskcV2zhcealR-XSlIrA5262D5p_jGYkPafVJ_iMfyzHCXqeYHhl2lyoQIsw4S4hrkW684WwDEkhnqnbGTdZqThlnQEviW3QSJpvHN1Xi9wIOvxBVntH05IZ-MHny8bR_RV5cRqHpZnXc2gBCJXyL7stbs5djkziGNpippk3LMWc9_cQekg7IILABvVuBGkYUxTHnpf7DJOPbPItKuAPDUi7uFPeyLn8m5HAMa5PH8Xr35XLY-1Fv85kP62UNQYkINJdThB459k9FjT2K5TGYurgqJYSWTTOT9PfUc_PjDjnIWcKzSYwW6wf1eCfl73pI3Za2gx1YYsPDIKBDwh_YV793qYAMb3g2IXGzLUKHK_l55GSXZAj8q6nBmqlqypVCk6ROgNmMUCoEAJ1z5hjyrJuSXw20m4HDIxZTb20wgq5aYu0Wd9oIbA5XyiHOQwzT6lVuo4"
+LOGIN_URL = "https://metahuman-prod.wair.ac.cn/metaman/api/account/login"
+
+TOKEN = None
+
+
+def login():
+    global TOKEN
+    payload = {
+        "source": "show",
+        "username": "auto_test_jxm",
+        "password": "auto_test_jxm123",
+        "permission": "on",
+    }
+    headers = {
+        "priority": "u=1, i",
+        "content-type": "application/json",
+    }
+    response = requests.post(LOGIN_URL, headers=headers, json=payload)
+    response.raise_for_status()
+    data = response.json()
+    TOKEN = data.get("data", {}).get("token")
+    if not TOKEN:
+        raise RuntimeError(f"登录失败，未获取到 token: {response.text[:200]}")
+    print(f"登录成功，token: {TOKEN[:20]}...")
+
 
 def get_headers():
+    if not TOKEN:
+        login()
     return {
         "Accept": "application/json, text/plain, */*",
         "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6",
         "Authorization": f"Bearer {TOKEN}",
-        "Casdoor": CASDOOR,
         "Content-Type": "application/json",
         "Origin": "https://metahuman-prod.wair.ac.cn",
         "Referer": "https://metahuman-prod.wair.ac.cn/create/",
