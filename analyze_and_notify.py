@@ -92,17 +92,27 @@ def send_feishu_notification(summary, failures, webhook_url):
 
 
 def main():
-    # Use the test results we got from the run
-    summary = {"passed": 91, "failed": 2, "skipped": 6, "total": 99}
+    # Use the test results we got from the new run
+    summary = {"passed": 89, "failed": 4, "skipped": 6, "total": 99}
     failures = [
+        {
+            "name": "tests/test_创建网页类型对话.py::Test创建网页类型对话::test_step_05_post_dialogs_get",
+            "error": "AssertionError: 解析响应或检查状态失败: 期望状态 'success'，实际状态 'failed'",
+            "type": "功能问题"
+        },
         {
             "name": "tests/test_创建网页类型对话_带动作.py::Test创建网页类型对话带动作::test_step_05_post_dialogs_get",
             "error": "AssertionError: 解析响应或检查状态失败: 期望状态 'success'，实际状态 'failed'",
             "type": "功能问题"
         },
         {
+            "name": "tests/test_ppt讲解视频合成.py::TestPpt讲解视频合成::test_step_04_get_pptvideo_taskspage_size1page1typeppttask_typev",
+            "error": "AssertionError: 解析响应或检查状态失败: 期望状态 2 (成功)，实际状态 '1'",
+            "type": "功能问题"
+        },
+        {
             "name": "tests/test_2d离线播报数字人.py::Test2d离线播报数字人::test_step_04_post_video_get",
-            "error": "AssertionError: 解析响应或检查状态失败: 期望状态 'normal'，实际状态 'failed', fail_reason: '合成动作背景视频失败'",
+            "error": "AssertionError: 解析响应或检查状态失败: 期望状态 'normal'，实际状态 'producing'",
             "type": "功能问题"
         }
     ]
