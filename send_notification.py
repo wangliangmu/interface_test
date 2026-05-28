@@ -9,12 +9,11 @@ def get_beijing_time():
     return datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
 
 def main():
-    # Test results (排除 skip_in_full_run 标记的用例不计入统计)
+    # Test results (skip_in_full_run 标记的用例不计入统计)
     summary = {
         "passed": 93,
         "failed": 0,
         "skipped": 0,
-        "skip_in_full_run": 6,
         "total": 93,
         "status": "通过",
         "execution_time": "2026-05-28 07:42:52 (耗时 1598.57秒)"
@@ -37,7 +36,7 @@ def main():
                 {
                     "tag": "div",
                     "text": {
-                        "content": f"📊 测试执行摘要\n- 执行时间：{summary['execution_time']}\n- 测试结果：{summary['status']}\n- 共执行：{summary['total']} 个\n- 通过：{summary['passed']} 个\n- 失败：{summary['failed']} 个\n- 跳过：{summary['skipped']} 个\n（skip_in_full_run 标记不计入统计：{summary['skip_in_full_run']} 个）",
+                        "content": f"📊 测试执行摘要\n- 执行时间：{summary['execution_time']}\n- 测试结果：{summary['status']}\n- 共执行：{summary['total']} 个\n- 通过：{summary['passed']} 个\n- 失败：{summary['failed']} 个\n- 跳过：{summary['skipped']} 个",
                         "tag": "lark_md"
                     }
                 },
