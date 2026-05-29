@@ -11,12 +11,12 @@ def get_beijing_time():
 def main():
     # Test results (skip_in_full_run 标记的用例不计入统计)
     summary = {
-        "passed": 93,
-        "failed": 0,
-        "skipped": 0,
-        "total": 93,
-        "status": "通过",
-        "execution_time": "2026-05-28 07:42:52 (耗时 1598.57秒)"
+        "passed": 92,
+        "failed": 1,
+        "skipped": 6,
+        "total": 99,
+        "status": "失败",
+        "execution_time": "2026-05-30 07:17:11 (耗时 1417.28秒)"
     }
 
     # Build Feishu card
@@ -26,7 +26,7 @@ def main():
         "msg_type": "interactive",
         "card": {
             "header": {
-                "template": "green",
+                "template": "red",
                 "title": {
                     "content": f"每日接口测试报告 - {datetime.now(pytz.timezone('Asia/Shanghai')).strftime('%Y-%m-%d')}",
                     "tag": "plain_text"
@@ -46,7 +46,17 @@ def main():
                 {
                     "tag": "div",
                     "text": {
-                        "content": "✅ 结论：所有测试通过，系统运行正常！",
+                        "content": "❌ 失败用例分析：\n1. tests/test_2d离线播报数字人.py::Test2d离线播报数字人::test_step_04_post_video_get\n  - 错误类型：功能问题/超时\n  - 原因：期望状态 'normal'，实际状态一直为 'producing'，等待超时\n  - 建议：检查 2D 离线播报任务处理服务是否正常，或延长等待时间",
+                        "tag": "lark_md"
+                    }
+                },
+                {
+                    "tag": "hr"
+                },
+                {
+                    "tag": "div",
+                    "text": {
+                        "content": "✅ 结论：大部分测试通过，但有一个 2D 离线播报用例超时，需要关注！",
                         "tag": "lark_md"
                     }
                 }
