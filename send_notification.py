@@ -13,10 +13,10 @@ def main():
     summary = {
         "passed": 93,
         "failed": 0,
-        "skipped": 0,
-        "total": 93,
+        "skipped": 6,
+        "total": 99,
         "status": "通过",
-        "execution_time": "2026-05-28 07:42:52 (耗时 1598.57秒)"
+        "execution_time": "2026-05-31 07:42:35 (耗时 1541.44秒)"
     }
 
     # Build Feishu card
