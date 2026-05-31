@@ -9,14 +9,14 @@ def get_beijing_time():
     return datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
 
 def main():
-    # Test results (skip_in_full_run 标记的用例不计入统计)
+    # Test results
     summary = {
-        "passed": 93,
-        "failed": 0,
-        "skipped": 0,
-        "total": 93,
-        "status": "通过",
-        "execution_time": "2026-05-28 07:42:52 (耗时 1598.57秒)"
+        "passed": 91,
+        "failed": 2,
+        "skipped": 6,
+        "total": 99,
+        "status": "失败",
+        "execution_time": "2026-06-01 07:40:39 (耗时 1439.31秒)"
     }
 
     # Build Feishu card
@@ -26,7 +26,7 @@ def main():
         "msg_type": "interactive",
         "card": {
             "header": {
-                "template": "green",
+                "template": "red",
                 "title": {
                     "content": f"每日接口测试报告 - {datetime.now(pytz.timezone('Asia/Shanghai')).strftime('%Y-%m-%d')}",
                     "tag": "plain_text"
@@ -46,7 +46,17 @@ def main():
                 {
                     "tag": "div",
                     "text": {
-                        "content": "✅ 结论：所有测试通过，系统运行正常！",
+                        "content": "❌ 失败用例分析：\n1. tests/test_图片克隆数字人.py::Test图片克隆数字人::test_step_06_post_human_get\n   - 错误类型：功能问题\n   - 原因：合成照片视频失败，状态为failed\n   - 建议：检查图片克隆相关功能\n\n2. tests/test_2d离线播报数字人.py::Test2d离线播报数字人::test_step_04_post_video_get\n   - 错误类型：功能问题\n   - 原因：视频合成长时间处于producing状态未完成\n   - 建议：检查视频合成任务处理逻辑或增加等待时间",
+                        "tag": "lark_md"
+                    }
+                },
+                {
+                    "tag": "hr"
+                },
+                {
+                    "tag": "div",
+                    "text": {
+                        "content": "✅ 结论：存在失败测试用例，需要排查相关功能问题",
                         "tag": "lark_md"
                     }
                 }
