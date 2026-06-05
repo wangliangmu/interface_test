@@ -11,13 +11,13 @@ def get_beijing_time():
 def main():
     # Test results (skip_in_full_run 标记的用例不计入统计)
     summary = {
-        "passed": 93,
-        "failed": 0,
-        "skipped": 0,
+        "passed": 91,
+        "failed": 2,
+        "skipped": 6,
         "total": 93,
-        "status": "通过",
-        "execution_time": "2026-05-28 07:42:52 (耗时 1598.57秒)"
-    }
+        "status": "部分失败",
+        "execution_time": "2026-06-06 07:16:40 (耗时 1438.57秒)"
+        }
 
     # Build Feishu card
     webhook_url = "https://open.feishu.cn/open-apis/bot/v2/hook/90050a70-42ce-43ff-81e9-88ba482fbb70"
@@ -26,7 +26,7 @@ def main():
         "msg_type": "interactive",
         "card": {
             "header": {
-                "template": "green",
+                "template": "red",
                 "title": {
                     "content": f"每日接口测试报告 - {datetime.now(pytz.timezone('Asia/Shanghai')).strftime('%Y-%m-%d')}",
                     "tag": "plain_text"
@@ -46,7 +46,17 @@ def main():
                 {
                     "tag": "div",
                     "text": {
-                        "content": "✅ 结论：所有测试通过，系统运行正常！",
+                        "content": "❌ 失败用例分析：\n1. test_图片克隆数字人.py::Test图片克隆数字人::test_step_06_post_human_get\n   - 错误类型：功能问题\n   - 原因：图片克隆合成失败，状态为 failed\n   - 建议：检查图片克隆功能的后端服务和依赖\n\n2. test_2d离线播报数字人.py::Test2d离线播报数字人::test_step_04_post_video_get\n   - 错误类型：功能问题\n   - 原因：2D数字人视频生成超时，状态一直保持 producing\n   - 建议：检查2D数字人视频生成服务和相关任务队列",
+                        "tag": "lark_md"
+                    }
+                },
+                {
+                    "tag": "hr"
+                },
+                {
+                    "tag": "div",
+                    "text": {
+                        "content": "⚠️ 结论：部分测试失败，请及时关注并修复相关问题！",
                         "tag": "lark_md"
                     }
                 }
