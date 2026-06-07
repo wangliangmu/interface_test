@@ -4,19 +4,21 @@ import requests
 from datetime import datetime
 import pytz
 
+
 def get_beijing_time():
     tz = pytz.timezone('Asia/Shanghai')
     return datetime.now(tz).strftime("%Y-%m-%d %H:%M:%S")
 
+
 def main():
     # Test results (skip_in_full_run 标记的用例不计入统计)
     summary = {
-        "passed": 93,
-        "failed": 0,
-        "skipped": 0,
-        "total": 93,
-        "status": "通过",
-        "execution_time": "2026-05-28 07:42:52 (耗时 1598.57秒)"
+        "passed": 92,
+        "failed": 1,
+        "skipped": 6,
+        "total": 99,
+        "status": "失败",
+        "execution_time": "2026-06-08 07:17:21 (耗时 1415.85秒)"
     }
 
     # Build Feishu card
@@ -26,7 +28,7 @@ def main():
         "msg_type": "interactive",
         "card": {
             "header": {
-                "template": "green",
+                "template": "red",
                 "title": {
                     "content": f"每日接口测试报告 - {datetime.now(pytz.timezone('Asia/Shanghai')).strftime('%Y-%m-%d')}",
                     "tag": "plain_text"
@@ -46,7 +48,17 @@ def main():
                 {
                     "tag": "div",
                     "text": {
-                        "content": "✅ 结论：所有测试通过，系统运行正常！",
+                        "content": "❌ 失败用例分析：\n1. tests/test_2d离线播报数字人.py::Test2d离线播报数字人::test_step_04_post_video_get\n  - 错误类型：功能问题/超时问题\n  - 原因：视频生成任务长时间处于 'producing' 状态，未在预期时间内变为 'normal' 状态，最终超时失败\n  - 建议：检查视频生成服务是否正常运行，或者增加等待超时时间",
+                        "tag": "lark_md"
+                    }
+                },
+                {
+                    "tag": "hr"
+                },
+                {
+                    "tag": "div",
+                    "text": {
+                        "content": "⚠️ 结论：存在1个失败用例，主要是2D离线播报数字人视频生成超时问题，其他功能正常。",
                         "tag": "lark_md"
                     }
                 }
@@ -66,6 +78,7 @@ def main():
         print(response.text)
     except Exception as e:
         print(f"Failed to send notification: {e}")
+
 
 if __name__ == "__main__":
     main()
