@@ -1,0 +1,55 @@
+{
+  "msg_type": "interactive",
+  "card": {
+    "config": {
+      "wide_screen_mode": true
+    },
+    "header": {
+      "template": "red",
+      "title": {
+        "tag": "plain_text",
+        "content": "每日接口测试报告 - 2026-06-15"
+      }
+    },
+    "elements": [
+      {
+        "tag": "markdown",
+        "content": "📊 **测试执行摘要**\n- 执行时间：2026-06-15 07:16:44 ~ 07:40:45\n- 测试结果：失败\n- 通过：89 个\n- 失败：4 个\n- 跳过：6 个\n- 总耗时：1440.84 秒 (约 24 分钟)"
+      },
+      {
+        "tag": "hr"
+      },
+      {
+        "tag": "markdown",
+        "content": "❌ **失败用例分析**"
+      },
+      {
+        "tag": "markdown",
+        "content": "**1. test_图片克隆数字人.py - test_step_06_post_human_get**\n- 错误类型：功能问题\n- 原因：数字人图片克隆任务返回状态为 `failed`，测试期望状态为 `normal`\n- 建议：排查数字人图片克隆服务的后台任务失败原因，检查输入素材是否符合规范、服务资源是否充足"
+      },
+      {
+        "tag": "markdown",
+        "content": "**2. test_ppt讲解视频合成.py - test_step_04_get_pptvideo_task**\n- 错误类型：功能问题\n- 原因：PPT 视频合成任务最终状态为 `3`，测试期望成功状态 `2`\n- 建议：排查 PPT 视频合成服务，检查 PPT 素材解析、素材处理链路是否异常"
+      },
+      {
+        "tag": "markdown",
+        "content": "**3. test_志强基础版声音克隆.py - test_step_04_post_voiceclone_get**\n- 错误类型：功能问题\n- 原因：声音克隆任务返回状态为 `failed`，测试期望状态为 `normal`\n- 建议：排查声音克隆服务（志强基础版），检查音频素材质量、克隆算法链路"
+      },
+      {
+        "tag": "markdown",
+        "content": "**4. test_2d离线播报数字人.py - test_step_04_post_video_get**\n- 错误类型：功能问题/环境问题\n- 原因：2D 离线播报数字人视频任务持续处于 `producing` 状态，超过测试轮询等待时间仍未转为 `normal`\n- 建议：增加等待重试次数或检查视频合成服务处理性能，可能队列积压或任务卡住"
+      },
+      {
+        "tag": "hr"
+      },
+      {
+        "tag": "markdown",
+        "content": "✅ **结论：本次接口测试 89 个用例通过，但有 4 个核心业务流程（图片克隆、PPT 视频合成、声音克隆、2D 离线播报）出现处理失败或超时，相关业务功能需要排查修复。**"
+      },
+      {
+        "tag": "markdown",
+        "content": "📄 详细报告：/workspace/reports/api_test_detail_20260615_071644.html\n📝 运行日志：/workspace/logs/api_test_20260615_071644.log"
+      }
+    ]
+  }
+}
