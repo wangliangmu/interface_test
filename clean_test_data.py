@@ -51,10 +51,19 @@ def get_human_list(page=1, page_size=100, org=2):
     response = requests.post(API_URL, headers=get_headers(), json=payload)
     return response.json()
 
+def _post_with_relogin(url, payload, retriable_codes=(401, 440)):
+    response = requests.post(url, headers=get_headers(), json=payload)
+    data = response.json()
+    if data.get("code") in retriable_codes:
+        global TOKEN
+        TOKEN = None
+        response = requests.post(url, headers=get_headers(), json=payload)
+        data = response.json()
+    return data
+
+
 def delete_human(human_id):
-    payload = {"human_id": human_id}
-    response = requests.post(DELETE_URL, headers=get_headers(), json=payload)
-    return response.json()
+    return _post_with_relogin(DELETE_URL, {"human_id": human_id})
 
 def cleanup_old_humans(days=7):
     cutoff_date = datetime.now() - timedelta(days=days)
@@ -97,9 +106,7 @@ def get_voice_list(page=1, page_size=100, org=2):
     return response.json()
 
 def delete_voice(voice_id, clone=False):
-    payload = {"voice_id": voice_id, "clone": clone}
-    response = requests.post(VOICE_DELETE_URL, headers=get_headers(), json=payload)
-    return response.json()
+    return _post_with_relogin(VOICE_DELETE_URL, {"voice_id": voice_id, "clone": clone})
 
 def cleanup_old_voices(days=7, max_pages=50):
     cutoff_date = datetime.now() - timedelta(days=days)
@@ -144,9 +151,7 @@ def get_ai_list(page=1, page_size=100, server_type="img", content=""):
     return response.json()
 
 def delete_ai(asset_id):
-    payload = {"id": asset_id}
-    response = requests.post(AI_DELETE_URL, headers=get_headers(), json=payload)
-    return response.json()
+    return _post_with_relogin(AI_DELETE_URL, {"id": asset_id})
 
 def cleanup_old_ai(days=7):
     cutoff_date = datetime.now() - timedelta(days=days)
