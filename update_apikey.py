@@ -86,7 +86,7 @@ def update_apikey(session, base_url, token):
     if code != 0:
         raise RuntimeError(f"更新 apikey 失败，code={code}: {response.text[:300]}")
 
-    apikey = data.get("apikey")
+    apikey = data.get("apikey") or extract_json_path(data, "$.data.apikey")
     if not apikey:
         raise RuntimeError(f"更新 apikey 失败，响应中无 apikey: {response.text[:300]}")
     return apikey
